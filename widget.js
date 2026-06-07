@@ -16,6 +16,7 @@
     "https://i.postimg.cc/qBXWmBQf/Chat-GPT-Image-6-jun-2026-11-58-24.png";
   var LANG = (script && script.getAttribute("data-lang")) || "sr";
   var MODE = (script && script.getAttribute("data-mode")) || "matura"; // "matura" | "ftn"
+  var AVATAR_OK = true;
 
   // ——— prevodi UI-ja (AI ionako odgovara na izabranom jeziku) ———
   var T = {
@@ -102,7 +103,12 @@
     "#zoi-ta:focus{border-color:#2FB7A0}" +
     ".zoi-send{background:#1F8A78;color:#fff;border:none;border-radius:13px;padding:0 14px;height:40px;font-family:inherit;font-weight:700;font-size:14px;cursor:pointer}" +
     ".zoi-tool{background:#F0FAF7;border:1px solid #CFE9E2;border-radius:13px;width:40px;height:40px;cursor:pointer;font-size:17px}" +
-    ".zoi-typing{font-size:13px;color:#6b7873;font-style:italic;padding:2px 4px}";
+    ".zoi-typing{font-size:13px;color:#6b7873;font-style:italic;padding:2px 4px}" +
+    ".zoi-say{align-self:flex-end;flex:none;background:#F0FAF7;border:1px solid #CFE9E2;border-radius:8px;cursor:pointer;font-size:13px;line-height:1;padding:4px 7px;color:#1F8A78}" +
+    ".zoi-say:hover{background:#E2F4EF;border-color:#2FB7A0}" +
+    ".zoi-avfb{display:grid;place-items:center;background:linear-gradient(135deg,#1F8A78,#2FB7A0);color:#fff}" +
+    "#zoi-btn.zoi-avfb{font-size:30px}" +
+    "#zoi-head .zoi-headfb{width:40px;height:40px;border-radius:50%;border:2px solid rgba(255,255,255,.7);font-size:20px}";
 
   var style = document.createElement("style");
   style.textContent = css;
@@ -113,6 +119,16 @@
   btn.id = "zoi-btn";
   btn.style.backgroundImage = "url('" + AVATAR + "')";
   btn.setAttribute("title", "Zoi");
+  (function () {
+    var probe = new Image();
+    probe.onerror = function () {
+      AVATAR_OK = false;
+      btn.style.backgroundImage = "none";
+      btn.classList.add("zoi-avfb");
+      btn.textContent = "👩‍🏫";
+    };
+    probe.src = AVATAR;
+  })();
 
   var langOpts = ORDER.map(function (l) {
     return '<option value="' + l + '"' + (l === LANG ? " selected" : "") + ">" + l.toUpperCase() + "</option>";
@@ -151,9 +167,22 @@
   var fileEl = $("#zoi-file"), prevEl = $("#zoi-prev"), prevImg = $("#zoi-prev-img"), prevName = $("#zoi-prev-name");
   var voiceBtn = $("#zoi-voice");
 
+  // rezerva za sliku u zaglavlju ako se ne učita
+  (function () {
+    var headAv = panel.querySelector("#zoi-head img");
+    if (headAv) headAv.onerror = function () {
+      AVATAR_OK = false;
+      var s = document.createElement("span");
+      s.className = "zoi-avfb zoi-headfb";
+      s.textContent = "👩‍🏫";
+      headAv.replaceWith(s);
+    };
+  })();
+
   var history = [];       // {role, content} za API
   var attachment = null;  // {media_type, data, url}
   var voiceOn = false;
+  var lastZoiText = "";
 
   // ——— jezik / tekstovi ———
   function applyLang() {
@@ -203,11 +232,31 @@
     html += '<div class="zoi-bub"></div>';
     row.innerHTML = html;
     var bub = row.querySelector(".zoi-bub");
+    if (who === "zoi") {
+      var av = row.querySelector(".zoi-av");
+      if (av) av.onerror = function () {
+        var s = document.createElement("span");
+        s.className = "zoi-av zoi-avfb";
+        s.textContent = "👩‍🏫";
+        av.replaceWith(s);
+      };
+    }
     if (text) {
       if (who === "zoi") { bub.innerHTML = fmt(text); }
       else { bub.appendChild(document.createTextNode(text)); }
     }
     if (imgUrl) { var im = document.createElement("img"); im.src = imgUrl; bub.appendChild(im); }
+    if (who === "zoi" && text) {
+      lastZoiText = text;
+      var say = document.createElement("button");
+      say.className = "zoi-say"; say.type = "button"; say.textContent = "🔊";
+      say.title = "Pročitaj naglas / zaustavi";
+      say.onclick = function () {
+        if (synth && synth.speaking && curBtn === say) { stopSpeak(); }
+        else { speakNow(text, say); }
+      };
+      row.appendChild(say);
+    }
     msgsEl.appendChild(row);
     msgsEl.scrollTop = msgsEl.scrollHeight;
     return bub;
@@ -222,16 +271,61 @@
     } else if (!on && ex) { ex.remove(); }
   }
 
-  function speak(text) {
-    if (!voiceOn || !window.speechSynthesis) return;
-    try {
-      window.speechSynthesis.cancel();
-      var u = new SpeechSynthesisUtterance(String(text).replace(/[*_#`]/g, " "));
-      u.lang = SPEAK[LANG] || "sr-RS";
-      u.rate = 0.98;
-      window.speechSynthesis.speak(u);
-    } catch (e) {}
+  // ——— čišćenje teksta za izgovor ———
+  function clean(text) {
+    return String(text)
+      .replace(/\*\*|__|[#`]/g, " ")
+      .replace(/\^2(?![0-9])/g, "²")
+      .replace(/\^3(?![0-9])/g, "³")
+      .replace(/\^/g, " ")
+      .replace(/[*_]/g, " ")
+      .replace(/\s{2,}/g, " ")
+      .trim();
   }
+
+  // ——— glas (TTS) ———
+  var synth = window.speechSynthesis || null;
+  var voices = [];
+  var curBtn = null;
+  function loadVoices() { try { voices = (synth && synth.getVoices()) || []; } catch (e) {} }
+  loadVoices();
+  if (synth && typeof synth.onvoiceschanged !== "undefined") synth.onvoiceschanged = loadVoices;
+
+  // za srpski/bosanski/hrvatski koristi srodan glas ako tačnog nema
+  var VFALL = { sr: ["sr", "hr", "bs"], bs: ["bs", "hr", "sr"], hr: ["hr", "bs", "sr"],
+                sk: ["sk", "cs"], de: ["de"], el: ["el"], en: ["en"], hu: ["hu"], sq: ["sq"], ro: ["ro"] };
+  function pickVoice(code) {
+    if (!voices.length) loadVoices();
+    var chain = VFALL[code] || [code];
+    for (var i = 0; i < chain.length; i++) {
+      var pre = chain[i];
+      for (var j = 0; j < voices.length; j++) {
+        var L = (voices[j].lang || "").toLowerCase().replace("_", "-");
+        if (L.indexOf(pre) === 0) return voices[j];
+      }
+    }
+    return null;
+  }
+  function stopSpeak() {
+    try { if (synth) synth.cancel(); } catch (e) {}
+    if (curBtn) { curBtn.textContent = "🔊"; curBtn = null; }
+  }
+  function speakNow(text, btn) {
+    if (!synth) return;
+    stopSpeak();
+    loadVoices();
+    var u = new SpeechSynthesisUtterance(clean(text));
+    var v = pickVoice(LANG);
+    if (v) { u.voice = v; u.lang = v.lang; } else { u.lang = SPEAK[LANG] || "sr-RS"; }
+    u.rate = 0.98;
+    if (btn) {
+      curBtn = btn; btn.textContent = "⏹";
+      u.onend = function () { if (curBtn === btn) curBtn = null; btn.textContent = "🔊"; };
+      u.onerror = function () { if (curBtn === btn) curBtn = null; btn.textContent = "🔊"; };
+    }
+    try { synth.speak(u); } catch (e) {}
+  }
+  function speak(text) { if (voiceOn) speakNow(text); } // auto-čitanje kad je 🔊 (gore) uključen
 
   // ——— slanje ———
   function send() {
@@ -291,7 +385,7 @@
 
   // ——— događaji ———
   btn.onclick = function () { panel.classList.toggle("zoi-open"); taEl.focus(); };
-  $("#zoi-x").onclick = function () { panel.classList.remove("zoi-open"); };
+  $("#zoi-x").onclick = function () { panel.classList.remove("zoi-open"); stopSpeak(); };
   goEl.onclick = send;
   taEl.addEventListener("keydown", function (e) {
     if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); }
@@ -299,11 +393,12 @@
   taEl.addEventListener("input", function () {
     taEl.style.height = "auto"; taEl.style.height = Math.min(taEl.scrollHeight, 96) + "px";
   });
-  langEl.onchange = function () { LANG = langEl.value; applyLang(); greet(); history = []; };
+  langEl.onchange = function () { stopSpeak(); LANG = langEl.value; applyLang(); greet(); history = []; };
   voiceBtn.onclick = function () {
     voiceOn = !voiceOn;
     voiceBtn.style.background = voiceOn ? "rgba(255,255,255,.45)" : "rgba(255,255,255,.18)";
-    if (!voiceOn && window.speechSynthesis) window.speechSynthesis.cancel();
+    if (voiceOn) { if (lastZoiText) speakNow(lastZoiText); }
+    else { stopSpeak(); }
   };
 
   // ——— start ———
