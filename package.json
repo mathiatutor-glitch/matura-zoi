@@ -1,0 +1,8 @@
+{
+  "name": "matura-zoi",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Zoi · samostalni AI tutor za pripremu male mature iz matematike (više jezika).",
+  "engines": { "node": ">=18" }
+}

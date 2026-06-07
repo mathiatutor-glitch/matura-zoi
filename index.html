@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Zoi · priprema za malu maturu (matematika)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{ --ink:#27302d; --teal:#1F8A78; --teal2:#2FB7A0; --cream:#FBF5EA; --card:#FFFDF8; --line:#ECE0CC; }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Nunito',system-ui,sans-serif;color:var(--ink);
+       background:radial-gradient(900px 500px at 80% -10%, #E7F7F2 0%, transparent 60%), var(--cream);}
+  .wrap{max-width:860px;margin:0 auto;padding:64px 22px 120px}
+  .badge{display:inline-block;background:#E7F7F2;color:var(--teal);border:1px solid #C8E9E0;
+         border-radius:999px;padding:6px 14px;font-weight:700;font-size:13px;letter-spacing:.2px}
+  h1{font-family:'Baloo 2',cursive;font-weight:800;font-size:clamp(34px,6vw,52px);line-height:1.05;margin:18px 0 10px}
+  h1 .hl{color:var(--teal)}
+  .lead{font-size:18px;line-height:1.65;color:#46544f;max-width:620px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin:40px 0}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px}
+  .card h3{font-family:'Baloo 2',cursive;margin:0 0 8px;font-size:19px}
+  .card p{margin:0;color:#56635e;font-size:14.5px;line-height:1.55}
+  .langs{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+  .lang{background:#fff;border:1px solid var(--line);border-radius:10px;padding:5px 10px;font-size:13px;font-weight:700;color:#3a4a45}
+  .embed{margin-top:40px;background:#10302b;color:#bdf0e3;border-radius:16px;padding:18px 20px;overflow:auto}
+  .embed code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13.5px;white-space:pre}
+  .hint{margin-top:14px;font-size:14px;color:#6b7873}
+  .arrow{position:fixed;right:96px;bottom:34px;font-family:'Baloo 2',cursive;font-weight:700;color:var(--teal);
+         background:#fff;border:1px solid #C8E9E0;border-radius:12px;padding:8px 12px;box-shadow:0 8px 20px rgba(20,80,70,.18)}
+  @media(max-width:560px){.arrow{display:none}}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <span class="badge">MathIA · samostalna verzija</span>
+    <h1>Zoi te vodi do <span class="hl">male mature</span> — korak po korak.</h1>
+    <p class="lead">Topla profesorica matematike koja zadatak rešava polako i pregledno, postavlja ti potpitanja
+       i na kraju ti da sličan zadatak za vežbu. Možeš da kucaš zadatak ili da pošalješ sliku iz sveske —
+       i sve to na <b>više jezika</b>.</p>
+
+    <div class="grid">
+      <div class="card"><h3>📷 Slika ili tekst</h3><p>Slikaš zadatak iz zbirke ili ga otkucaš — Zoi ga pročita i kreće da objašnjava.</p></div>
+      <div class="card"><h3>🪜 Korak po korak</h3><p>Prepiši uredno, skrati, reši „kao slikovnicu". Bez preskakanja, bez zbrke.</p></div>
+      <div class="card"><h3>🌍 Više jezika</h3>
+        <p>Isti metod, tvoj jezik:</p>
+        <div class="langs"><span class="lang">SR</span><span class="lang">EN</span><span class="lang">HU</span><span class="lang">BS</span><span class="lang">SQ</span><span class="lang">HR</span><span class="lang">RO</span><span class="lang">SK</span></div>
+      </div>
+      <div class="card"><h3>🔊 Glas</h3><p>Uključi zvučnik pa Zoi pročita objašnjenje naglas dok pratiš.</p></div>
+    </div>
+
+    <p class="hint">Klikni Zoi dugme dole desno i napiši joj <b>„Zdravo"</b> ili pošalji sliku nekog zadatka. 👇</p>
+
+    <div class="embed"><code>&lt;script src="widget.js"
+        data-api="/api/chat"
+        data-avatar="URL_DO_ZOI_SLIKE"
+        data-lang="sr"&gt;&lt;/script&gt;</code></div>
+    <p class="hint">Toliko — jedna linija na bilo kojoj strani i Zoi je tu.</p>
+  </div>
+
+  <div class="arrow">Probaj Zoi →</div>
+
+  <!-- ZOI WIDGET (samostalna matura verzija) -->
+  <script src="widget.js"
+          data-api="/api/chat"
+          data-avatar="https://i.postimg.cc/qBXWmBQf/Chat-GPT-Image-6-jun-2026-11-58-24.png"
+          data-lang="sr"></script>
+</body>
+</html>
