@@ -16,6 +16,7 @@
     "https://i.postimg.cc/qBXWmBQf/Chat-GPT-Image-6-jun-2026-11-58-24.png";
   var LANG = (script && script.getAttribute("data-lang")) || "sr";
   var MODE = (script && script.getAttribute("data-mode")) || "matura"; // "matura" | "ftn"
+  var NAME = (script && script.getAttribute("data-name")) || "Zoi"; // ime asistenta (npr. "Mila")
   var AVATAR_OK = true;
   var TTS = (script && script.getAttribute("data-tts")) || API.replace(/\/api\/chat\/?$/, "/api/tts");
 
@@ -67,7 +68,7 @@
     fr: { sub: "professeure · concours FTN", hi: "Salut ! 😊 Je suis Zoi, ta prof de maths pour le concours d’entrée à la FTN. Écris un exercice ou envoie une 📷 photo — on avance étape par étape." },
   };
   function modeSub(x) { return (MODE === "ftn" && FTN[LANG]) ? FTN[LANG].sub : x.sub; }
-  function modeHi(x) { return (MODE === "ftn" && FTN[LANG]) ? FTN[LANG].hi : x.hi; }
+  function modeHi(x) { var s = (MODE === "ftn" && FTN[LANG]) ? FTN[LANG].hi : x.hi; return String(s).replace(/Zoi/g, NAME); }
 
   // ——— stilovi (sve scope-ovano sa zoi- prefiksom) ———
   var css =
@@ -119,7 +120,7 @@
   var btn = document.createElement("div");
   btn.id = "zoi-btn";
   btn.style.backgroundImage = "url('" + AVATAR + "')";
-  btn.setAttribute("title", "Zoi");
+  btn.setAttribute("title", NAME);
   (function () {
     var probe = new Image();
     probe.onerror = function () {
@@ -139,8 +140,8 @@
   panel.id = "zoi-panel";
   panel.innerHTML =
     '<div id="zoi-head">' +
-      '<img src="' + AVATAR + '" alt="Zoi"/>' +
-      '<div><div class="zoi-name">Zoi</div><div class="zoi-sub" id="zoi-sub"></div></div>' +
+      '<img src="' + AVATAR + '" alt="' + NAME + '"/>' +
+      '<div><div class="zoi-name">' + NAME + '</div><div class="zoi-sub" id="zoi-sub"></div></div>' +
       '<div class="zoi-sp"></div>' +
       '<select id="zoi-lang" title="Jezik">' + langOpts + "</select>" +
       '<button class="zoi-ico" id="zoi-voice" title="Glas">🔊</button>' +
@@ -267,7 +268,7 @@
     var ex = msgsEl.querySelector(".zoi-typing");
     if (on && !ex) {
       var d = document.createElement("div");
-      d.className = "zoi-typing"; d.textContent = t().thinking;
+      d.className = "zoi-typing"; d.textContent = String(t().thinking).replace(/Zoi/g, NAME);
       msgsEl.appendChild(d); msgsEl.scrollTop = msgsEl.scrollHeight;
     } else if (!on && ex) { ex.remove(); }
   }
@@ -299,7 +300,7 @@
     s = s.replace(/²/g, " na kvadrat ");
     s = s.replace(/³/g, " na treći stepen ");
     // indeks: x_1 -> iks indeks 1
-    s = s.replace(/_\s*\{?([0-9A-Za-z]+)\}?/g, " indeks $1 ");
+    s = s.replace(/_\s*\{?([0-9A-Za-z]+)\}?/g, " $1 ");
     // poređenja i operacije
     s = s.replace(/<=/g, " manje ili jednako ");
     s = s.replace(/>=/g, " veće ili jednako ");
