@@ -11,13 +11,13 @@ const LANGS = {
   sr: "srpskom jeziku",
   en: "engleskom jeziku (English)",
   hu: "mađarskom jeziku (magyar)",
-  bs: "bosanskom jeziku",
-  sq: "albanskom jeziku (shqip)",
   hr: "hrvatskom jeziku",
   ro: "rumunskom jeziku (română)",
   sk: "slovačkom jeziku (slovenčina)",
   de: "nemačkom jeziku (Deutsch)",
   el: "grčkom jeziku (Ελληνικά)",
+  es: "španskom jeziku (español)",
+  fr: "francuskom jeziku (français)",
 };
 
 // ————————————————————————————————————————————————————————————
