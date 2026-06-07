@@ -96,13 +96,13 @@ async function synthAzure(text, lang, key, region, override) {
 }
 
 // izaberi provajdera po jeziku
-async function speak(text, lang) {
+async function speak(text, lang, voice) {
   const elKey = process.env.ELEVENLABS_API_KEY;
   const azKey = process.env.AZURE_SPEECH_KEY;
   const azRegion = process.env.AZURE_SPEECH_REGION;
 
   if (lang === "sr" && elKey) {
-    return await synthEleven(text, EL_VOICE_SR, elKey);   // srpski -> Ida
+    return await synthEleven(text, voice || EL_VOICE_SR, elKey);   // srpski -> zadati glas ili Ida
   }
   if (azKey && azRegion) {
     return await synthAzure(text, lang, azKey, azRegion); // ostalo -> Azure
@@ -122,7 +122,8 @@ export default async function handler(req, res) {
     // --- GET: brzi test u browseru -> /api/tts ili /api/tts?lang=en ---
     if (req.method === "GET") {
       const lang = (req.query && req.query.lang) || "sr";
-      const buf = await speak(SAMPLE[lang] || SAMPLE.sr, lang);
+      const voice = (req.query && req.query.voice) || "";
+      const buf = await speak(SAMPLE[lang] || SAMPLE.sr, lang, voice);
       res.setHeader("Content-Type", "audio/mpeg");
       res.setHeader("Cache-Control", "no-store");
       res.statusCode = 200;
@@ -131,11 +132,11 @@ export default async function handler(req, res) {
 
     if (req.method !== "POST") return res.status(405).json({ error: "Koristi POST." });
 
-    const { text = "", lang = "sr" } = req.body || {};
+    const { text = "", lang = "sr", voice = "" } = req.body || {};
     const t = String(text).slice(0, 1500);
     if (!t.trim()) return res.status(400).json({ error: "Nema teksta." });
 
-    const buf = await speak(t, lang);
+    const buf = await speak(t, lang, voice);
     res.setHeader("Content-Type", "audio/mpeg");
     res.setHeader("Cache-Control", "no-store");
     res.statusCode = 200;
