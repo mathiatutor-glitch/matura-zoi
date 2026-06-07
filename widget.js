@@ -17,22 +17,23 @@
   var LANG = (script && script.getAttribute("data-lang")) || "sr";
   var MODE = (script && script.getAttribute("data-mode")) || "matura"; // "matura" | "ftn"
   var AVATAR_OK = true;
+  var TTS = (script && script.getAttribute("data-tts")) || API.replace(/\/api\/chat\/?$/, "/api/tts");
 
   // ——— prevodi UI-ja (AI ionako odgovara na izabranom jeziku) ———
   var T = {
     sr: { sub: "profesorica · mala matura", hi: "Ćao! 😊 Ja sam Zoi, tvoja profesorica za malu maturu iz matematike. Napiši zadatak ili pošalji 📷 sliku — idemo korak po korak, polako i lepo.", ph: "Napiši zadatak ili pitanje…", send: "Pošalji", chips: ["Napiši zadatak", "Pošalji sliku 📷", "Objasni mi pojam"], voice: "Glas", thinking: "Zoi razmišlja…" },
     en: { sub: "teacher · final exam (grade 8)", hi: "Hi! 😊 I'm Zoi, your math teacher for the grade-8 final exam. Type a problem or send a 📷 photo — we'll go step by step.", ph: "Type a problem or question…", send: "Send", chips: ["Type a problem", "Send a photo 📷", "Explain a concept"], voice: "Voice", thinking: "Zoi is thinking…" },
     hu: { sub: "tanárnő · kisérettségi", hi: "Szia! 😊 Zoi vagyok, a matek tanárnőd a kisérettségire. Írj be egy feladatot vagy küldj 📷 képet — lépésről lépésre haladunk.", ph: "Írd be a feladatot vagy kérdést…", send: "Küldés", chips: ["Feladat beírása", "Kép küldése 📷", "Fogalom magyarázat"], voice: "Hang", thinking: "Zoi gondolkodik…" },
-    bs: { sub: "profesorica · mala matura", hi: "Ćao! 😊 Ja sam Zoi, tvoja profesorica iz matematike za malu maturu. Napiši zadatak ili pošalji 📷 sliku — idemo korak po korak.", ph: "Napiši zadatak ili pitanje…", send: "Pošalji", chips: ["Napiši zadatak", "Pošalji sliku 📷", "Objasni pojam"], voice: "Glas", thinking: "Zoi razmišlja…" },
-    sq: { sub: "mësuese · matura e vogël", hi: "Përshëndetje! 😊 Jam Zoi, mësuesja jote e matematikës. Shkruaj një ushtrim ose dërgo një 📷 foto — shkojmë hap pas hapi.", ph: "Shkruaj ushtrimin ose pyetjen…", send: "Dërgo", chips: ["Shkruaj ushtrim", "Dërgo foto 📷", "Shpjego një koncept"], voice: "Zëri", thinking: "Zoi po mendon…" },
     hr: { sub: "profesorica · mala matura", hi: "Bok! 😊 Ja sam Zoi, tvoja profesorica matematike za malu maturu. Napiši zadatak ili pošalji 📷 sliku — idemo korak po korak.", ph: "Napiši zadatak ili pitanje…", send: "Pošalji", chips: ["Napiši zadatak", "Pošalji sliku 📷", "Objasni pojam"], voice: "Glas", thinking: "Zoi razmišlja…" },
     ro: { sub: "profesoară · examen final", hi: "Bună! 😊 Sunt Zoi, profesoara ta de matematică. Scrie un exercițiu sau trimite o 📷 poză — mergem pas cu pas.", ph: "Scrie exercițiul sau întrebarea…", send: "Trimite", chips: ["Scrie un exercițiu", "Trimite o poză 📷", "Explică un concept"], voice: "Voce", thinking: "Zoi se gândește…" },
     sk: { sub: "učiteľka · malá matura", hi: "Ahoj! 😊 Som Zoi, tvoja učiteľka matematiky. Napíš úlohu alebo pošli 📷 fotku — pôjdeme krok za krokom.", ph: "Napíš úlohu alebo otázku…", send: "Poslať", chips: ["Napíš úlohu", "Pošli fotku 📷", "Vysvetli pojem"], voice: "Hlas", thinking: "Zoi premýšľa…" },
     de: { sub: "Lehrerin · Abschlussprüfung (Kl. 8)", hi: "Hallo! 😊 Ich bin Zoi, deine Mathelehrerin für die Abschlussprüfung der 8. Klasse. Schreib eine Aufgabe oder schick ein 📷 Foto — wir gehen Schritt für Schritt vor.", ph: "Schreib eine Aufgabe oder Frage…", send: "Senden", chips: ["Aufgabe schreiben", "Foto senden 📷", "Begriff erklären"], voice: "Stimme", thinking: "Zoi denkt nach…" },
     el: { sub: "καθηγήτρια · τελικές εξετάσεις", hi: "Γεια! 😊 Είμαι η Zoi, η καθηγήτριά σου στα μαθηματικά για τις τελικές εξετάσεις. Γράψε μια άσκηση ή στείλε μια 📷 φωτογραφία — θα πάμε βήμα βήμα.", ph: "Γράψε την άσκηση ή την ερώτηση…", send: "Αποστολή", chips: ["Γράψε άσκηση", "Στείλε φωτογραφία 📷", "Εξήγησε μια έννοια"], voice: "Φωνή", thinking: "Η Zoi σκέφτεται…" },
+    es: { sub: "profesora · examen final (8.º)", hi: "¡Hola! 😊 Soy Zoi, tu profesora de matemáticas. Escribe un ejercicio o envía una 📷 foto — vamos paso a paso.", ph: "Escribe el ejercicio o la pregunta…", send: "Enviar", chips: ["Escribe un ejercicio", "Enviar foto 📷", "Explica un concepto"], voice: "Voz", thinking: "Zoi está pensando…" },
+    fr: { sub: "professeure · examen final", hi: "Salut ! 😊 Je suis Zoi, ta prof de maths. Écris un exercice ou envoie une 📷 photo — on avance étape par étape.", ph: "Écris l’exercice ou la question…", send: "Envoyer", chips: ["Écris un exercice", "Envoyer une photo 📷", "Explique une notion"], voice: "Voix", thinking: "Zoi réfléchit…" },
   };
-  var SPEAK = { sr: "sr-RS", en: "en-US", hu: "hu-HU", bs: "bs-BA", sq: "sq-AL", hr: "hr-HR", ro: "ro-RO", sk: "sk-SK", de: "de-DE", el: "el-GR" };
-  var ORDER = ["sr", "en", "hu", "bs", "sq", "hr", "ro", "sk", "de", "el"];
+  var SPEAK = { sr: "sr-RS", en: "en-US", hu: "hu-HU", hr: "hr-HR", ro: "ro-RO", sk: "sk-SK", de: "de-DE", el: "el-GR", es: "es-ES", fr: "fr-FR" };
+  var ORDER = ["sr", "en", "hu", "hr", "ro", "sk", "de", "el", "es", "fr"];
   function t() { return T[LANG] || T.sr; }
 
   // dopune: 4. čip (zadatak za vežbu), prefiks za „objasni pojam", poruka za vežbu — po jeziku
@@ -40,13 +41,13 @@
     sr: { c: "Zadatak za vežbu 🎯", cp: "Objasni mi pojam: ", pr: "Daj mi jedan zadatak za vežbu po nivou male mature." },
     en: { c: "Practice problem 🎯", cp: "Explain a concept: ", pr: "Give me one practice problem at grade-8 final-exam level." },
     hu: { c: "Gyakorló feladat 🎯", cp: "Magyarázz el egy fogalmat: ", pr: "Adj egy gyakorló feladatot a kisérettségi szintjén." },
-    bs: { c: "Zadatak za vježbu 🎯", cp: "Objasni mi pojam: ", pr: "Daj mi jedan zadatak za vježbu na nivou male mature." },
-    sq: { c: "Ushtrim praktik 🎯", cp: "Më shpjego një koncept: ", pr: "Më jep një ushtrim praktike në nivelin e maturës së vogël." },
     hr: { c: "Zadatak za vježbu 🎯", cp: "Objasni mi pojam: ", pr: "Daj mi jedan zadatak za vježbu na razini male mature." },
     ro: { c: "Exercițiu de practică 🎯", cp: "Explică-mi un concept: ", pr: "Dă-mi un exercițiu de practică la nivelul examenului final." },
     sk: { c: "Cvičná úloha 🎯", cp: "Vysvetli mi pojem: ", pr: "Daj mi jednu cvičnú úlohu na úrovni malej matury." },
     de: { c: "Übungsaufgabe 🎯", cp: "Erkläre mir einen Begriff: ", pr: "Gib mir eine Übungsaufgabe auf dem Niveau der Abschlussprüfung der 8. Klasse." },
     el: { c: "Άσκηση εξάσκησης 🎯", cp: "Εξήγησέ μου μια έννοια: ", pr: "Δώσε μου μια άσκηση εξάσκησης στο επίπεδο των τελικών εξετάσεων." },
+    es: { c: "Ejercicio de práctica 🎯", cp: "Explícame un concepto: ", pr: "Dame un ejercicio de práctica del nivel del examen final." },
+    fr: { c: "Exercice d’entraînement 🎯", cp: "Explique-moi une notion : ", pr: "Donne-moi un exercice d’entraînement au niveau de l’examen final." },
   };
   Object.keys(EXTRA).forEach(function (k) {
     if (T[k]) { T[k].chips = T[k].chips.concat([EXTRA[k].c]); T[k].cp = EXTRA[k].cp; T[k].pr = EXTRA[k].pr; }
@@ -57,13 +58,13 @@
     sr: { sub: "profesorica · prijemni FTN", hi: "Ćao! 😊 Ja sam Zoi, tvoja profesorica za prijemni iz matematike (FTN). Napiši zadatak ili pošalji 📷 sliku — idemo korak po korak." },
     en: { sub: "teacher · FTN entrance exam", hi: "Hi! 😊 I'm Zoi, your math teacher for the FTN entrance exam. Type a problem or send a 📷 photo — we'll go step by step." },
     hu: { sub: "tanárnő · FTN felvételi", hi: "Szia! 😊 Zoi vagyok, a matek tanárnőd az FTN felvételire. Írj egy feladatot vagy küldj 📷 képet — lépésről lépésre haladunk." },
-    bs: { sub: "profesorica · prijemni FTN", hi: "Ćao! 😊 Ja sam Zoi, tvoja profesorica za prijemni iz matematike (FTN). Napiši zadatak ili pošalji 📷 sliku — idemo korak po korak." },
-    sq: { sub: "mësuese · pranimi FTN", hi: "Përshëndetje! 😊 Jam Zoi, mësuesja jote e matematikës për provimin pranues të FTN-së. Shkruaj një ushtrim ose dërgo një 📷 foto — shkojmë hap pas hapi." },
     hr: { sub: "profesorica · prijemni FTN", hi: "Bok! 😊 Ja sam Zoi, tvoja profesorica za prijemni iz matematike (FTN). Napiši zadatak ili pošalji 📷 sliku — idemo korak po korak." },
     ro: { sub: "profesoară · admitere FTN", hi: "Bună! 😊 Sunt Zoi, profesoara ta de matematică pentru admiterea la FTN. Scrie un exercițiu sau trimite o 📷 poză — mergem pas cu pas." },
     sk: { sub: "učiteľka · prijímačky FTN", hi: "Ahoj! 😊 Som Zoi, tvoja učiteľka matematiky na prijímačky na FTN. Napíš úlohu alebo pošli 📷 fotku — pôjdeme krok za krokom." },
     de: { sub: "Lehrerin · FTN-Aufnahmeprüfung", hi: "Hallo! 😊 Ich bin Zoi, deine Mathelehrerin für die FTN-Aufnahmeprüfung. Schreib eine Aufgabe oder schick ein 📷 Foto — wir gehen Schritt für Schritt vor." },
     el: { sub: "καθηγήτρια · εισαγωγικές FTN", hi: "Γεια! 😊 Είμαι η Zoi, η καθηγήτριά σου στα μαθηματικά για τις εισαγωγικές εξετάσεις του FTN. Γράψε μια άσκηση ή στείλε μια 📷 φωτογραφία — θα πάμε βήμα βήμα." },
+    es: { sub: "profesora · acceso FTN", hi: "¡Hola! 😊 Soy Zoi, tu profesora de matemáticas para el examen de acceso a la FTN. Escribe un ejercicio o envía una 📷 foto — vamos paso a paso." },
+    fr: { sub: "professeure · concours FTN", hi: "Salut ! 😊 Je suis Zoi, ta prof de maths pour le concours d’entrée à la FTN. Écris un exercice ou envoie une 📷 photo — on avance étape par étape." },
   };
   function modeSub(x) { return (MODE === "ftn" && FTN[LANG]) ? FTN[LANG].sub : x.sub; }
   function modeHi(x) { return (MODE === "ftn" && FTN[LANG]) ? FTN[LANG].hi : x.hi; }
@@ -272,28 +273,83 @@
   }
 
   // ——— čišćenje teksta za izgovor ———
+  function stripMd(s) {
+    return String(s).replace(/\*\*|__|[#`]/g, " ").replace(/[*_]/g, " ");
+  }
+  // izgovor matematike na srpskom (i bs/hr) — simboli -> reči
+  function mathSr(s) {
+    s = " " + s + " ";
+    // funkcije -> reči (sin samo kad ima argument, da ne pokvari reč „sin")
+    s = s.replace(/\bcos\b/g, " kosinus ");
+    s = s.replace(/\bsin(?=\s*\(|\s+[A-Za-z0-9])/g, " sinus ");
+    s = s.replace(/\btg\b/g, " tangens ");
+    s = s.replace(/\b(?:ctg|cot)\b/g, " kotangens ");
+    s = s.replace(/\bln\b/g, " prirodni logaritam ");
+    s = s.replace(/\blog\b/g, " logaritam ");
+    // koreni
+    s = s.replace(/∛\s*/g, " treći koren iz ");
+    s = s.replace(/√\s*/g, " koren iz ");
+    // stepeni
+    s = s.replace(/\^\s*2\b/g, " na kvadrat ");
+    s = s.replace(/\^\s*3\b/g, " na treći stepen ");
+    s = s.replace(/\^\s*4\b/g, " na četvrti stepen ");
+    s = s.replace(/\^\s*\(([^)]*)\)/g, " na stepen $1 ");
+    s = s.replace(/\^\s*([0-9]+)/g, " na $1. stepen ");
+    s = s.replace(/\^\s*([A-Za-z]+)/g, " na $1 ");
+    s = s.replace(/²/g, " na kvadrat ");
+    s = s.replace(/³/g, " na treći stepen ");
+    // indeks: x_1 -> iks indeks 1
+    s = s.replace(/_\s*\{?([0-9A-Za-z]+)\}?/g, " indeks $1 ");
+    // poređenja i operacije
+    s = s.replace(/<=/g, " manje ili jednako ");
+    s = s.replace(/>=/g, " veće ili jednako ");
+    s = s.replace(/!=/g, " nije jednako ");
+    s = s.replace(/≈/g, " približno jednako ");
+    s = s.replace(/≠/g, " nije jednako ");
+    s = s.replace(/≤/g, " manje ili jednako ");
+    s = s.replace(/≥/g, " veće ili jednako ");
+    s = s.replace(/=/g, " jednako ");
+    s = s.replace(/</g, " manje od ");
+    s = s.replace(/>/g, " veće od ");
+    s = s.replace(/±/g, " plus minus ");
+    s = s.replace(/[·×∙*]/g, " puta ");
+    s = s.replace(/÷/g, " podeljeno sa ");
+    s = s.replace(/%/g, " posto ");
+    s = s.replace(/π/g, " pi ");
+    s = s.replace(/∞/g, " beskonačno ");
+    s = s.replace(/°/g, " stepeni ");
+    s = s.replace(/[()]/g, " ");
+    // razlomak a/b
+    s = s.replace(/([0-9A-Za-z])\s*\/\s*([0-9A-Za-z])/g, "$1 kroz $2");
+    // plus / minus
+    s = s.replace(/\+/g, " plus ");
+    s = s.replace(/−/g, " minus ");
+    s = s.replace(/(\d|\s)\s*-\s*(\d|[A-Za-z])/g, "$1 minus $2");
+    // implicitno množenje: 2x -> 2 iks, 4ac -> 4 ac
+    s = s.replace(/(\d)(?=[A-Za-zπ])/g, "$1 ");
+    // promenljive bez srpskog ekvivalenta -> uvek matematika
+    s = s.replace(/[xX]/g, " iks ");
+    s = s.replace(/[yY]/g, " ipsilon ");
+    return s.replace(/\s{2,}/g, " ").trim();
+  }
   function clean(text) {
-    return String(text)
-      .replace(/\*\*|__|[#`]/g, " ")
-      .replace(/\^2(?![0-9])/g, "²")
-      .replace(/\^3(?![0-9])/g, "³")
-      .replace(/\^/g, " ")
-      .replace(/[*_]/g, " ")
-      .replace(/\s{2,}/g, " ")
-      .trim();
+    var s = stripMd(text);
+    if (LANG === "sr" || LANG === "bs" || LANG === "hr") return mathSr(s);
+    return s.replace(/\^2(?![0-9])/g, "²").replace(/\^3(?![0-9])/g, "³")
+            .replace(/\^/g, " ").replace(/\s{2,}/g, " ").trim();
   }
 
   // ——— glas (TTS) ———
   var synth = window.speechSynthesis || null;
   var voices = [];
   var curBtn = null;
+  var curAudio = null;
   function loadVoices() { try { voices = (synth && synth.getVoices()) || []; } catch (e) {} }
   loadVoices();
   if (synth && typeof synth.onvoiceschanged !== "undefined") synth.onvoiceschanged = loadVoices;
 
   // za srpski/bosanski/hrvatski koristi srodan glas ako tačnog nema
-  var VFALL = { sr: ["sr", "hr", "bs"], bs: ["bs", "hr", "sr"], hr: ["hr", "bs", "sr"],
-                sk: ["sk", "cs"], de: ["de"], el: ["el"], en: ["en"], hu: ["hu"], sq: ["sq"], ro: ["ro"] };
+  var VFALL = { sr: ["sr","hr"], hr: ["hr","sr"], sk: ["sk","cs"], de: ["de"], el: ["el"], en: ["en"], hu: ["hu"], ro: ["ro"], es: ["es"], fr: ["fr"] };
   function pickVoice(code) {
     if (!voices.length) loadVoices();
     var chain = VFALL[code] || [code];
@@ -308,11 +364,11 @@
   }
   function stopSpeak() {
     try { if (synth) synth.cancel(); } catch (e) {}
+    if (curAudio) { try { curAudio.pause(); } catch (e) {} curAudio = null; }
     if (curBtn) { curBtn.textContent = "🔊"; curBtn = null; }
   }
-  function speakNow(text, btn) {
-    if (!synth) return;
-    stopSpeak();
+  function deviceSpeak(text, btn) {            // rezerva: glas uređaja
+    if (!synth) { if (btn) btn.textContent = "🔊"; return; }
     loadVoices();
     var u = new SpeechSynthesisUtterance(clean(text));
     var v = pickVoice(LANG);
@@ -320,10 +376,28 @@
     u.rate = 0.98;
     if (btn) {
       curBtn = btn; btn.textContent = "⏹";
-      u.onend = function () { if (curBtn === btn) curBtn = null; btn.textContent = "🔊"; };
-      u.onerror = function () { if (curBtn === btn) curBtn = null; btn.textContent = "🔊"; };
+      u.onend = function () { if (curBtn === btn) curBtn = null; if (btn) btn.textContent = "🔊"; };
+      u.onerror = function () { if (curBtn === btn) curBtn = null; if (btn) btn.textContent = "🔊"; };
     }
     try { synth.speak(u); } catch (e) {}
+  }
+  function speakNow(text, btn) {
+    stopSpeak();
+    if (btn) { curBtn = btn; btn.textContent = "⏹"; }
+    var spoken = clean(text);
+    // 1) cloud glas (isti za sve uređaje); 2) ako zakaže -> glas uređaja
+    fetch(TTS, { method: "POST", headers: { "Content-Type": "application/json" },
+                 body: JSON.stringify({ text: spoken, lang: LANG }) })
+      .then(function (r) { if (!r.ok) throw 0; return r.blob(); })
+      .then(function (blob) {
+        if (!blob || blob.size < 256) throw 0;
+        var url = URL.createObjectURL(blob);
+        var a = new Audio(url); curAudio = a;
+        a.onended = function () { if (curBtn === btn) curBtn = null; if (btn) btn.textContent = "🔊"; try { URL.revokeObjectURL(url); } catch (e) {} };
+        a.onerror = function () { deviceSpeak(text, btn); };
+        a.play().catch(function () { deviceSpeak(text, btn); });
+      })
+      .catch(function () { deviceSpeak(text, btn); });
   }
   function speak(text) { if (voiceOn) speakNow(text); } // auto-čitanje kad je 🔊 (gore) uključen
 
