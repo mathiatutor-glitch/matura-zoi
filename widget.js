@@ -288,9 +288,15 @@
   // izgovor matematike na srpskom (i bs/hr) — simboli -> reči
   function mathSr(s) {
     s = " " + s + " ";
+    // grčka slova -> srpski izgovor (npr. „sin α" -> „sinus alfa"); π se rešava niže kao „pi"
+    s = s.replace(/[αΑ]/g, " alfa ").replace(/[βΒ]/g, " beta ").replace(/[γΓ]/g, " gama ")
+         .replace(/[δΔ]/g, " delta ").replace(/[εΕ]/g, " epsilon ").replace(/[θΘϑ]/g, " teta ")
+         .replace(/[λΛ]/g, " lambda ").replace(/[μµ]/g, " mi ").replace(/[ρ]/g, " ro ")
+         .replace(/[σςΣ]/g, " sigma ").replace(/[τ]/g, " tau ").replace(/[φΦϕ]/g, " fi ")
+         .replace(/[ψΨ]/g, " psi ").replace(/[ωΩ]/g, " omega ");
     // funkcije -> reči (sin samo kad ima argument, da ne pokvari reč „sin")
     s = s.replace(/\bcos\b/g, " kosinus ");
-    s = s.replace(/\bsin(?=\s*\(|\s+[A-Za-z0-9])/g, " sinus ");
+    s = s.replace(/\bsin(?=\s*[(²³^]|\s+[A-Za-z0-9])/g, " sinus ");
     s = s.replace(/\btg\b/g, " tangens ");
     s = s.replace(/\b(?:ctg|cot)\b/g, " kotangens ");
     s = s.replace(/\bln\b/g, " prirodni logaritam ");
