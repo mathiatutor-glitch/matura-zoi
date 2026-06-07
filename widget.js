@@ -17,6 +17,7 @@
   var LANG = (script && script.getAttribute("data-lang")) || "sr";
   var MODE = (script && script.getAttribute("data-mode")) || "matura"; // "matura" | "ftn"
   var NAME = (script && script.getAttribute("data-name")) || "Zoi"; // ime asistenta (npr. "Mila")
+  var VOICE = (script && script.getAttribute("data-voice")) || ""; // ElevenLabs Voice ID za srpski (prazno = podrazumevano)
   var AVATAR_OK = true;
   var TTS = (script && script.getAttribute("data-tts")) || API.replace(/\/api\/chat\/?$/, "/api/tts");
 
@@ -408,7 +409,7 @@
     if (!c) { deviceSpeak(text, btn); return; }
     // 1) Azure glas (isti za sve uređaje); 2) ako zakaže -> glas uređaja
     fetch(TTS, { method: "POST", headers: { "Content-Type": "application/json" },
-                 body: JSON.stringify({ text: spoken, lang: LANG }) })
+                 body: JSON.stringify({ text: spoken, lang: LANG, voice: VOICE }) })
       .then(function (r) { if (!r.ok) throw 0; return r.arrayBuffer(); })
       .then(function (buf) {
         if (!buf || buf.byteLength < 256) throw 0;
