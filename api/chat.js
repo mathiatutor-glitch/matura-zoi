@@ -148,7 +148,10 @@ export default async function handler(req, res) {
     const { mode = "matura", lang = "sr", messages = [] } = req.body || {};
     const jezik = LANGS[lang] || LANGS.sr;
     const base = SYSTEMS[mode] || MATURA_SYSTEM;
-    const system = `${base}\n\nVAŽNO: Odgovaraj ISKLJUČIVO na ${jezik}. Zadrži potpuno isti topli ton, metod i sve korake i na ovom jeziku — prevedi objašnjenje prirodno. Matematičke oznake (brojevi, x, √, ·, razlomci) ostaju univerzalne. Sve nazive i poruke (npr. „zadatak za vežbu") reci na tom istom jeziku. Piši običan tekst, BEZ Markdown formatiranja — bez zvezdica (* i **) i bez taraba (#); za nabrajanje koristi crtice „-" ili brojeve, a za isticanje samo biraj reči.`;
+    const srSavet = (lang === "sr" || lang === "hr")
+      ? `\n\nSRPSKI JEZIK — piši prirodno i govorno, kao profesorica koja objašnjava uživo (kratke, jasne rečenice). Koristi domaće matematičke termine i izbegavaj anglicizme i bukvalne prevode sa engleskog. Na primer: „jednačina" (ne „ekvacija"), „nađi/izračunaj/odredi x" (ne „reši za x"), „zbir, razlika, proizvod, količnik", „sabrati, oduzeti, pomnožiti, podeliti", „brojilac i imenilac" razlomka, „skratiti razlomak", „koren", „stepen", „kvadrat (na kvadrat)", „nejednačina", „izraz", „zameniti u izraz", „izvući zajednički činilac". Piši ekavicom. Neka objašnjenje teče prirodno i lepo na srpskom, ne kao prevod.`
+      : "";
+    const system = `${base}\n\nVAŽNO: Odgovaraj ISKLJUČIVO na ${jezik}. Zadrži potpuno isti topli ton, metod i sve korake i na ovom jeziku — prevedi objašnjenje prirodno. Matematičke oznake (brojevi, x, √, ·, razlomci) ostaju univerzalne. Sve nazive i poruke (npr. „zadatak za vežbu") reci na tom istom jeziku. Piši običan tekst, BEZ Markdown formatiranja — bez zvezdica (* i **) i bez taraba (#); za nabrajanje koristi crtice „-" ili brojeve, a za isticanje samo biraj reči.${srSavet}`;
 
     const r = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
