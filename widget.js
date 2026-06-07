@@ -335,7 +335,10 @@
   }
   function clean(text) {
     var s = stripMd(text);
-    if (LANG === "sr" || LANG === "bs" || LANG === "hr") return mathSr(s);
+    if (LANG === "sr" || LANG === "bs" || LANG === "hr") {
+      s = s.replace(/\bFTN\b/g, "Fakultet tehničkih nauka"); // da ne čita „ef-ti-en"
+      return mathSr(s);
+    }
     return s.replace(/\^2(?![0-9])/g, "²").replace(/\^3(?![0-9])/g, "³")
             .replace(/\^/g, " ").replace(/\s{2,}/g, " ").trim();
   }
