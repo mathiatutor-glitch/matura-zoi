@@ -253,8 +253,8 @@
       say.className = "zoi-say"; say.type = "button"; say.textContent = "🔊";
       say.title = "Pročitaj naglas / zaustavi";
       say.onclick = function () {
-        if (synth && synth.speaking && curBtn === say) { stopSpeak(); }
-        else { speakNow(text, say); }
+        if (curBtn === say) { stopSpeak(); }
+        else { primeAudio(); speakNow(text, say); }
       };
       row.appendChild(say);
     }
@@ -344,6 +344,15 @@
   var voices = [];
   var curBtn = null;
   var curAudio = null;
+  // jedan trajni audio element — Safari ga „otključa“ na klik pa kasnije sme da pusti Azure zvuk
+  var aud = (typeof Audio !== "undefined") ? new Audio() : null;
+  if (aud) { aud.preload = "auto"; try { aud.setAttribute("playsinline", ""); } catch (e) {} }
+  var audioReady = false;
+  var SILENT = "data:audio/wav;base64,UklGRgQCAABXQVZFZm10IBAAAAABAAEAQB8AAIA+AAACABAAZGF0YeABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+  function primeAudio() {            // MORA da se pozove unutar klika (sinhrono)
+    if (!aud || audioReady) return;
+    try { aud.src = SILENT; var p = aud.play(); if (p && p.then) p.then(function(){ audioReady = true; }).catch(function(){}); } catch (e) {}
+  }
   function loadVoices() { try { voices = (synth && synth.getVoices()) || []; } catch (e) {} }
   loadVoices();
   if (synth && typeof synth.onvoiceschanged !== "undefined") synth.onvoiceschanged = loadVoices;
@@ -364,7 +373,8 @@
   }
   function stopSpeak() {
     try { if (synth) synth.cancel(); } catch (e) {}
-    if (curAudio) { try { curAudio.pause(); } catch (e) {} curAudio = null; }
+    try { if (aud) aud.pause(); } catch (e) {}
+    curAudio = null;
     if (curBtn) { curBtn.textContent = "🔊"; curBtn = null; }
   }
   function deviceSpeak(text, btn) {            // rezerva: glas uređaja
@@ -383,19 +393,24 @@
   }
   function speakNow(text, btn) {
     stopSpeak();
+    primeAudio();                       // otključaj zvuk JOŠ unutar klika (Safari)
     if (btn) { curBtn = btn; btn.textContent = "⏹"; }
     var spoken = clean(text);
-    // 1) cloud glas (isti za sve uređaje); 2) ako zakaže -> glas uređaja
+    if (!aud) { deviceSpeak(text, btn); return; }
+    // 1) Azure glas (isti za sve uređaje); 2) ako zakaže -> glas uređaja
     fetch(TTS, { method: "POST", headers: { "Content-Type": "application/json" },
                  body: JSON.stringify({ text: spoken, lang: LANG }) })
       .then(function (r) { if (!r.ok) throw 0; return r.blob(); })
       .then(function (blob) {
         if (!blob || blob.size < 256) throw 0;
+        if (curBtn !== btn) return;       // korisnik je u međuvremenu zaustavio
         var url = URL.createObjectURL(blob);
-        var a = new Audio(url); curAudio = a;
-        a.onended = function () { if (curBtn === btn) curBtn = null; if (btn) btn.textContent = "🔊"; try { URL.revokeObjectURL(url); } catch (e) {} };
-        a.onerror = function () { deviceSpeak(text, btn); };
-        a.play().catch(function () { deviceSpeak(text, btn); });
+        curAudio = aud;
+        aud.onended = function () { if (curBtn === btn) curBtn = null; if (btn) btn.textContent = "🔊"; try { URL.revokeObjectURL(url); } catch (e) {} };
+        aud.onerror = function () { deviceSpeak(text, btn); };
+        aud.src = url;
+        var pr = aud.play();
+        if (pr && pr.catch) pr.catch(function () { deviceSpeak(text, btn); });
       })
       .catch(function () { deviceSpeak(text, btn); });
   }
