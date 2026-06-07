@@ -278,6 +278,13 @@
   function stripMd(s) {
     return String(s).replace(/\*\*|__|[#`]/g, " ").replace(/[*_]/g, " ");
   }
+  // izbaci emojije i sličice iz IZGOVORA (na ekranu ostaju) — da glas ne čita „nasmešeno lice"
+  function stripEmoji(s) {
+    s = String(s);
+    try { s = s.replace(/[\u{1F000}-\u{1FAFF}\u{1F1E6}-\u{1F1FF}]/gu, " "); } catch (e) {}
+    s = s.replace(/[\u2190-\u21FF\u2300-\u27BF\u2600-\u26FF\u2B00-\u2BFF\uFE0F\u200D\u20E3]/g, " ");
+    return s.replace(/\s{2,}/g, " ");
+  }
   // izgovor matematike na srpskom (i bs/hr) — simboli -> reči
   function mathSr(s) {
     s = " " + s + " ";
@@ -335,7 +342,7 @@
     return s.replace(/\s{2,}/g, " ").trim();
   }
   function clean(text) {
-    var s = stripMd(text);
+    var s = stripEmoji(stripMd(text));
     if (LANG === "sr" || LANG === "bs" || LANG === "hr") {
       s = s.replace(/\bFTN\b/g, "Fakultet tehničkih nauka"); // da ne čita „ef-ti-en"
       return mathSr(s);
