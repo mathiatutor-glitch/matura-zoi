@@ -15,6 +15,7 @@
     (script && script.getAttribute("data-avatar")) ||
     "https://i.postimg.cc/qBXWmBQf/Chat-GPT-Image-6-jun-2026-11-58-24.png";
   var LANG = (script && script.getAttribute("data-lang")) || "sr";
+  var MODE = (script && script.getAttribute("data-mode")) || "matura"; // "matura" | "ftn"
 
   // ——— prevodi UI-ja (AI ionako odgovara na izabranom jeziku) ———
   var T = {
@@ -26,9 +27,11 @@
     hr: { sub: "profesorica · mala matura", hi: "Bok! 😊 Ja sam Zoi, tvoja profesorica matematike za malu maturu. Napiši zadatak ili pošalji 📷 sliku — idemo korak po korak.", ph: "Napiši zadatak ili pitanje…", send: "Pošalji", chips: ["Napiši zadatak", "Pošalji sliku 📷", "Objasni pojam"], voice: "Glas", thinking: "Zoi razmišlja…" },
     ro: { sub: "profesoară · examen final", hi: "Bună! 😊 Sunt Zoi, profesoara ta de matematică. Scrie un exercițiu sau trimite o 📷 poză — mergem pas cu pas.", ph: "Scrie exercițiul sau întrebarea…", send: "Trimite", chips: ["Scrie un exercițiu", "Trimite o poză 📷", "Explică un concept"], voice: "Voce", thinking: "Zoi se gândește…" },
     sk: { sub: "učiteľka · malá matura", hi: "Ahoj! 😊 Som Zoi, tvoja učiteľka matematiky. Napíš úlohu alebo pošli 📷 fotku — pôjdeme krok za krokom.", ph: "Napíš úlohu alebo otázku…", send: "Poslať", chips: ["Napíš úlohu", "Pošli fotku 📷", "Vysvetli pojem"], voice: "Hlas", thinking: "Zoi premýšľa…" },
+    de: { sub: "Lehrerin · Abschlussprüfung (Kl. 8)", hi: "Hallo! 😊 Ich bin Zoi, deine Mathelehrerin für die Abschlussprüfung der 8. Klasse. Schreib eine Aufgabe oder schick ein 📷 Foto — wir gehen Schritt für Schritt vor.", ph: "Schreib eine Aufgabe oder Frage…", send: "Senden", chips: ["Aufgabe schreiben", "Foto senden 📷", "Begriff erklären"], voice: "Stimme", thinking: "Zoi denkt nach…" },
+    el: { sub: "καθηγήτρια · τελικές εξετάσεις", hi: "Γεια! 😊 Είμαι η Zoi, η καθηγήτριά σου στα μαθηματικά για τις τελικές εξετάσεις. Γράψε μια άσκηση ή στείλε μια 📷 φωτογραφία — θα πάμε βήμα βήμα.", ph: "Γράψε την άσκηση ή την ερώτηση…", send: "Αποστολή", chips: ["Γράψε άσκηση", "Στείλε φωτογραφία 📷", "Εξήγησε μια έννοια"], voice: "Φωνή", thinking: "Η Zoi σκέφτεται…" },
   };
-  var SPEAK = { sr: "sr-RS", en: "en-US", hu: "hu-HU", bs: "bs-BA", sq: "sq-AL", hr: "hr-HR", ro: "ro-RO", sk: "sk-SK" };
-  var ORDER = ["sr", "en", "hu", "bs", "sq", "hr", "ro", "sk"];
+  var SPEAK = { sr: "sr-RS", en: "en-US", hu: "hu-HU", bs: "bs-BA", sq: "sq-AL", hr: "hr-HR", ro: "ro-RO", sk: "sk-SK", de: "de-DE", el: "el-GR" };
+  var ORDER = ["sr", "en", "hu", "bs", "sq", "hr", "ro", "sk", "de", "el"];
   function t() { return T[LANG] || T.sr; }
 
   // dopune: 4. čip (zadatak za vežbu), prefiks za „objasni pojam", poruka za vežbu — po jeziku
@@ -41,10 +44,28 @@
     hr: { c: "Zadatak za vježbu 🎯", cp: "Objasni mi pojam: ", pr: "Daj mi jedan zadatak za vježbu na razini male mature." },
     ro: { c: "Exercițiu de practică 🎯", cp: "Explică-mi un concept: ", pr: "Dă-mi un exercițiu de practică la nivelul examenului final." },
     sk: { c: "Cvičná úloha 🎯", cp: "Vysvetli mi pojem: ", pr: "Daj mi jednu cvičnú úlohu na úrovni malej matury." },
+    de: { c: "Übungsaufgabe 🎯", cp: "Erkläre mir einen Begriff: ", pr: "Gib mir eine Übungsaufgabe auf dem Niveau der Abschlussprüfung der 8. Klasse." },
+    el: { c: "Άσκηση εξάσκησης 🎯", cp: "Εξήγησέ μου μια έννοια: ", pr: "Δώσε μου μια άσκηση εξάσκησης στο επίπεδο των τελικών εξετάσεων." },
   };
   Object.keys(EXTRA).forEach(function (k) {
     if (T[k]) { T[k].chips = T[k].chips.concat([EXTRA[k].c]); T[k].cp = EXTRA[k].cp; T[k].pr = EXTRA[k].pr; }
   });
+
+  // ——— FTN mod: drugačiji pozdrav/podnaslov (UI ostaje isti, „mozak" bira server) ———
+  var FTN = {
+    sr: { sub: "profesorica · prijemni FTN", hi: "Ćao! 😊 Ja sam Zoi, tvoja profesorica za prijemni iz matematike (FTN). Napiši zadatak ili pošalji 📷 sliku — idemo korak po korak." },
+    en: { sub: "teacher · FTN entrance exam", hi: "Hi! 😊 I'm Zoi, your math teacher for the FTN entrance exam. Type a problem or send a 📷 photo — we'll go step by step." },
+    hu: { sub: "tanárnő · FTN felvételi", hi: "Szia! 😊 Zoi vagyok, a matek tanárnőd az FTN felvételire. Írj egy feladatot vagy küldj 📷 képet — lépésről lépésre haladunk." },
+    bs: { sub: "profesorica · prijemni FTN", hi: "Ćao! 😊 Ja sam Zoi, tvoja profesorica za prijemni iz matematike (FTN). Napiši zadatak ili pošalji 📷 sliku — idemo korak po korak." },
+    sq: { sub: "mësuese · pranimi FTN", hi: "Përshëndetje! 😊 Jam Zoi, mësuesja jote e matematikës për provimin pranues të FTN-së. Shkruaj një ushtrim ose dërgo një 📷 foto — shkojmë hap pas hapi." },
+    hr: { sub: "profesorica · prijemni FTN", hi: "Bok! 😊 Ja sam Zoi, tvoja profesorica za prijemni iz matematike (FTN). Napiši zadatak ili pošalji 📷 sliku — idemo korak po korak." },
+    ro: { sub: "profesoară · admitere FTN", hi: "Bună! 😊 Sunt Zoi, profesoara ta de matematică pentru admiterea la FTN. Scrie un exercițiu sau trimite o 📷 poză — mergem pas cu pas." },
+    sk: { sub: "učiteľka · prijímačky FTN", hi: "Ahoj! 😊 Som Zoi, tvoja učiteľka matematiky na prijímačky na FTN. Napíš úlohu alebo pošli 📷 fotku — pôjdeme krok za krokom." },
+    de: { sub: "Lehrerin · FTN-Aufnahmeprüfung", hi: "Hallo! 😊 Ich bin Zoi, deine Mathelehrerin für die FTN-Aufnahmeprüfung. Schreib eine Aufgabe oder schick ein 📷 Foto — wir gehen Schritt für Schritt vor." },
+    el: { sub: "καθηγήτρια · εισαγωγικές FTN", hi: "Γεια! 😊 Είμαι η Zoi, η καθηγήτριά σου στα μαθηματικά για τις εισαγωγικές εξετάσεις του FTN. Γράψε μια άσκηση ή στείλε μια 📷 φωτογραφία — θα πάμε βήμα βήμα." },
+  };
+  function modeSub(x) { return (MODE === "ftn" && FTN[LANG]) ? FTN[LANG].sub : x.sub; }
+  function modeHi(x) { return (MODE === "ftn" && FTN[LANG]) ? FTN[LANG].hi : x.hi; }
 
   // ——— stilovi (sve scope-ovano sa zoi- prefiksom) ———
   var css =
@@ -137,7 +158,7 @@
   // ——— jezik / tekstovi ———
   function applyLang() {
     var x = t();
-    subEl.textContent = x.sub;
+    subEl.textContent = modeSub(x);
     taEl.placeholder = x.ph;
     goEl.textContent = x.send;
     chipsEl.innerHTML = "";
@@ -157,7 +178,20 @@
 
   function greet() {
     msgsEl.innerHTML = "";
-    addBub("zoi", t().hi);
+    addBub("zoi", modeHi(t()));
+  }
+
+  // ——— čišćenje Markdown-a (da se ne vide gole zvezdice/taraba) ———
+  function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+  function fmt(s) {
+    s = esc(s);
+    s = s.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>"); // **podebljano**
+    s = s.replace(/__([^_]+)__/g, "<strong>$1</strong>");     // __podebljano__
+    s = s.replace(/^[ \t]*#{1,6}\s*/gm, "");                  // ### naslovi -> bez taraba
+    s = s.replace(/^[ \t]*[\*\-\+]\s+/gm, "• ");              // „* "/„- " na početku reda -> tačkica
+    s = s.replace(/\*([^*\n]+)\*/g, "$1");                    // *kurziv* -> tekst
+    s = s.replace(/\*/g, "");                                  // sve preostale zvezdice
+    return s;
   }
 
   // ——— mehurići ———
@@ -169,7 +203,10 @@
     html += '<div class="zoi-bub"></div>';
     row.innerHTML = html;
     var bub = row.querySelector(".zoi-bub");
-    if (text) bub.appendChild(document.createTextNode(text));
+    if (text) {
+      if (who === "zoi") { bub.innerHTML = fmt(text); }
+      else { bub.appendChild(document.createTextNode(text)); }
+    }
     if (imgUrl) { var im = document.createElement("img"); im.src = imgUrl; bub.appendChild(im); }
     msgsEl.appendChild(row);
     msgsEl.scrollTop = msgsEl.scrollHeight;
@@ -189,7 +226,7 @@
     if (!voiceOn || !window.speechSynthesis) return;
     try {
       window.speechSynthesis.cancel();
-      var u = new SpeechSynthesisUtterance(text);
+      var u = new SpeechSynthesisUtterance(String(text).replace(/[*_#`]/g, " "));
       u.lang = SPEAK[LANG] || "sr-RS";
       u.rate = 0.98;
       window.speechSynthesis.speak(u);
@@ -219,7 +256,7 @@
     fetch(API, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ lang: LANG, messages: history }),
+      body: JSON.stringify({ mode: MODE, lang: LANG, messages: history }),
     })
       .then(function (r) { return r.json(); })
       .then(function (data) {
