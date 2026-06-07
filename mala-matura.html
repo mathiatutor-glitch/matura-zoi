@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Priprema za malu maturu — matematika | MathIA</title>
+<meta name="description" content="Pripremi se za malu maturu iz matematike uz Zoi — AI profesoricu koja resava korak po korak, na 8 jezika, sa slikom zadatka i glasom." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{ --ink:#27302d; --teal:#1F8A78; --teal2:#2FB7A0; --cream:#FBF5EA; --card:#FFFDF8; --line:#ECE0CC; --muted:#56635e; }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:'Nunito',system-ui,sans-serif;color:var(--ink);
+       background:radial-gradient(1000px 560px at 82% -8%, #E7F7F2 0%, transparent 60%), var(--cream);}
+  .top{max-width:980px;margin:0 auto;padding:22px;display:flex;align-items:center;gap:12px}
+  .brand{font-family:'Baloo 2',cursive;font-weight:800;font-size:20px;color:var(--teal)}
+  .top .sp{flex:1}
+  .plang{background:#fff;border:1px solid #C8E9E0;border-radius:10px;font-family:inherit;font-weight:700;font-size:14px;color:var(--teal);padding:8px 10px;cursor:pointer}
+  .back{font-weight:700;font-size:14px;color:var(--teal);text-decoration:none;border:1px solid #C8E9E0;background:#fff;border-radius:10px;padding:8px 13px}
+  .back:hover{background:#F0FAF7}
+
+  .wrap{max-width:980px;margin:0 auto;padding:16px 22px 130px}
+  .hero{padding:34px 0 8px}
+  .badge{display:inline-block;background:#E7F7F2;color:var(--teal);border:1px solid #C8E9E0;border-radius:999px;padding:6px 14px;font-weight:700;font-size:13px}
+  h1{font-family:'Baloo 2',cursive;font-weight:800;font-size:clamp(34px,6vw,54px);line-height:1.06;margin:18px 0 12px}
+  h1 .hl{color:var(--teal)}
+  .lead{font-size:18px;line-height:1.65;color:var(--muted);max-width:640px}
+  .cta{margin-top:24px;display:inline-flex;align-items:center;gap:10px;background:var(--teal);color:#fff;font-weight:800;font-family:'Baloo 2',cursive;font-size:17px;border:none;border-radius:14px;padding:13px 20px;cursor:pointer;box-shadow:0 10px 26px rgba(20,80,70,.22)}
+  .cta:hover{background:#176f60}
+
+  h2{font-family:'Baloo 2',cursive;font-weight:700;font-size:24px;margin:46px 0 16px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px}
+  .card h3{font-family:'Baloo 2',cursive;margin:0 0 8px;font-size:19px}
+  .card p{margin:0;color:var(--muted);font-size:14.5px;line-height:1.55}
+
+  .areas{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
+  .area{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 14px}
+  .area .at{display:block;font-weight:700;font-size:14px}
+  .area .as{display:block;font-weight:600;font-size:12px;color:var(--muted);margin-top:2px}
+
+  .levels{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
+  .lvl{flex:1;min-width:200px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px}
+  .lvl b{font-family:'Baloo 2',cursive;font-size:17px}
+  .lvl.o b{color:#2FB7A0}.lvl.s b{color:#1F8A78}.lvl.n b{color:#C77B3A}
+  .lvl p{margin:6px 0 0;color:var(--muted);font-size:14px;line-height:1.5}
+
+  .steps{counter-reset:s;display:grid;gap:12px;margin-top:4px}
+  .step{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+  .step::before{counter-increment:s;content:counter(s);flex:none;width:30px;height:30px;border-radius:50%;background:var(--teal);color:#fff;font-family:'Baloo 2',cursive;font-weight:700;display:grid;place-items:center}
+  .step p{margin:0;font-size:15px;line-height:1.5}
+
+  .langbar{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+  .lang{background:#fff;border:1px solid var(--line);border-radius:10px;padding:6px 11px;font-size:13px;font-weight:700;color:#3a4a45}
+
+  .arrow{position:fixed;right:96px;bottom:34px;font-family:'Baloo 2',cursive;font-weight:700;color:var(--teal);background:#fff;border:1px solid #C8E9E0;border-radius:12px;padding:8px 12px;box-shadow:0 8px 20px rgba(20,80,70,.18);z-index:1000}
+  @media(max-width:560px){.arrow{display:none}}
+
+  footer{max-width:980px;margin:0 auto;padding:24px 22px 60px;color:var(--muted);font-size:13.5px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+  <div class="top">
+    <span class="brand">MathIA</span>
+    <span class="sp"></span>
+    <select class="plang" id="plang" title="Jezik / Language">
+      <option value="sr">Srpski</option>
+      <option value="en">English</option>
+      <option value="hu">Magyar</option>
+      <option value="hr">Hrvatski</option>
+      <option value="ro">Romana</option>
+      <option value="sk">Slovencina</option>
+      <option value="de">Deutsch</option>
+      <option value="el">Ελληνικά</option>
+      <option value="es">Español</option>
+      <option value="fr">Français</option>
+    </select>
+    <a class="back" id="back" href="index.html"></a>
+  </div>
+
+  <div class="wrap">
+    <section class="hero">
+      <span class="badge" id="badge"></span>
+      <h1 id="h1"></h1>
+      <p class="lead" id="lead"></p>
+      <button class="cta" id="cta" type="button"></button>
+    </section>
+
+    <h2 id="h2a"></h2>
+    <div class="grid">
+      <div class="card"><h3 id="c1t"></h3><p id="c1p"></p></div>
+      <div class="card"><h3 id="c2t"></h3><p id="c2p"></p></div>
+      <div class="card"><h3 id="c3t"></h3><p id="c3p"></p></div>
+      <div class="card"><h3 id="c4t"></h3><p id="c4p"></p></div>
+    </div>
+
+    <h2 id="h2b"></h2>
+    <div class="areas">
+      <div class="area"><span class="at" id="a1t"></span><span class="as" id="a1s"></span></div>
+      <div class="area"><span class="at" id="a2t"></span><span class="as" id="a2s"></span></div>
+      <div class="area"><span class="at" id="a3t"></span><span class="as" id="a3s"></span></div>
+      <div class="area"><span class="at" id="a4t"></span><span class="as" id="a4s"></span></div>
+      <div class="area"><span class="at" id="a5t"></span><span class="as" id="a5s"></span></div>
+    </div>
+
+    <h2 id="h2c"></h2>
+    <div class="levels">
+      <div class="lvl o"><b id="l1n"></b><p id="l1p"></p></div>
+      <div class="lvl s"><b id="l2n"></b><p id="l2p"></p></div>
+      <div class="lvl n"><b id="l3n"></b><p id="l3p"></p></div>
+    </div>
+
+    <h2 id="h2d"></h2>
+    <div class="steps">
+      <div class="step"><p id="s1"></p></div>
+      <div class="step"><p id="s2"></p></div>
+      <div class="step"><p id="s3"></p></div>
+    </div>
+
+    <h2 id="h2e"></h2>
+    <p class="lead" id="leade" style="font-size:16px"></p>
+    <div class="langbar">
+      <span class="lang">Srpski</span><span class="lang">English</span><span class="lang">Magyar</span>
+      <span class="lang">Bosanski</span><span class="lang">Shqip</span><span class="lang">Hrvatski</span>
+      <span class="lang">Romana</span><span class="lang">Slovencina</span>
+    </div>
+  </div>
+
+  <div class="arrow" id="arrow"></div>
+
+  <footer><span id="yr"></span> <span id="foot"></span></footer>
+
+  <script>
+  var I18N = {
+    sr: {
+      back:"\u2190 Po\u010detna", badge:"Zavr\u0161ni ispit \u00b7 8. razred",
+      h1:"Priprema za <span class='hl'>malu maturu</span> iz matematike.",
+      lead:"Uz <b>Zoi</b> \u2014 toplu AI profesoricu koja zadatak re\u0161ava polako i pregledno, postavlja ti potpitanja i na kraju ti da sli\u010dan zadatak za ve\u017ebu. Mo\u017ee\u0161 da kuca\u0161 zadatak ili da po\u0161alje\u0161 sliku iz zbirke \u2014 i sve to na <b>10 jezika</b>.",
+      cta:"Po\u010dni sa Zoi \u2192", h2a:"\u0160ta dobija\u0161",
+      c1t:"\ud83d\udcf7 Slika ili tekst", c1p:"Slika\u0161 zadatak iz zbirke ili ga otkuca\u0161 \u2014 Zoi ga pro\u010dita i kre\u0107e da obja\u0161njava.",
+      c2t:"\ud83e\ude9c Korak po korak", c2p:"Prepi\u0161i uredno, skrati, re\u0161i \u201ekao slikovnicu\u201c. Bez preskakanja, bez zbrke.",
+      c3t:"\ud83c\udfaf Zadatak za ve\u017ebu", c3p:"Na kraju svakog re\u0161enja dobije\u0161 nov, sli\u010dan zadatak istog nivoa za samostalnu ve\u017ebu.",
+      c4t:"\ud83d\udd0a Glas", c4p:"Uklju\u010di zvu\u010dnik pa Zoi pro\u010dita obja\u0161njenje naglas dok prati\u0161.",
+      h2b:"Pet oblasti zavr\u0161nog ispita",
+      a1t:"Brojevi i operacije", a1s:"razlomci, decimale, procenti, koreni",
+      a2t:"Algebra i funkcije", a2s:"izrazi, jedna\u010dine, sistemi, grafici",
+      a3t:"Geometrija", a3s:"trougao, krug, Pitagora, sli\u010dnost",
+      a4t:"Merenje", a4s:"obim, povr\u0161ina, zapremina tela",
+      a5t:"Obrada podataka", a5s:"tabele, dijagrami, prosek, verovatno\u0107a",
+      h2c:"Tri nivoa \u2014 Zoi ti ka\u017ee koji je",
+      l1n:"Osnovni", l1p:"Prepoznavanje i jednostavna primena.",
+      l2n:"Srednji", l2p:"Vi\u0161e koraka i primena u zadacima iz \u017eivota.",
+      l3n:"Napredni", l3p:"Slo\u017eeniji zadaci \u201eprika\u017ei postupak\u201c.",
+      h2d:"Kako da krene\u0161",
+      s1:"Klikni <b>Zoi</b> dugme dole desno.",
+      s2:"Izaberi jezik u vrhu prozora i napi\u0161i <b>\u201eZdravo\u201c</b> ili odmah svoj zadatak.",
+      s3:"Po\u0161alji \ud83d\udcf7 sliku zadatka iz zbirke ili ga otkucaj \u2014 pa idete korak po korak.",
+      h2e:"Na tvom jeziku", leade:"Isti metod, tvoj jezik \u2014 Zoi se prebacuje prekida\u010dem u vrhu prozora:",
+      arrow:"Zoi je tu \u2192", foot:"MathIA \u00b7 mathia.rs \u00b7 Priprema za malu maturu (matematika) \u00b7 online i u\u017eivo"
+    },
+    en: {
+      back:"\u2190 Home", badge:"Final exam \u00b7 Grade 8",
+      h1:"Prep for the <span class='hl'>final exam</span> in mathematics.",
+      lead:"With <b>Zoi</b> \u2014 a warm AI teacher who solves problems slowly and clearly, asks you guiding questions, and ends with a similar practice problem. Type a problem or send a photo from your workbook \u2014 all in <b>10 languages</b>.",
+      cta:"Start with Zoi \u2192", h2a:"What you get",
+      c1t:"\ud83d\udcf7 Photo or text", c1p:"Snap a problem from the workbook or type it \u2014 Zoi reads it and starts explaining.",
+      c2t:"\ud83e\ude9c Step by step", c2p:"Copy it neatly, simplify, solve it \u201clike a picture book\u201d. No skipping, no mess.",
+      c3t:"\ud83c\udfaf Practice problem", c3p:"After every solution you get a new, similar problem at the same level to practice on your own.",
+      c4t:"\ud83d\udd0a Voice", c4p:"Turn on the speaker and Zoi reads the explanation aloud as you follow.",
+      h2b:"Five areas of the final exam",
+      a1t:"Numbers and operations", a1s:"fractions, decimals, percentages, roots",
+      a2t:"Algebra and functions", a2s:"expressions, equations, systems, graphs",
+      a3t:"Geometry", a3s:"triangle, circle, Pythagoras, similarity",
+      a4t:"Measurement", a4s:"perimeter, area, volume of solids",
+      a5t:"Data handling", a5s:"tables, charts, average, probability",
+      h2c:"Three levels \u2014 Zoi tells you which",
+      l1n:"Basic", l1p:"Recognition and simple application.",
+      l2n:"Intermediate", l2p:"Several steps and real-life application.",
+      l3n:"Advanced", l3p:"More complex \u201cshow your work\u201d problems.",
+      h2d:"How to start",
+      s1:"Click the <b>Zoi</b> button at the bottom right.",
+      s2:"Pick a language at the top of the window and type <b>\u201cHello\u201d</b> or your problem right away.",
+      s3:"Send a \ud83d\udcf7 photo of a problem from the workbook or type it \u2014 then you go step by step.",
+      h2e:"In your language", leade:"Same method, your language \u2014 Zoi switches with the toggle at the top of the window:",
+      arrow:"Zoi is here \u2192", foot:"MathIA \u00b7 mathia.rs \u00b7 Final-exam prep (mathematics) \u00b7 online and in person"
+    },
+    hu: {
+      back:"\u2190 F\u0151oldal", badge:"Z\u00e1r\u00f3vizsga \u00b7 8. oszt\u00e1ly",
+      h1:"Felk\u00e9sz\u00fcl\u00e9s a <span class='hl'>kis\u00e9retts\u00e9gire</span> matematik\u00e1b\u00f3l.",
+      lead:"A <b>Zoi</b>-val \u2014 a kedves AI-tan\u00e1rn\u0151vel, aki lassan \u00e9s \u00e9rthet\u0151en oldja meg a feladatokat, r\u00e1vezet\u0151 k\u00e9rd\u00e9seket tesz fel, a v\u00e9g\u00e9n pedig ad egy hasonl\u00f3 gyakorl\u00f3 feladatot. \u00cdrd be a feladatot, vagy k\u00fcldj k\u00e9pet a gy\u0171jtem\u00e9nyb\u0151l \u2014 mindezt <b>10 nyelven</b>.",
+      cta:"Kezdj a Zoival \u2192", h2a:"Mit kapsz",
+      c1t:"\ud83d\udcf7 K\u00e9p vagy sz\u00f6veg", c1p:"Fot\u00f3zd le a feladatot a gy\u0171jtem\u00e9nyb\u0151l, vagy \u00edrd be \u2014 Zoi elolvassa \u00e9s magyar\u00e1zni kezd.",
+      c2t:"\ud83e\ude9c L\u00e9p\u00e9sr\u0151l l\u00e9p\u00e9sre", c2p:"M\u00e1sold le rendesen, egyszer\u0171s\u00edtsd, oldd meg \u201emint egy k\u00e9pesk\u00f6nyvet\u201d. Kihagy\u00e1s \u00e9s z\u0171rzavar n\u00e9lk\u00fcl.",
+      c3t:"\ud83c\udfaf Gyakorl\u00f3 feladat", c3p:"Minden megold\u00e1s ut\u00e1n kapsz egy \u00faj, hasonl\u00f3, azonos szint\u0171 feladatot \u00f6n\u00e1ll\u00f3 gyakorl\u00e1sra.",
+      c4t:"\ud83d\udd0a Hang", c4p:"Kapcsold be a hangsz\u00f3r\u00f3t, \u00e9s Zoi felolvassa a magyar\u00e1zatot, mik\u00f6zben k\u00f6veted.",
+      h2b:"A z\u00e1r\u00f3vizsga \u00f6t ter\u00fclete",
+      a1t:"Sz\u00e1mok \u00e9s m\u0171veletek", a1s:"t\u00f6rtek, tizedesek, sz\u00e1zal\u00e9kok, gy\u00f6k\u00f6k",
+      a2t:"Algebra \u00e9s f\u00fcggv\u00e9nyek", a2s:"kifejez\u00e9sek, egyenletek, rendszerek, grafikonok",
+      a3t:"Geometria", a3s:"h\u00e1romsz\u00f6g, k\u00f6r, Pitagorasz, hasonl\u00f3s\u00e1g",
+      a4t:"M\u00e9r\u00e9s", a4s:"ker\u00fclet, ter\u00fclet, testek t\u00e9rfogata",
+      a5t:"Adatkezel\u00e9s", a5s:"t\u00e1bl\u00e1zatok, diagramok, \u00e1tlag, val\u00f3sz\u00edn\u0171s\u00e9g",
+      h2c:"H\u00e1rom szint \u2014 Zoi megmondja, melyik",
+      l1n:"Alap", l1p:"Felismer\u00e9s \u00e9s egyszer\u0171 alkalmaz\u00e1s.",
+      l2n:"K\u00f6z\u00e9p", l2p:"T\u00f6bb l\u00e9p\u00e9s \u00e9s val\u00f3s \u00e9lethelyzetekben val\u00f3 alkalmaz\u00e1s.",
+      l3n:"Halad\u00f3", l3p:"\u00d6sszetettebb \u201emutasd a megold\u00e1s menet\u00e9t\u201d feladatok.",
+      h2d:"Hogyan kezdj hozz\u00e1",
+      s1:"Kattints a <b>Zoi</b> gombra jobbra lent.",
+      s2:"V\u00e1lassz nyelvet az ablak tetej\u00e9n, \u00e9s \u00edrd be, hogy <b>\u201eSzia\u201d</b>, vagy r\u00f6gt\u00f6n a feladatot.",
+      s3:"K\u00fcldj \ud83d\udcf7 k\u00e9pet a feladatr\u00f3l a gy\u0171jtem\u00e9nyb\u0151l, vagy \u00edrd be \u2014 azt\u00e1n l\u00e9p\u00e9sr\u0151l l\u00e9p\u00e9sre haladtok.",
+      h2e:"A te nyelveden", leade:"Ugyanaz a m\u00f3dszer, a te nyelveden \u2014 Zoi az ablak tetej\u00e9n l\u00e9v\u0151 kapcsol\u00f3val v\u00e1lt:",
+      arrow:"Zoi itt van \u2192", foot:"MathIA \u00b7 mathia.rs \u00b7 Felk\u00e9sz\u00fcl\u00e9s a kis\u00e9retts\u00e9gire (matematika) \u00b7 online \u00e9s szem\u00e9lyesen"
+    },
+    hr: {
+      back:"\u2190 Po\u010detna", badge:"Zavr\u0161ni ispit \u00b7 8. razred",
+      h1:"Priprema za <span class='hl'>malu maturu</span> iz matematike.",
+      lead:"Uz <b>Zoi</b> \u2014 toplu AI profesoricu koja zadatak rje\u0161ava polako i pregledno, postavlja ti potpitanja i na kraju ti da sli\u010dan zadatak za vje\u017ebu. Mo\u017ee\u0161 upisati zadatak ili poslati sliku iz zbirke \u2014 i sve to na <b>10 jezika</b>.",
+      cta:"Po\u010dni sa Zoi \u2192", h2a:"\u0160to dobiva\u0161",
+      c1t:"\ud83d\udcf7 Slika ili tekst", c1p:"Slika\u0161 zadatak iz zbirke ili ga upi\u0161e\u0161 \u2014 Zoi ga pro\u010dita i po\u010dne obja\u0161njavati.",
+      c2t:"\ud83e\ude9c Korak po korak", c2p:"Prepi\u0161i uredno, skrati, rije\u0161i \u201ekao slikovnicu\u201c. Bez preskakanja, bez zbrke.",
+      c3t:"\ud83c\udfaf Zadatak za vje\u017ebu", c3p:"Na kraju svakog rje\u0161enja dobije\u0161 nov, sli\u010dan zadatak iste razine za samostalnu vje\u017ebu.",
+      c4t:"\ud83d\udd0a Glas", c4p:"Uklju\u010di zvu\u010dnik pa Zoi pro\u010dita obja\u0161njenje naglas dok prati\u0161.",
+      h2b:"Pet podru\u010dja zavr\u0161nog ispita",
+      a1t:"Brojevi i operacije", a1s:"razlomci, decimale, postoci, korijeni",
+      a2t:"Algebra i funkcije", a2s:"izrazi, jednad\u017ebe, sustavi, grafovi",
+      a3t:"Geometrija", a3s:"trokut, kru\u017enica, Pitagora, sli\u010dnost",
+      a4t:"Mjerenje", a4s:"opseg, povr\u0161ina, obujam tijela",
+      a5t:"Obrada podataka", a5s:"tablice, dijagrami, prosjek, vjerojatnost",
+      h2c:"Tri razine \u2014 Zoi ti ka\u017ee koja je",
+      l1n:"Osnovna", l1p:"Prepoznavanje i jednostavna primjena.",
+      l2n:"Srednja", l2p:"Vi\u0161e koraka i primjena u \u017eivotnim zadacima.",
+      l3n:"Napredna", l3p:"Slo\u017eeniji zadaci \u201eprika\u017ei postupak\u201c.",
+      h2d:"Kako zapo\u010deti",
+      s1:"Klikni <b>Zoi</b> gumb dolje desno.",
+      s2:"Odaberi jezik na vrhu prozora i upi\u0161i <b>\u201eBok\u201c</b> ili odmah svoj zadatak.",
+      s3:"Po\u0161alji \ud83d\udcf7 sliku zadatka iz zbirke ili ga upi\u0161i \u2014 pa idete korak po korak.",
+      h2e:"Na tvom jeziku", leade:"Ista metoda, tvoj jezik \u2014 Zoi se prebacuje preklopnikom na vrhu prozora:",
+      arrow:"Zoi je tu \u2192", foot:"MathIA \u00b7 mathia.rs \u00b7 Priprema za malu maturu (matematika) \u00b7 online i u\u017eivo"
+    },
+    ro: {
+      back:"\u2190 Acas\u0103", badge:"Examen final \u00b7 Clasa a 8-a",
+      h1:"Preg\u0103tire pentru <span class='hl'>examenul final</span> la matematic\u0103.",
+      lead:"Cu <b>Zoi</b> \u2014 o profesoar\u0103 AI cald\u0103 care rezolv\u0103 problemele \u00eencet \u015fi clar, \u00ee\u0163i pune \u00eentreb\u0103ri de ghidare \u015fi la final \u00ee\u0163i d\u0103 o problem\u0103 similar\u0103 pentru exerci\u0163iu. Scrie problema sau trimite o poz\u0103 din culegere \u2014 totul \u00een <b>10 limbi</b>.",
+      cta:"\u00cencepe cu Zoi \u2192", h2a:"Ce prime\u015fti",
+      c1t:"\ud83d\udcf7 Poz\u0103 sau text", c1p:"Fotografiezi problema din culegere sau o scrii \u2014 Zoi o cite\u015fte \u015fi \u00eencepe s\u0103 explice.",
+      c2t:"\ud83e\ude9c Pas cu pas", c2p:"Copiaz-o ordonat, simplific\u0103, rezolv-o \u201eca o carte cu poze\u201d. F\u0103r\u0103 salturi, f\u0103r\u0103 dezordine.",
+      c3t:"\ud83c\udfaf Problem\u0103 de exerci\u0163iu", c3p:"Dup\u0103 fiecare rezolvare prime\u015fti o problem\u0103 nou\u0103, similar\u0103, de acela\u015fi nivel, pentru exerci\u0163iu individual.",
+      c4t:"\ud83d\udd0a Voce", c4p:"Porne\u015fte difuzorul \u015fi Zoi cite\u015fte explica\u0163ia cu voce tare \u00een timp ce urm\u0103re\u015fti.",
+      h2b:"Cinci domenii ale examenului",
+      a1t:"Numere \u015fi opera\u0163ii", a1s:"frac\u0163ii, zecimale, procente, radicali",
+      a2t:"Algebr\u0103 \u015fi func\u0163ii", a2s:"expresii, ecua\u0163ii, sisteme, grafice",
+      a3t:"Geometrie", a3s:"triunghi, cerc, Pitagora, asem\u0103nare",
+      a4t:"M\u0103surare", a4s:"perimetru, arie, volumul corpurilor",
+      a5t:"Prelucrarea datelor", a5s:"tabele, diagrame, media, probabilitatea",
+      h2c:"Trei niveluri \u2014 Zoi \u00ee\u0163i spune care",
+      l1n:"De baz\u0103", l1p:"Recunoa\u015ftere \u015fi aplicare simpl\u0103.",
+      l2n:"Mediu", l2p:"Mai mul\u0163i pa\u015fi \u015fi aplicare \u00een situa\u0163ii reale.",
+      l3n:"Avansat", l3p:"Probleme mai complexe \u201earat\u0103 rezolvarea\u201d.",
+      h2d:"Cum s\u0103 \u00eencepi",
+      s1:"Apas\u0103 butonul <b>Zoi</b> din dreapta jos.",
+      s2:"Alege limba \u00een partea de sus a ferestrei \u015fi scrie <b>\u201eBun\u0103\u201d</b> sau direct problema ta.",
+      s3:"Trimite o \ud83d\udcf7 poz\u0103 a problemei din culegere sau scrie-o \u2014 apoi merge\u0163i pas cu pas.",
+      h2e:"\u00cen limba ta", leade:"Aceea\u015fi metod\u0103, limba ta \u2014 Zoi comut\u0103 cu butonul din partea de sus a ferestrei:",
+      arrow:"Zoi e aici \u2192", foot:"MathIA \u00b7 mathia.rs \u00b7 Preg\u0103tire pentru examenul final (matematic\u0103) \u00b7 online \u015fi \u00een persoan\u0103"
+    },
+    sk: {
+      back:"\u2190 Domov", badge:"Z\u00e1vere\u010dn\u00e1 sk\u00fa\u0161ka \u00b7 8. ro\u010dn\u00edk",
+      h1:"Pr\u00edprava na <span class='hl'>mal\u00fa maturu</span> z matematiky.",
+      lead:"So <b>Zoi</b> \u2014 milou AI u\u010dite\u013ekou, ktor\u00e1 rie\u0161i \u00falohy pomaly a preh\u013eadne, kladie ti n\u00e1vodn\u00e9 ot\u00e1zky a na konci ti d\u00e1 podobn\u00fa cvi\u010dn\u00fa \u00falohu. Nap\u00ed\u0161 \u00falohu alebo po\u0161li fotku zo zbierky \u2014 to v\u0161etko v <b>10 jazykoch</b>.",
+      cta:"Za\u010dni so Zoi \u2192", h2a:"\u010co z\u00edska\u0161",
+      c1t:"\ud83d\udcf7 Foto alebo text", c1p:"Odfo\u0165 \u00falohu zo zbierky alebo ju nap\u00ed\u0161 \u2014 Zoi ju pre\u010d\u00edta a za\u010dne vysvet\u013eova\u0165.",
+      c2t:"\ud83e\ude9c Krok za krokom", c2p:"Prep\u00ed\u0161 \u00fah\u013eadne, zjednodu\u0161, vyrie\u0161 \u201eako obr\u00e1zkov\u00fa knihu\u201d. Bez preskakovania, bez zm\u00e4tku.",
+      c3t:"\ud83c\udfaf Cvi\u010dn\u00e1 \u00faloha", c3p:"Po ka\u017edom rie\u0161en\u00ed dostane\u0161 nov\u00fa, podobn\u00fa \u00falohu rovnakej \u00farovne na samostatn\u00e9 cvi\u010denie.",
+      c4t:"\ud83d\udd0a Hlas", c4p:"Zapni reproduktor a Zoi pre\u010d\u00edta vysvetlenie nahlas, k\u00fdm sleduje\u0161.",
+      h2b:"P\u00e4\u0165 oblast\u00ed sk\u00fa\u0161ky",
+      a1t:"\u010c\u00edsla a oper\u00e1cie", a1s:"zlomky, desatinn\u00e9 \u010d\u00edsla, percent\u00e1, odmocniny",
+      a2t:"Algebra a funkcie", a2s:"v\u00fdrazy, rovnice, s\u00fastavy, grafy",
+      a3t:"Geometria", a3s:"trojuholn\u00edk, kruh, Pytagoras, podobnos\u0165",
+      a4t:"Meranie", a4s:"obvod, obsah, objem telies",
+      a5t:"Spracovanie \u00fadajov", a5s:"tabu\u013eky, diagramy, priemer, pravdepodobnos\u0165",
+      h2c:"Tri \u00farovne \u2014 Zoi ti povie, ktor\u00e1",
+      l1n:"Z\u00e1kladn\u00e1", l1p:"Rozpoznanie a jednoduch\u00e9 pou\u017eitie.",
+      l2n:"Stredn\u00e1", l2p:"Viac krokov a pou\u017eitie v re\u00e1lnych situ\u00e1ci\u00e1ch.",
+      l3n:"Pokro\u010dil\u00e1", l3p:"Zlo\u017eitej\u0161ie \u00falohy \u201euk\u00e1\u017e postup\u201d.",
+      h2d:"Ako za\u010da\u0165",
+      s1:"Klikni na tla\u010didlo <b>Zoi</b> vpravo dole.",
+      s2:"Vyber jazyk v hornej \u010dasti okna a nap\u00ed\u0161 <b>\u201eAhoj\u201d</b> alebo rovno svoju \u00falohu.",
+      s3:"Po\u0161li \ud83d\udcf7 fotku \u00falohy zo zbierky alebo ju nap\u00ed\u0161 \u2014 potom idete krok za krokom.",
+      h2e:"V tvojom jazyku", leade:"Rovnak\u00e1 met\u00f3da, tvoj jazyk \u2014 Zoi sa prep\u00edna prep\u00edna\u010dom v hornej \u010dasti okna:",
+      arrow:"Zoi je tu \u2192", foot:"MathIA \u00b7 mathia.rs \u00b7 Pr\u00edprava na mal\u00fa maturu (matematika) \u00b7 online aj na\u017eivo"
+    },
+    de: {
+      back:"← Startseite", badge:"Abschlussprüfung · 8. Klasse",
+      h1:"Vorbereitung auf die <span class='hl'>Abschlussprüfung</span> in Mathematik.",
+      lead:"Mit <b>Zoi</b> — einer warmherzigen KI-Lehrerin, die Aufgaben langsam und übersichtlich löst, dir Leitfragen stellt und am Ende eine ähnliche Übungsaufgabe gibt. Tippe eine Aufgabe oder schick ein Foto aus der Aufgabensammlung — alles in <b>10 Sprachen</b>.",
+      cta:"Mit Zoi starten →", h2a:"Was du bekommst",
+      c1t:"📷 Foto oder Text", c1p:"Fotografiere eine Aufgabe aus der Sammlung oder tippe sie — Zoi liest sie und beginnt zu erklären.",
+      c2t:"🪜 Schritt für Schritt", c2p:"Sauber abschreiben, vereinfachen, lösen „wie ein Bilderbuch”. Kein Überspringen, kein Durcheinander.",
+      c3t:"🎯 Übungsaufgabe", c3p:"Nach jeder Lösung bekommst du eine neue, ähnliche Aufgabe gleicher Stufe zum selbstständigen Üben.",
+      c4t:"🔊 Stimme", c4p:"Schalte den Lautsprecher ein und Zoi liest die Erklärung laut vor, während du folgst.",
+      h2b:"Fünf Bereiche der Abschlussprüfung",
+      a1t:"Zahlen und Operationen", a1s:"Brüche, Dezimalzahlen, Prozente, Wurzeln",
+      a2t:"Algebra und Funktionen", a2s:"Terme, Gleichungen, Systeme, Graphen",
+      a3t:"Geometrie", a3s:"Dreieck, Kreis, Pythagoras, Ähnlichkeit",
+      a4t:"Messen", a4s:"Umfang, Fläche, Volumen von Körpern",
+      a5t:"Datenauswertung", a5s:"Tabellen, Diagramme, Mittelwert, Wahrscheinlichkeit",
+      h2c:"Drei Stufen — Zoi sagt dir, welche",
+      l1n:"Grundstufe", l1p:"Erkennen und einfache Anwendung.",
+      l2n:"Mittelstufe", l2p:"Mehrere Schritte und Anwendung im Alltag.",
+      l3n:"Fortgeschritten", l3p:"Komplexere Aufgaben „zeig den Lösungsweg”.",
+      h2d:"Wie du anfängst",
+      s1:"Klick unten rechts auf den <b>Zoi</b>-Button.",
+      s2:"Wähl oben im Fenster eine Sprache und schreib <b>„Hallo”</b> oder gleich deine Aufgabe.",
+      s3:"Schick ein 📷 Foto einer Aufgabe aus der Sammlung oder tippe sie — dann geht ihr Schritt für Schritt vor.",
+      h2e:"In deiner Sprache", leade:"Dieselbe Methode, deine Sprache — Zoi wechselt mit dem Schalter oben im Fenster:",
+      arrow:"Zoi ist hier →", foot:"MathIA · mathia.rs · Vorbereitung auf die Abschlussprüfung (Mathematik) · online und vor Ort"
+    },
+    el: {
+      back:"← Αρχική", badge:"Τελικές εξετάσεις · Τάξη 8",
+      h1:"Προετοιμασία για τις <span class='hl'>τελικές εξετάσεις</span> στα μαθηματικά.",
+      lead:"Με τη <b>Zoi</b> — μια ζεστή δασκάλα ΤΝ που λύνει τις ασκήσεις αργά και καθαρά, σου κάνει καθοδηγητικές ερωτήσεις και στο τέλος σου δίνει μια παρόμοια άσκηση για εξάσκηση. Γράψε μια άσκηση ή στείλε μια φωτογραφία από τη συλλογή — όλα σε <b>10 γλώσσες</b>.",
+      cta:"Ξεκίνα με τη Zoi →", h2a:"Τι κερδίζεις",
+      c1t:"📷 Φωτογραφία ή κείμενο", c1p:"Φωτογράφισε μια άσκηση από τη συλλογή ή γράψε την — η Zoi τη διαβάζει και αρχίζει να εξηγεί.",
+      c2t:"🪜 Βήμα βήμα", c2p:"Αντίγραψέ την καθαρά, απλοποίησε, λύσε την „σαν εικονογραφημένο βιβλίο”. Χωρίς παραλείψεις, χωρίς μπέρδεμα.",
+      c3t:"🎯 Άσκηση εξάσκησης", c3p:"Μετά από κάθε λύση παίρνεις μια νέα, παρόμοια άσκηση ίδιου επιπέδου για να εξασκηθείς μόνος σου.",
+      c4t:"🔊 Φωνή", c4p:"Άναψε το ηχείο και η Zoi διαβάζει την εξήγηση φωναχτά καθώς παρακολουθείς.",
+      h2b:"Πέντε περιοχές των τελικών εξετάσεων",
+      a1t:"Αριθμοί και πράξεις", a1s:"κλάσματα, δεκαδικοί, ποσοστά, ρίζες",
+      a2t:"Άλγεβρα και συναρτήσεις", a2s:"παραστάσεις, εξισώσεις, συστήματα, γραφικές παραστάσεις",
+      a3t:"Γεωμετρία", a3s:"τρίγωνο, κύκλος, Πυθαγόρας, ομοιότητα",
+      a4t:"Μέτρηση", a4s:"περίμετρος, εμβαδόν, όγκος στερεών",
+      a5t:"Επεξεργασία δεδομένων", a5s:"πίνακες, διαγράμματα, μέσος όρος, πιθανότητα",
+      h2c:"Τρία επίπεδα — η Zoi σου λέει ποιο",
+      l1n:"Βασικό", l1p:"Αναγνώριση και απλή εφαρμογή.",
+      l2n:"Μεσαίο", l2p:"Περισσότερα βήματα και εφαρμογή σε καθημερινές καταστάσεις.",
+      l3n:"Προχωρημένο", l3p:"Πιο σύνθετες ασκήσεις „δείξε τη λύση”.",
+      h2d:"Πώς να ξεκινήσεις",
+      s1:"Πάτησε το κουμπί <b>Zoi</b> κάτω δεξιά.",
+      s2:"Διάλεξε γλώσσα στην κορυφή του παραθύρου και γράψε <b>„Γεια”</b> ή κατευθείαν την άσκησή σου.",
+      s3:"Στείλε μια 📷 φωτογραφία μιας άσκησης από τη συλλογή ή γράψε την — μετά προχωράτε βήμα βήμα.",
+      h2e:"Στη γλώσσα σου", leade:"Ίδια μέθοδος, η γλώσσα σου — η Zoi αλλάζει με τον διακόπτη στην κορυφή του παραθύρου:",
+      arrow:"Η Zoi είναι εδώ →", foot:"MathIA · mathia.rs · Προετοιμασία για τις τελικές εξετάσεις (μαθηματικά) · online και δια ζώσης"
+    },
+    es: {
+      back:"← Inicio", badge:"Examen final · 8.º grado",
+      h1:"Preparación para el <span class='hl'>examen final</span> de matemáticas.",
+      lead:"Con <b>Zoi</b> — una profesora de IA cálida que resuelve los ejercicios despacio y con claridad, te hace preguntas guía y al final te da un ejercicio similar para practicar. Escribe un ejercicio o envía una foto de la colección — todo en <b>10 idiomas</b>.",
+      cta:"Empieza con Zoi →", h2a:"Qué obtienes",
+      c1t:"📷 Foto o texto", c1p:"Fotografía un ejercicio de la colección o escríbelo — Zoi lo lee y empieza a explicar.",
+      c2t:"🪜 Paso a paso", c2p:"Copiar limpio, simplificar, resolver „como un libro ilustrado”. Sin saltos, sin enredos.",
+      c3t:"🎯 Ejercicio de práctica", c3p:"Después de cada solución recibes un ejercicio nuevo y similar del mismo nivel para practicar solo.",
+      c4t:"🔊 Voz", c4p:"Enciende el altavoz y Zoi lee la explicación en voz alta mientras sigues.",
+      h2b:"Cinco áreas del examen final",
+      a1t:"Números y operaciones", a1s:"fracciones, decimales, porcentajes, raíces",
+      a2t:"Álgebra y funciones", a2s:"expresiones, ecuaciones, sistemas, gráficas",
+      a3t:"Geometría", a3s:"triángulo, círculo, Pitágoras, semejanza",
+      a4t:"Medición", a4s:"perímetro, área, volumen de cuerpos",
+      a5t:"Tratamiento de datos", a5s:"tablas, diagramas, media, probabilidad",
+      h2c:"Tres niveles — Zoi te dice cuál",
+      l1n:"Básico", l1p:"Reconocer y aplicar de forma sencilla.",
+      l2n:"Medio", l2p:"Varios pasos y aplicación en situaciones reales.",
+      l3n:"Avanzado", l3p:"Ejercicios más complejos „muestra el procedimiento”.",
+      h2d:"Cómo empezar",
+      s1:"Haz clic en el botón <b>Zoi</b> abajo a la derecha.",
+      s2:"Elige un idioma arriba en la ventana y escribe <b>„Hola”</b> o directamente tu ejercicio.",
+      s3:"Envía una 📷 foto de un ejercicio de la colección o escríbelo — y vais paso a paso.",
+      h2e:"En tu idioma", leade:"El mismo método, tu idioma — Zoi cambia con el selector arriba en la ventana:",
+      arrow:"Zoi está aquí →", foot:"MathIA · mathia.rs · Preparación para el examen final (matemáticas) · en línea y presencial"
+    },
+    fr: {
+      back:"← Accueil", badge:"Examen final · 8e année",
+      h1:"Préparation à l’<span class='hl'>examen final</span> de mathématiques.",
+      lead:"Avec <b>Zoi</b> — une professeure IA bienveillante qui résout les exercices lentement et clairement, te pose des questions guides et te donne à la fin un exercice similaire à t’entraîner. Écris un exercice ou envoie une photo du recueil — le tout en <b>10 langues</b>.",
+      cta:"Commence avec Zoi →", h2a:"Ce que tu obtiens",
+      c1t:"📷 Photo ou texte", c1p:"Photographie un exercice du recueil ou tape-le — Zoi le lit et commence à expliquer.",
+      c2t:"🪜 Étape par étape", c2p:"Recopier au propre, simplifier, résoudre „comme un livre d’images”. Sans saut, sans confusion.",
+      c3t:"🎯 Exercice d’entraînement", c3p:"Après chaque solution, tu reçois un nouvel exercice similaire du même niveau à faire seul.",
+      c4t:"🔊 Voix", c4p:"Active le haut-parleur et Zoi lit l’explication à voix haute pendant que tu suis.",
+      h2b:"Cinq domaines de l’examen final",
+      a1t:"Nombres et opérations", a1s:"fractions, décimaux, pourcentages, racines",
+      a2t:"Algèbre et fonctions", a2s:"expressions, équations, systèmes, graphiques",
+      a3t:"Géométrie", a3s:"triangle, cercle, Pythagore, similitude",
+      a4t:"Mesure", a4s:"périmètre, aire, volume des solides",
+      a5t:"Traitement de données", a5s:"tableaux, diagrammes, moyenne, probabilité",
+      h2c:"Trois niveaux — Zoi te dit lequel",
+      l1n:"Base", l1p:"Reconnaître et appliquer simplement.",
+      l2n:"Intermédiaire", l2p:"Plusieurs étapes et application concrète.",
+      l3n:"Avancé", l3p:"Exercices plus complexes „montre la démarche”.",
+      h2d:"Comment commencer",
+      s1:"Clique sur le bouton <b>Zoi</b> en bas à droite.",
+      s2:"Choisis une langue en haut de la fenêtre et écris <b>„Bonjour”</b> ou directement ton exercice.",
+      s3:"Envoie une 📷 photo d’un exercice du recueil ou tape-le — puis vous avancez étape par étape.",
+      h2e:"Dans ta langue", leade:"La même méthode, ta langue — Zoi change avec le sélecteur en haut de la fenêtre:",
+      arrow:"Zoi est ici →", foot:"MathIA · mathia.rs · Préparation à l’examen final (mathématiques) · en ligne et en présentiel"
+    }
+  };
+
+  function syncWidget(code){
+    try {
+      var zl = document.getElementById('zoi-lang');
+      if (zl && zl.value !== code) { zl.value = code; zl.dispatchEvent(new Event('change')); }
+    } catch (e) {}
+  }
+  function applyLang(code){
+    var d = I18N[code] || I18N.sr;
+    for (var k in d){ var el = document.getElementById(k); if (el) el.innerHTML = d[k]; }
+    document.documentElement.lang = code;
+    syncWidget(code);
+  }
+
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  document.getElementById('cta').onclick = function(){
+    var b = document.getElementById('zoi-btn'); if (b) b.click();
+  };
+  var plang = document.getElementById('plang');
+  plang.onchange = function(){ applyLang(plang.value); };
+  applyLang(plang.value);
+  </script>
+
+  <!-- ZOI WIDGET — matura verzija (ucitava se sa matura-zoi Vercel projekta) -->
+  <script src="https://matura-zoi.vercel.app/widget.js?v=9"
+          data-mode="matura"
+          data-api="https://matura-zoi.vercel.app/api/chat"
+          data-avatar="https://i.postimg.cc/N0hWwn53/Chat-GPT-Image-6-jun-2026-19-43-06.png"
+          data-lang="sr"></script>
+</body>
+</html>

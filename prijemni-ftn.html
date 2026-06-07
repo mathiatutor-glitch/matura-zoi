@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Priprema za prijemni iz matematike — FTN | MathIA</title>
+<meta name="description" content="Pripremi se za prijemni iz matematike za FTN uz Zoi — AI profesoricu koja resava korak po korak, na vise jezika, sa slikom zadatka i glasom." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{ --ink:#27302d; --teal:#1F8A78; --teal2:#2FB7A0; --cream:#FBF5EA; --card:#FFFDF8; --line:#ECE0CC; --muted:#56635e; }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:'Nunito',system-ui,sans-serif;color:var(--ink);
+       background:radial-gradient(1000px 560px at 82% -8%, #E7F7F2 0%, transparent 60%), var(--cream);}
+  .top{max-width:980px;margin:0 auto;padding:22px;display:flex;align-items:center;gap:12px}
+  .brand{font-family:'Baloo 2',cursive;font-weight:800;font-size:20px;color:var(--teal)}
+  .top .sp{flex:1}
+  .plang{background:#fff;border:1px solid #C8E9E0;border-radius:10px;font-family:inherit;font-weight:700;font-size:14px;color:var(--teal);padding:8px 10px;cursor:pointer}
+  .back{font-weight:700;font-size:14px;color:var(--teal);text-decoration:none;border:1px solid #C8E9E0;background:#fff;border-radius:10px;padding:8px 13px}
+  .back:hover{background:#F0FAF7}
+  .wrap{max-width:980px;margin:0 auto;padding:16px 22px 130px}
+  .hero{padding:34px 0 8px}
+  .badge{display:inline-block;background:#E7F7F2;color:var(--teal);border:1px solid #C8E9E0;border-radius:999px;padding:6px 14px;font-weight:700;font-size:13px}
+  h1{font-family:'Baloo 2',cursive;font-weight:800;font-size:clamp(34px,6vw,54px);line-height:1.06;margin:18px 0 12px}
+  h1 .hl{color:var(--teal)}
+  .lead{font-size:18px;line-height:1.65;color:var(--muted);max-width:660px}
+  .cta{margin-top:24px;display:inline-flex;align-items:center;gap:10px;background:var(--teal);color:#fff;font-weight:800;font-family:'Baloo 2',cursive;font-size:17px;border:none;border-radius:14px;padding:13px 20px;cursor:pointer;box-shadow:0 10px 26px rgba(20,80,70,.22)}
+  .cta:hover{background:#176f60}
+  h2{font-family:'Baloo 2',cursive;font-weight:700;font-size:24px;margin:46px 0 16px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px}
+  .card h3{font-family:'Baloo 2',cursive;margin:0 0 8px;font-size:19px}
+  .card p{margin:0;color:var(--muted);font-size:14.5px;line-height:1.55}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
+  .chip2{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-weight:700;font-size:14px}
+  .steps{counter-reset:s;display:grid;gap:12px;margin-top:4px}
+  .step{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+  .step::before{counter-increment:s;content:counter(s);flex:none;width:30px;height:30px;border-radius:50%;background:var(--teal);color:#fff;font-family:'Baloo 2',cursive;font-weight:700;display:grid;place-items:center}
+  .step p{margin:0;font-size:15px;line-height:1.5}
+  .arrow{position:fixed;right:96px;bottom:34px;font-family:'Baloo 2',cursive;font-weight:700;color:var(--teal);background:#fff;border:1px solid #C8E9E0;border-radius:12px;padding:8px 12px;box-shadow:0 8px 20px rgba(20,80,70,.18);z-index:1000}
+  @media(max-width:560px){.arrow{display:none}}
+  footer{max-width:980px;margin:0 auto;padding:24px 22px 60px;color:var(--muted);font-size:13.5px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+  <div class="top">
+    <span class="brand">MathIA</span>
+    <span class="sp"></span>
+    <select class="plang" id="plang" title="Jezik / Language">
+      <option value="sr">Srpski</option>
+      <option value="en">English</option>
+      <option value="hu">Magyar</option>
+      <option value="hr">Hrvatski</option>
+      <option value="ro">Romana</option>
+      <option value="sk">Slovencina</option>
+      <option value="de">Deutsch</option>
+      <option value="el">Ελληνικά</option>
+      <option value="es">Español</option>
+      <option value="fr">Français</option>
+    </select>
+    <a class="back" id="back" href="index.html"></a>
+  </div>
+
+  <div class="wrap">
+    <section class="hero">
+      <span class="badge" id="badge"></span>
+      <h1 id="h1"></h1>
+      <p class="lead" id="lead"></p>
+      <button class="cta" id="cta" type="button"></button>
+    </section>
+
+    <h2 id="h2a"></h2>
+    <div class="grid">
+      <div class="card"><h3 id="c1t"></h3><p id="c1p"></p></div>
+      <div class="card"><h3 id="c2t"></h3><p id="c2p"></p></div>
+      <div class="card"><h3 id="c3t"></h3><p id="c3p"></p></div>
+      <div class="card"><h3 id="c4t"></h3><p id="c4p"></p></div>
+    </div>
+
+    <h2 id="h2b"></h2>
+    <div class="chips">
+      <span class="chip2" id="o1"></span><span class="chip2" id="o2"></span>
+      <span class="chip2" id="o3"></span><span class="chip2" id="o4"></span>
+      <span class="chip2" id="o5"></span><span class="chip2" id="o6"></span>
+      <span class="chip2" id="o7"></span><span class="chip2" id="o8"></span>
+      <span class="chip2" id="o9"></span><span class="chip2" id="o10"></span>
+    </div>
+
+    <h2 id="h2c"></h2>
+    <div class="steps">
+      <div class="step"><p id="s1"></p></div>
+      <div class="step"><p id="s2"></p></div>
+      <div class="step"><p id="s3"></p></div>
+    </div>
+  </div>
+
+  <div class="arrow" id="arrow"></div>
+  <footer><span id="yr"></span> <span id="foot"></span></footer>
+
+  <script>
+  var I18N = {
+  "sr": {
+    "back": "← Početna",
+    "badge": "Prijemni ispit · FTN",
+    "h1": "Priprema za <span class='hl'>prijemni iz matematike</span> — FTN.",
+    "lead": "Uz <b>Zoi</b> — AI profesoricu koja zadatke sa prijemnog rešava korak po korak, objašnjava odakle formula dolazi i vodi te potpitanjima. Kucaj zadatak ili pošalji 📷 sliku — pripremi se za prijemni na FTN u Novom Sadu.",
+    "cta": "Počni sa Zoi →",
+    "h2a": "Šta dobijaš",
+    "c1t": "📷 Slika ili tekst",
+    "c1p": "Slikaš zadatak ili ga otkucaš — Zoi ga pročita i kreće da objašnjava.",
+    "c2t": "🪜 Korak po korak",
+    "c2p": "Ne samo rešenje — Zoi objašnjava postupak i odakle formula dolazi.",
+    "c3t": "🎯 Zadaci za vežbu",
+    "c3p": "Posle rešenja dobiješ sličan zadatak da uvežbaš tip sa prijemnog.",
+    "c4t": "🔊 Glas",
+    "c4p": "Uključi zvučnik pa Zoi pročita objašnjenje naglas dok pratiš.",
+    "h2b": "Oblasti prijemnog",
+    "o1": "Skupovi i logika",
+    "o2": "Brojevni skupovi (N, Z, Q, R, C)",
+    "o3": "Algebra (polinomi, razlomci, koreni)",
+    "o4": "Jednačine i nejednačine",
+    "o5": "Funkcije (domen, inverzna, parnost)",
+    "o6": "Trigonometrija",
+    "o7": "Geometrija (planimetrija i stereometrija)",
+    "o8": "Analitička geometrija",
+    "o9": "Nizovi i redovi",
+    "o10": "Kombinatorika i verovatnoća",
+    "h2c": "Kako da kreneš",
+    "s1": "Klikni <b>Zoi</b> dugme dole desno.",
+    "s2": "Napiši <b>„Zdravo”</b> ili odmah svoj zadatak sa prijemnog.",
+    "s3": "Pošalji 📷 sliku zadatka ili ga otkucaj — pa idete korak po korak.",
+    "arrow": "Zoi je tu →",
+    "foot": "MathIA · mathia.rs · Priprema za prijemni iz matematike — FTN · online i uživo"
+  },
+  "en": {
+    "back": "← Home",
+    "badge": "Entrance exam · FTN",
+    "h1": "Prep for the <span class='hl'>math entrance exam</span> — FTN.",
+    "lead": "With <b>Zoi</b> — an AI teacher who solves entrance-exam problems step by step, explains where each formula comes from, and guides you with questions. Type a problem or send a 📷 photo — get ready for the FTN entrance exam in Novi Sad.",
+    "cta": "Start with Zoi →",
+    "h2a": "What you get",
+    "c1t": "📷 Photo or text",
+    "c1p": "Snap a problem or type it — Zoi reads it and starts explaining.",
+    "c2t": "🪜 Step by step",
+    "c2p": "Not just the answer — Zoi explains the method and where the formula comes from.",
+    "c3t": "🎯 Practice problems",
+    "c3p": "After a solution you get a similar problem to drill the exam type.",
+    "c4t": "🔊 Voice",
+    "c4p": "Turn on the speaker and Zoi reads the explanation aloud as you follow.",
+    "h2b": "Exam areas",
+    "o1": "Sets and logic",
+    "o2": "Number sets (N, Z, Q, R, C)",
+    "o3": "Algebra (polynomials, fractions, roots)",
+    "o4": "Equations and inequalities",
+    "o5": "Functions (domain, inverse, parity)",
+    "o6": "Trigonometry",
+    "o7": "Geometry (plane and solid)",
+    "o8": "Analytic geometry",
+    "o9": "Sequences and series",
+    "o10": "Combinatorics and probability",
+    "h2c": "How to start",
+    "s1": "Click the <b>Zoi</b> button at the bottom right.",
+    "s2": "Type <b>„Hello”</b> or your entrance-exam problem right away.",
+    "s3": "Send a 📷 photo of a problem or type it — then you go step by step.",
+    "arrow": "Zoi is here →",
+    "foot": "MathIA · mathia.rs · Math entrance-exam prep — FTN · online and in person"
+  },
+  "hu": {
+    "back": "← Főoldal",
+    "badge": "Felvételi · FTN",
+    "h1": "Felkészülés a <span class='hl'>matematika felvételire</span> — FTN.",
+    "lead": "A <b>Zoi</b>-val — az AI-tanárnővel, aki a felvételi feladatokat lépésről lépésre oldja meg, elmagyarázza, honnan jön a képlet, és kérdésekkel vezet. Írd be a feladatot vagy küldj 📷 képet — készülj fel az újvidéki FTN felvételire.",
+    "cta": "Kezdj a Zoival →",
+    "h2a": "Mit kapsz",
+    "c1t": "📷 Kép vagy szöveg",
+    "c1p": "Fotózd le a feladatot vagy írd be — Zoi elolvassa és magyarázni kezd.",
+    "c2t": "🪜 Lépésről lépésre",
+    "c2p": "Nem csak a megoldás — Zoi elmagyarázza a menetet és azt, honnan jön a képlet.",
+    "c3t": "🎯 Gyakorló feladatok",
+    "c3p": "A megoldás után kapsz egy hasonló feladatot, hogy gyakorold a felvételi típusát.",
+    "c4t": "🔊 Hang",
+    "c4p": "Kapcsold be a hangszórót, és Zoi felolvassa a magyarázatot, miközben követed.",
+    "h2b": "A felvételi területei",
+    "o1": "Halmazok és logika",
+    "o2": "Számhalmazok (N, Z, Q, R, C)",
+    "o3": "Algebra (polinomok, törtek, gyökök)",
+    "o4": "Egyenletek és egyenlőtlenségek",
+    "o5": "Függvények (értelmezési tartomány, inverz, paritás)",
+    "o6": "Trigonometria",
+    "o7": "Geometria (sík és test)",
+    "o8": "Analitikus geometria",
+    "o9": "Sorozatok és sorok",
+    "o10": "Kombinatorika és valószínűség",
+    "h2c": "Hogyan kezdj hozzá",
+    "s1": "Kattints a <b>Zoi</b> gombra jobbra lent.",
+    "s2": "Írd be, hogy <b>„Szia”</b>, vagy rögtön a felvételis feladatodat.",
+    "s3": "Küldj 📷 képet a feladatról vagy írd be — aztán lépésről lépésre haladtok.",
+    "arrow": "Zoi itt van →",
+    "foot": "MathIA · mathia.rs · Felkészülés a matematika felvételire — FTN · online és személyesen"
+  },
+  "hr": {
+    "back": "← Početna",
+    "badge": "Prijemni ispit · FTN",
+    "h1": "Priprema za <span class='hl'>prijemni iz matematike</span> — FTN.",
+    "lead": "Uz <b>Zoi</b> — AI profesoricu koja zadatke s prijemnog rješava korak po korak, objašnjava odakle formula dolazi i vodi te potpitanjima. Upiši zadatak ili pošalji 📷 sliku — pripremi se za prijemni na FTN u Novom Sadu.",
+    "cta": "Počni sa Zoi →",
+    "h2a": "Što dobivaš",
+    "c1t": "📷 Slika ili tekst",
+    "c1p": "Slikaš zadatak ili ga upišeš — Zoi ga pročita i počne objašnjavati.",
+    "c2t": "🪜 Korak po korak",
+    "c2p": "Ne samo rješenje — Zoi objašnjava postupak i odakle formula dolazi.",
+    "c3t": "🎯 Zadaci za vježbu",
+    "c3p": "Nakon rješenja dobiješ sličan zadatak da uvježbaš tip s prijemnog.",
+    "c4t": "🔊 Glas",
+    "c4p": "Uključi zvučnik pa Zoi pročita objašnjenje naglas dok pratiš.",
+    "h2b": "Područja prijemnog",
+    "o1": "Skupovi i logika",
+    "o2": "Brojevni skupovi (N, Z, Q, R, C)",
+    "o3": "Algebra (polinomi, razlomci, korijeni)",
+    "o4": "Jednadžbe i nejednadžbe",
+    "o5": "Funkcije (domena, inverzna, parnost)",
+    "o6": "Trigonometrija",
+    "o7": "Geometrija (planimetrija i stereometrija)",
+    "o8": "Analitička geometrija",
+    "o9": "Nizovi i redovi",
+    "o10": "Kombinatorika i vjerojatnost",
+    "h2c": "Kako započeti",
+    "s1": "Klikni <b>Zoi</b> gumb dolje desno.",
+    "s2": "Upiši <b>„Bok”</b> ili odmah svoj zadatak s prijemnog.",
+    "s3": "Pošalji 📷 sliku zadatka ili ga upiši — pa idete korak po korak.",
+    "arrow": "Zoi je tu →",
+    "foot": "MathIA · mathia.rs · Priprema za prijemni iz matematike — FTN · online i uživo"
+  },
+  "ro": {
+    "back": "← Acasă",
+    "badge": "Examen de admitere · FTN",
+    "h1": "Pregătire pentru <span class='hl'>admiterea la matematică</span> — FTN.",
+    "lead": "Cu <b>Zoi</b> — o profesoară AI care rezolvă problemele de admitere pas cu pas, explică de unde vine formula și te ghidează cu întrebări. Scrie problema sau trimite o 📷 poză — pregătește-te pentru admiterea la FTN în Novi Sad.",
+    "cta": "Începe cu Zoi →",
+    "h2a": "Ce primești",
+    "c1t": "📷 Poză sau text",
+    "c1p": "Fotografiezi problema sau o scrii — Zoi o citește și începe să explice.",
+    "c2t": "🪜 Pas cu pas",
+    "c2p": "Nu doar rezultatul — Zoi explică metoda și de unde vine formula.",
+    "c3t": "🎯 Probleme de exercițiu",
+    "c3p": "După rezolvare primești o problemă similară ca să exersezi tipul de la admitere.",
+    "c4t": "🔊 Voce",
+    "c4p": "Pornește difuzorul și Zoi citește explicația cu voce tare în timp ce urmărești.",
+    "h2b": "Domeniile examenului",
+    "o1": "Mulțimi și logică",
+    "o2": "Mulțimi de numere (N, Z, Q, R, C)",
+    "o3": "Algebră (polinoame, fracții, radicali)",
+    "o4": "Ecuații și inecuații",
+    "o5": "Funcții (domeniu, inversă, paritate)",
+    "o6": "Trigonometrie",
+    "o7": "Geometrie (plană și în spațiu)",
+    "o8": "Geometrie analitică",
+    "o9": "Șiruri și serii",
+    "o10": "Combinatorică și probabilități",
+    "h2c": "Cum să începi",
+    "s1": "Apasă butonul <b>Zoi</b> din dreapta jos.",
+    "s2": "Scrie <b>„Bună”</b> sau direct problema ta de la admitere.",
+    "s3": "Trimite o 📷 poză a problemei sau scrie-o — apoi mergeți pas cu pas.",
+    "arrow": "Zoi e aici →",
+    "foot": "MathIA · mathia.rs · Pregătire pentru admiterea la matematică — FTN · online și în persoană"
+  },
+  "sk": {
+    "back": "← Domov",
+    "badge": "Prijímacia skúška · FTN",
+    "h1": "Príprava na <span class='hl'>prijímačky z matematiky</span> — FTN.",
+    "lead": "So <b>Zoi</b> — AI učiteľkou, ktorá rieši prijímacie úlohy krok za krokom, vysvetľuje, odkiaľ vzorec pochádza, a vedie ťa otázkami. Napíš úlohu alebo pošli 📷 fotku — priprav sa na prijímačky na FTN v Novom Sade.",
+    "cta": "Začni so Zoi →",
+    "h2a": "Čo získaš",
+    "c1t": "📷 Foto alebo text",
+    "c1p": "Odfoť úlohu alebo ju napíš — Zoi ju prečíta a začne vysvetľovať.",
+    "c2t": "🪜 Krok za krokom",
+    "c2p": "Nie len výsledok — Zoi vysvetlí postup a odkiaľ vzorec pochádza.",
+    "c3t": "🎯 Cvičné úlohy",
+    "c3p": "Po riešení dostaneš podobnú úlohu, aby si si precvičil typ z prijímačiek.",
+    "c4t": "🔊 Hlas",
+    "c4p": "Zapni reproduktor a Zoi prečíta vysvetlenie nahlas, kým sleduješ.",
+    "h2b": "Oblasti skúšky",
+    "o1": "Množiny a logika",
+    "o2": "Číselné množiny (N, Z, Q, R, C)",
+    "o3": "Algebra (polynómy, zlomky, odmocniny)",
+    "o4": "Rovnice a nerovnice",
+    "o5": "Funkcie (definičný obor, inverzná, parita)",
+    "o6": "Trigonometria",
+    "o7": "Geometria (rovinná a priestorová)",
+    "o8": "Analytická geometria",
+    "o9": "Postupnosti a rady",
+    "o10": "Kombinatorika a pravdepodobnosť",
+    "h2c": "Ako začať",
+    "s1": "Klikni na tlačidlo <b>Zoi</b> vpravo dole.",
+    "s2": "Napíš <b>„Ahoj”</b> alebo rovno svoju prijímaciu úlohu.",
+    "s3": "Pošli 📷 fotku úlohy alebo ju napíš — potom idete krok za krokom.",
+    "arrow": "Zoi je tu →",
+    "foot": "MathIA · mathia.rs · Príprava na prijímačky z matematiky — FTN · online aj naživo"
+  },
+  "de": {
+    "back": "← Startseite",
+    "badge": "Aufnahmeprüfung · FTN",
+    "h1": "Vorbereitung auf die <span class='hl'>Mathe-Aufnahmeprüfung</span> — FTN.",
+    "lead": "Mit <b>Zoi</b> — einer KI-Lehrerin, die Aufnahmeaufgaben Schritt für Schritt löst, erklärt, woher die Formel kommt, und dich mit Fragen führt. Tippe eine Aufgabe oder schick ein 📷 Foto — bereite dich auf die FTN-Aufnahmeprüfung in Novi Sad vor.",
+    "cta": "Mit Zoi starten →",
+    "h2a": "Was du bekommst",
+    "c1t": "📷 Foto oder Text",
+    "c1p": "Fotografiere die Aufgabe oder tippe sie — Zoi liest sie und beginnt zu erklären.",
+    "c2t": "🪜 Schritt für Schritt",
+    "c2p": "Nicht nur das Ergebnis — Zoi erklärt den Weg und woher die Formel kommt.",
+    "c3t": "🎯 Übungsaufgaben",
+    "c3p": "Nach der Lösung bekommst du eine ähnliche Aufgabe, um den Prüfungstyp zu üben.",
+    "c4t": "🔊 Stimme",
+    "c4p": "Schalte den Lautsprecher ein und Zoi liest die Erklärung laut vor, während du folgst.",
+    "h2b": "Prüfungsbereiche",
+    "o1": "Mengen und Logik",
+    "o2": "Zahlenmengen (N, Z, Q, R, C)",
+    "o3": "Algebra (Polynome, Brüche, Wurzeln)",
+    "o4": "Gleichungen und Ungleichungen",
+    "o5": "Funktionen (Definitionsbereich, Umkehrfunktion, Symmetrie)",
+    "o6": "Trigonometrie",
+    "o7": "Geometrie (Ebene und Körper)",
+    "o8": "Analytische Geometrie",
+    "o9": "Folgen und Reihen",
+    "o10": "Kombinatorik und Wahrscheinlichkeit",
+    "h2c": "Wie du anfängst",
+    "s1": "Klick unten rechts auf den <b>Zoi</b>-Button.",
+    "s2": "Schreib <b>„Hallo”</b> oder gleich deine Aufnahmeaufgabe.",
+    "s3": "Schick ein 📷 Foto der Aufgabe oder tippe sie — dann geht ihr Schritt für Schritt vor.",
+    "arrow": "Zoi ist hier →",
+    "foot": "MathIA · mathia.rs · Vorbereitung auf die Mathe-Aufnahmeprüfung — FTN · online und vor Ort"
+  },
+  "el": {
+    "back": "← Αρχική",
+    "badge": "Εισαγωγικές εξετάσεις · FTN",
+    "h1": "Προετοιμασία για τις <span class='hl'>εισαγωγικές εξετάσεις μαθηματικών</span> — FTN.",
+    "lead": "Με τη <b>Zoi</b> — μια δασκάλα ΤΝ που λύνει τις ασκήσεις των εισαγωγικών βήμα βήμα, εξηγεί από πού προκύπτει ο τύπος και σε καθοδηγεί με ερωτήσεις. Γράψε μια άσκηση ή στείλε μια 📷 φωτογραφία — προετοιμάσου για τις εισαγωγικές του FTN στο Νόβι Σαντ.",
+    "cta": "Ξεκίνα με τη Zoi →",
+    "h2a": "Τι κερδίζεις",
+    "c1t": "📷 Φωτογραφία ή κείμενο",
+    "c1p": "Φωτογράφισε την άσκηση ή γράψε την — η Zoi τη διαβάζει και αρχίζει να εξηγεί.",
+    "c2t": "🪜 Βήμα βήμα",
+    "c2p": "Όχι μόνο το αποτέλεσμα — η Zoi εξηγεί τη μέθοδο και από πού προκύπτει ο τύπος.",
+    "c3t": "🎯 Ασκήσεις εξάσκησης",
+    "c3p": "Μετά τη λύση παίρνεις μια παρόμοια άσκηση για να εξασκηθείς στον τύπο των εισαγωγικών.",
+    "c4t": "🔊 Φωνή",
+    "c4p": "Άναψε το ηχείο και η Zoi διαβάζει την εξήγηση φωναχτά καθώς παρακολουθείς.",
+    "h2b": "Περιοχές των εξετάσεων",
+    "o1": "Σύνολα και λογική",
+    "o2": "Αριθμοσύνολα (N, Z, Q, R, C)",
+    "o3": "Άλγεβρα (πολυώνυμα, κλάσματα, ρίζες)",
+    "o4": "Εξισώσεις και ανισώσεις",
+    "o5": "Συναρτήσεις (πεδίο ορισμού, αντίστροφη, αρτιότητα)",
+    "o6": "Τριγωνομετρία",
+    "o7": "Γεωμετρία (επίπεδη και στερεά)",
+    "o8": "Αναλυτική γεωμετρία",
+    "o9": "Ακολουθίες και σειρές",
+    "o10": "Συνδυαστική και πιθανότητες",
+    "h2c": "Πώς να ξεκινήσεις",
+    "s1": "Πάτησε το κουμπί <b>Zoi</b> κάτω δεξιά.",
+    "s2": "Γράψε <b>„Γεια”</b> ή κατευθείαν την άσκηση των εισαγωγικών σου.",
+    "s3": "Στείλε μια 📷 φωτογραφία της άσκησης ή γράψε την — μετά προχωράτε βήμα βήμα.",
+    "arrow": "Η Zoi είναι εδώ →",
+    "foot": "MathIA · mathia.rs · Προετοιμασία για τις εισαγωγικές μαθηματικών — FTN · online και δια ζώσης"
+  },
+  "es": {
+    "back": "← Inicio",
+    "badge": "Examen de acceso · FTN",
+    "h1": "Preparación para el <span class='hl'>examen de acceso de matemáticas</span> — FTN.",
+    "lead": "Con <b>Zoi</b> — una profesora de IA que resuelve los problemas de acceso paso a paso, explica de dónde viene cada fórmula y te guía con preguntas. Escribe un problema o envía una 📷 foto — prepárate para el examen de acceso a la FTN en Novi Sad.",
+    "cta": "Empieza con Zoi →",
+    "h2a": "Qué obtienes",
+    "c1t": "📷 Foto o texto",
+    "c1p": "Fotografía el problema o escríbelo — Zoi lo lee y empieza a explicar.",
+    "c2t": "🪜 Paso a paso",
+    "c2p": "No solo el resultado — Zoi explica el método y de dónde viene la fórmula.",
+    "c3t": "🎯 Problemas de práctica",
+    "c3p": "Tras la solución recibes un problema similar para practicar el tipo del examen.",
+    "c4t": "🔊 Voz",
+    "c4p": "Enciende el altavoz y Zoi lee la explicación en voz alta mientras sigues.",
+    "h2b": "Áreas del examen",
+    "o1": "Conjuntos y lógica",
+    "o2": "Conjuntos numéricos (N, Z, Q, R, C)",
+    "o3": "Álgebra (polinomios, fracciones, raíces)",
+    "o4": "Ecuaciones e inecuaciones",
+    "o5": "Funciones (dominio, inversa, paridad)",
+    "o6": "Trigonometría",
+    "o7": "Geometría (plana y del espacio)",
+    "o8": "Geometría analítica",
+    "o9": "Sucesiones y series",
+    "o10": "Combinatoria y probabilidad",
+    "h2c": "Cómo empezar",
+    "s1": "Haz clic en el botón <b>Zoi</b> abajo a la derecha.",
+    "s2": "Escribe <b>„Hola”</b> o directamente tu problema de acceso.",
+    "s3": "Envía una 📷 foto del problema o escríbelo — y vais paso a paso.",
+    "arrow": "Zoi está aquí →",
+    "foot": "MathIA · mathia.rs · Preparación para el examen de acceso de matemáticas — FTN · en línea y presencial"
+  },
+  "fr": {
+    "back": "← Accueil",
+    "badge": "Concours d’entrée · FTN",
+    "h1": "Préparation au <span class='hl'>concours de mathématiques</span> — FTN.",
+    "lead": "Avec <b>Zoi</b> — une professeure IA qui résout les exercices du concours étape par étape, explique d’où vient chaque formule et te guide par des questions. Écris un exercice ou envoie une 📷 photo — prépare-toi au concours d’entrée à la FTN à Novi Sad.",
+    "cta": "Commence avec Zoi →",
+    "h2a": "Ce que tu obtiens",
+    "c1t": "📷 Photo ou texte",
+    "c1p": "Photographie l’exercice ou tape-le — Zoi le lit et commence à expliquer.",
+    "c2t": "🪜 Étape par étape",
+    "c2p": "Pas seulement le résultat — Zoi explique la méthode et d’où vient la formule.",
+    "c3t": "🎯 Exercices d’entraînement",
+    "c3p": "Après la solution, tu reçois un exercice similaire pour t’entraîner au type du concours.",
+    "c4t": "🔊 Voix",
+    "c4p": "Active le haut-parleur et Zoi lit l’explication à voix haute pendant que tu suis.",
+    "h2b": "Domaines du concours",
+    "o1": "Ensembles et logique",
+    "o2": "Ensembles de nombres (N, Z, Q, R, C)",
+    "o3": "Algèbre (polynômes, fractions, racines)",
+    "o4": "Équations et inéquations",
+    "o5": "Fonctions (domaine, réciproque, parité)",
+    "o6": "Trigonométrie",
+    "o7": "Géométrie (plane et dans l’espace)",
+    "o8": "Géométrie analytique",
+    "o9": "Suites et séries",
+    "o10": "Combinatoire et probabilités",
+    "h2c": "Comment commencer",
+    "s1": "Clique sur le bouton <b>Zoi</b> en bas à droite.",
+    "s2": "Écris <b>„Bonjour”</b> ou directement ton exercice du concours.",
+    "s3": "Envoie une 📷 photo de l’exercice ou tape-le — puis vous avancez étape par étape.",
+    "arrow": "Zoi est ici →",
+    "foot": "MathIA · mathia.rs · Préparation au concours de mathématiques — FTN · en ligne et en présentiel"
+  }
+};
+  function openZoi(){
+    var b = document.getElementById('zoi-btn');
+    if (b) { b.click(); return; }
+    var c = document.querySelector('[id^="zoi"], [class*="zoi"]');
+    if (c) { try { c.click(); return; } catch(e){} }
+    window.scrollTo(0, document.body.scrollHeight);
+  }
+  function syncWidget(code){
+    try { var zl = document.getElementById('zoi-lang');
+      if (zl && zl.value !== code) { zl.value = code; zl.dispatchEvent(new Event('change')); } } catch (e) {}
+  }
+  function applyLang(code){
+    var d = I18N[code] || I18N.sr;
+    for (var k in d){ var el = document.getElementById(k); if (el) el.innerHTML = d[k]; }
+    document.documentElement.lang = code; syncWidget(code);
+  }
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  document.getElementById('cta').onclick = openZoi;
+  var plang = document.getElementById('plang');
+  plang.onchange = function(){ applyLang(plang.value); };
+  applyLang(plang.value);
+  </script>
+
+  <!-- ZOI WIDGET — isti matura-zoi projekat, ali u FTN modu (data-mode="ftn") -->
+  <script src="https://matura-zoi.vercel.app/widget.js?v=9"
+          data-mode="ftn"
+          data-api="https://matura-zoi.vercel.app/api/chat"
+          data-avatar="https://i.postimg.cc/N0hWwn53/Chat-GPT-Image-6-jun-2026-19-43-06.png"
+          data-lang="sr"></script>
+</body>
+</html>
