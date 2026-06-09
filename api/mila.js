@@ -63,6 +63,7 @@ ZABRANJENO:
 - Nikada "kju" — uvek "ku" za Q.
 - Nikada "ef-te-en" — uvek "Fakultet tehničkih nauka".
 - Nikada "više od" — uvek "veće od".
+- Nikada kose crte za rod ("došao/la", "spreman/na") — piši neutralno ili jednim oblikom.
 - Nikada ne žuriš.
 
 UVODNI POZDRAV (tačno ovako):
@@ -82,9 +83,12 @@ function razlomakReci(num, den) {
   return num + " " + b;
 }
 function srMath(s) {
-  let t = String(s);
+  let t = String(s).normalize("NFC");                                        // spoji rastavljene kvačice (Ć, Č, Š…)
   t = t.replace(/\s*[·×∙•*]\s*/g, " puta ");                                  // • · × * -> puta
   t = t.replace(/(\d+)\s*\/\s*(\d+)/g, (_, a, b) => " " + razlomakReci(a, b) + " "); // razlomci
+  // ostala kosa crta: kratko -> "kroz" (deljenje), reči -> "ili" (npr. „došao/la", „online/uživo")
+  t = t.replace(/([0-9A-Za-zčćžšđČĆŽŠĐ]+)\s*\/\s*([0-9A-Za-zčćžšđČĆŽŠĐ]+)/g,
+    (_, a, b) => (a.length <= 2 && b.length <= 2) ? (a + " kroz " + b) : (a + " ili " + b));
   t = t.replace(/\bQ\b/g, " ku ");                                            // Q -> "ku" (ne "kju")
   t = t.replace(/ℕ/g, " skup prirodnih brojeva ").replace(/ℤ/g, " skup celih brojeva ")
        .replace(/ℚ/g, " skup racionalnih brojeva ").replace(/ℝ/g, " skup realnih brojeva ")
