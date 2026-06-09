@@ -20,6 +20,7 @@
   var VOICE = (script && script.getAttribute("data-voice")) || ""; // ElevenLabs Voice ID za srpski (prazno = podrazumevano)
   var AVATAR_OK = true;
   var TTS = (script && script.getAttribute("data-tts")) || API.replace(/\/api\/chat\/?$/, "/api/tts");
+  var RATE = (script && script.getAttribute("data-rate")) || ""; // brzina govora (npr. "0.85" za sporije); prazno = normalno
 
   // ——— prevodi UI-ja (AI ionako odgovara na izabranom jeziku) ———
   var T = {
@@ -285,6 +286,20 @@
     s = s.replace(/[\u2190-\u21FF\u2300-\u27BF\u2600-\u26FF\u2B00-\u2BFF\uFE0F\u200D\u20E3]/g, " ");
     return s.replace(/\s{2,}/g, " ");
   }
+  // imenovani razlomci: 3/4 -> "3 četvrtine" (TTS pročita "tri četvrtine"), 1/2 -> "jedna polovina"
+  function razlomakReci(num, den) {
+    var N = { 2: "polovina", 3: "trećina", 4: "četvrtina", 5: "petina", 6: "šestina",
+      7: "sedmina", 8: "osmina", 9: "devetina", 10: "desetina", 11: "jedanaestina",
+      12: "dvanaestina", 15: "petnaestina", 16: "šesnaestina", 20: "dvadesetina", 100: "stotina" };
+    var n = parseInt(num, 10), d = parseInt(den, 10), b = N[d];
+    if (!b) return num + " kroz " + den;          // npr. 3/27 -> "tri kroz dvadeset sedam"
+    var pl = b.slice(0, -1) + "e";                  // paukal: -a -> -e
+    var d2 = n % 100, d1 = n % 10;
+    if (n === 1) return "jedna " + b;               // 1/2 -> "jedna polovina"
+    if (n === 2) return "dve " + pl;                // 2/3 -> "dve trećine"
+    if (d1 >= 2 && d1 <= 4 && !(d2 >= 12 && d2 <= 14)) return num + " " + pl; // 3,4 -> paukal
+    return num + " " + b;                            // 5+, 11..14 -> jedninski/gen.mn. oblik
+  }
   // izgovor matematike na srpskom (i bs/hr) — simboli -> reči
   function mathSr(s) {
     s = " " + s + " ";
@@ -292,8 +307,24 @@
     s = s.replace(/[αΑ]/g, " alfa ").replace(/[βΒ]/g, " beta ").replace(/[γΓ]/g, " gama ")
          .replace(/[δΔ]/g, " delta ").replace(/[εΕ]/g, " epsilon ").replace(/[θΘϑ]/g, " teta ")
          .replace(/[λΛ]/g, " lambda ").replace(/[μµ]/g, " mi ").replace(/[ρ]/g, " ro ")
-         .replace(/[σςΣ]/g, " sigma ").replace(/[τ]/g, " tau ").replace(/[φΦϕ]/g, " fi ")
+         .replace(/Σ/g, " suma ").replace(/[σς]/g, " sigma ").replace(/[τ]/g, " tau ").replace(/[φΦϕ]/g, " fi ")
          .replace(/[ψΨ]/g, " psi ").replace(/[ωΩ]/g, " omega ");
+    // brojevni skupovi (unicode) i logika skupova (oblast „skupovi" na FTN-u)
+    s = s.replace(/ℕ/g, " skup prirodnih brojeva ").replace(/ℤ/g, " skup celih brojeva ")
+         .replace(/ℚ/g, " skup racionalnih brojeva ").replace(/ℝ/g, " skup realnih brojeva ")
+         .replace(/ℂ/g, " skup kompleksnih brojeva ");
+    s = s.replace(/∈/g, " pripada ").replace(/∉/g, " ne pripada ")
+         .replace(/[⊆⊂]/g, " podskup od ").replace(/[⊇⊃]/g, " nadskup od ")
+         .replace(/∪/g, " unija ").replace(/∩/g, " presek ").replace(/∅/g, " prazan skup ")
+         .replace(/∀/g, " za svako ").replace(/∃/g, " postoji ");
+    // apsolutna vrednost |x| -> „apsolutna vrednost iks"
+    s = s.replace(/\|\s*([^|]{1,40}?)\s*\|/g, " apsolutna vrednost $1 ");
+    // analiza: integral, suma/proizvod, parcijalni izvod
+    s = s.replace(/[∫∮]/g, " integral ").replace(/∏/g, " proizvod ").replace(/∂/g, " parcijalno ");
+    // funkcije f(x), f''(x), f'(x) -> „ef od iks", „ef drugi izvod od iks", „ef prim od iks" (i g, h)
+    s = s.replace(/\bf\s*(?:['′]{2}|[″‴])\s*\(/g, " ef drugi izvod od ").replace(/\bf\s*['′]\s*\(/g, " ef prim od ").replace(/\bf\s*\(/g, " ef od ");
+    s = s.replace(/\bg\s*['′]\s*\(/g, " ge prim od ").replace(/\bg\s*\(/g, " ge od ");
+    s = s.replace(/\bh\s*\(/g, " ha od ");
     // funkcije -> reči (sin samo kad ima argument, da ne pokvari reč „sin")
     s = s.replace(/\bcos\b/g, " kosinus ");
     s = s.replace(/\bsin(?=\s*[(²³^]|\s+[A-Za-z0-9])/g, " sinus ");
@@ -301,6 +332,10 @@
     s = s.replace(/\b(?:ctg|cot)\b/g, " kotangens ");
     s = s.replace(/\bln\b/g, " prirodni logaritam ");
     s = s.replace(/\blog\b/g, " logaritam ");
+    // arkus-funkcije, limes, faktorijel
+    s = s.replace(/\barcsin\b/g, " arkus sinus ").replace(/\barccos\b/g, " arkus kosinus ")
+         .replace(/\barctg\b/g, " arkus tangens ").replace(/\barctan\b/g, " arkus tangens ");
+    s = s.replace(/\blim\b/g, " limes ");
     // koreni
     s = s.replace(/∛\s*/g, " treći koren iz ");
     s = s.replace(/√\s*/g, " koren iz ");
@@ -316,6 +351,8 @@
     // indeks: x_1 -> iks indeks 1
     s = s.replace(/_\s*\{?([0-9A-Za-z]+)\}?/g, " $1 ");
     // poređenja i operacije
+    // implikacije (ASCII) pre znakova <,>,=
+    s = s.replace(/<=>/g, " ako i samo ako ").replace(/=>/g, " sledi ");
     s = s.replace(/<=/g, " manje ili jednako ");
     s = s.replace(/>=/g, " veće ili jednako ");
     s = s.replace(/!=/g, " nije jednako ");
@@ -327,14 +364,15 @@
     s = s.replace(/</g, " manje od ");
     s = s.replace(/>/g, " veće od ");
     s = s.replace(/±/g, " plus minus ");
-    s = s.replace(/[·×∙*]/g, " puta ");
+    s = s.replace(/[·×∙•*]/g, " puta ");
     s = s.replace(/÷/g, " podeljeno sa ");
     s = s.replace(/%/g, " posto ");
     s = s.replace(/π/g, " pi ");
     s = s.replace(/∞/g, " beskonačno ");
     s = s.replace(/°/g, " stepeni ");
-    s = s.replace(/[()]/g, " ");
-    // razlomak a/b
+    s = s.replace(/[()\[\]{}]/g, " ");
+    // razlomak: brojni a/b -> imenovan ("3/4" -> "3 četvrtine"); slovni/mešani ostaje "kroz"
+    s = s.replace(/(\d+)\s*\/\s*(\d+)/g, function (_, a, b) { return " " + razlomakReci(a, b) + " "; });
     s = s.replace(/([0-9A-Za-z])\s*\/\s*([0-9A-Za-z])/g, "$1 kroz $2");
     // plus / minus
     s = s.replace(/\+/g, " plus ");
@@ -342,18 +380,28 @@
     s = s.replace(/(\d|\s)\s*-\s*(\d|[A-Za-z])/g, "$1 minus $2");
     // implicitno množenje: 2x -> 2 iks, 4ac -> 4 ac
     s = s.replace(/(\d)(?=[A-Za-zπ])/g, "$1 ");
+    // faktorijel: 5! -> „5 faktorijel", n! -> „en faktorijel"
+    s = s.replace(/(\d)\s*!/g, "$1 faktorijel ");
+    s = s.replace(/\b([nmk])\s*!/g, "$1 faktorijel ");
+    // slovo Q -> "ku" (da ne čita "kju"); ako Q kod tebe znači skup racionalnih, vidi napomenu
+    s = s.replace(/\bQ\b/g, " ku ");
     // promenljive bez srpskog ekvivalenta -> uvek matematika
     s = s.replace(/[xX]/g, " iks ");
     s = s.replace(/[yY]/g, " ipsilon ");
     return s.replace(/\s{2,}/g, " ").trim();
   }
   function clean(text) {
-    var s = stripEmoji(stripMd(text));
     if (LANG === "sr" || LANG === "bs" || LANG === "hr") {
+      // strelice nose značenje (limesi/implikacije) — obradi ih PRE stripEmoji koji bi ih obrisao
+      var s = stripMd(text)
+        .replace(/([A-Za-z0-9)\]∞])\s*[→⟶]\s*/g, "$1 teži ka ") // x→0, n→∞
+        .replace(/[⇒⟹]/g, " sledi ").replace(/⇔/g, " ako i samo ako ");
+      s = stripEmoji(s);
       s = s.replace(/\bFTN\b/g, "Fakultet tehničkih nauka"); // da ne čita „ef-ti-en"
       return mathSr(s);
     }
-    return s.replace(/\^2(?![0-9])/g, "²").replace(/\^3(?![0-9])/g, "³")
+    var e = stripEmoji(stripMd(text));
+    return e.replace(/\^2(?![0-9])/g, "²").replace(/\^3(?![0-9])/g, "³")
             .replace(/\^/g, " ").replace(/\s{2,}/g, " ").trim();
   }
 
@@ -421,8 +469,10 @@
     var c = ensureCtx();
     if (!c) { deviceSpeak(text, btn); return; }
     // 1) Azure glas (isti za sve uređaje); 2) ako zakaže -> glas uređaja
+    var ttsBody = { text: spoken, lang: LANG, voice: VOICE };
+    if (RATE) ttsBody.speed = RATE;
     fetch(TTS, { method: "POST", headers: { "Content-Type": "application/json" },
-                 body: JSON.stringify({ text: spoken, lang: LANG, voice: VOICE }) })
+                 body: JSON.stringify(ttsBody) })
       .then(function (r) { if (!r.ok) throw 0; return r.arrayBuffer(); })
       .then(function (buf) {
         if (!buf || buf.byteLength < 256) throw 0;
