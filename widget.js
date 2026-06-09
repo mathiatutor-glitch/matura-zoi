@@ -371,9 +371,11 @@
     s = s.replace(/∞/g, " beskonačno ");
     s = s.replace(/°/g, " stepeni ");
     s = s.replace(/[()\[\]{}]/g, " ");
-    // razlomak: brojni a/b -> imenovan ("3/4" -> "3 četvrtine"); slovni/mešani ostaje "kroz"
+    // razlomak: brojni a/b -> imenovan ("3/4" -> "3 četvrtine")
     s = s.replace(/(\d+)\s*\/\s*(\d+)/g, function (_, a, b) { return " " + razlomakReci(a, b) + " "; });
-    s = s.replace(/([0-9A-Za-z])\s*\/\s*([0-9A-Za-z])/g, "$1 kroz $2");
+    // ostala kosa crta: kratki tokeni (promenljive/brojevi) -> "kroz" (deljenje); reči -> "ili" (npr. „došao/la", „online/uživo")
+    s = s.replace(/([0-9A-Za-zčćžšđČĆŽŠĐ]+)\s*\/\s*([0-9A-Za-zčćžšđČĆŽŠĐ]+)/g,
+      function (_, a, b) { return (a.length <= 2 && b.length <= 2) ? (a + " kroz " + b) : (a + " ili " + b); });
     // plus / minus
     s = s.replace(/\+/g, " plus ");
     s = s.replace(/−/g, " minus ");
@@ -391,6 +393,7 @@
     return s.replace(/\s{2,}/g, " ").trim();
   }
   function clean(text) {
+    text = String(text == null ? "" : text).normalize("NFC"); // spoji rastavljene kvačice (Ć, Č, Š…)
     if (LANG === "sr" || LANG === "bs" || LANG === "hr") {
       // strelice nose značenje (limesi/implikacije) — obradi ih PRE stripEmoji koji bi ih obrisao
       var s = stripMd(text)
