@@ -5,7 +5,7 @@
 // Ako neki provajder zakaže, widget se sam vraća na glas uređaja.
 
 // ——— ElevenLabs (samo srpski) ———
-const EL_VOICE_SR = "d3l4f3HgkE3P6Fo91lYA"; // "Ida"
+const EL_VOICE_SR = "sK1CZxinAv6CB3NL3fNq"; // tvoj klon — isti glas za Zoi i Milu (raniji "Ida": d3l4f3HgkE3P6Fo91lYA)
 const EL_MODEL = "eleven_multilingual_v2";
 
 // ——— Azure (ostali jezici) ———
@@ -42,7 +42,10 @@ function xmlEscape(s) {
 }
 
 // ElevenLabs -> MP3 buffer
-async function synthEleven(text, voiceId, key) {
+async function synthEleven(text, voiceId, key, speed) {
+  const vs = { stability: 0.5, similarity_boost: 0.75, style: 0.0, use_speaker_boost: true };
+  const sp = Number(speed);
+  vs.speed = (sp >= 0.7 && sp <= 1.2) ? sp : 0.9; // podrazumevano 0.9 (sporije); data-rate/?speed= menja
   const r = await fetch(
     `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}?output_format=mp3_44100_128`,
     {
@@ -55,7 +58,7 @@ async function synthEleven(text, voiceId, key) {
       body: JSON.stringify({
         text: text,
         model_id: EL_MODEL,
-        voice_settings: { stability: 0.5, similarity_boost: 0.75, style: 0.0, use_speaker_boost: true },
+        voice_settings: vs,
       }),
     }
   );
@@ -96,13 +99,13 @@ async function synthAzure(text, lang, key, region, override) {
 }
 
 // izaberi provajdera po jeziku
-async function speak(text, lang, voice) {
+async function speak(text, lang, voice, speed) {
   const elKey = process.env.ELEVENLABS_API_KEY;
   const azKey = process.env.AZURE_SPEECH_KEY;
   const azRegion = process.env.AZURE_SPEECH_REGION;
 
   if (lang === "sr" && elKey) {
-    return await synthEleven(text, voice || EL_VOICE_SR, elKey);   // srpski -> zadati glas ili Ida
+    return await synthEleven(text, voice || EL_VOICE_SR, elKey, speed);   // srpski -> zadati glas ili Ida
   }
   if (azKey && azRegion) {
     return await synthAzure(text, lang, azKey, azRegion); // ostalo -> Azure
@@ -123,7 +126,8 @@ export default async function handler(req, res) {
     if (req.method === "GET") {
       const lang = (req.query && req.query.lang) || "sr";
       const voice = (req.query && req.query.voice) || "";
-      const buf = await speak(SAMPLE[lang] || SAMPLE.sr, lang, voice);
+      const speed = (req.query && req.query.speed) || "";
+      const buf = await speak(SAMPLE[lang] || SAMPLE.sr, lang, voice, speed);
       res.setHeader("Content-Type", "audio/mpeg");
       res.setHeader("Cache-Control", "no-store");
       res.statusCode = 200;
@@ -132,11 +136,11 @@ export default async function handler(req, res) {
 
     if (req.method !== "POST") return res.status(405).json({ error: "Koristi POST." });
 
-    const { text = "", lang = "sr", voice = "" } = req.body || {};
+    const { text = "", lang = "sr", voice = "", speed = "" } = req.body || {};
     const t = String(text).slice(0, 1500);
     if (!t.trim()) return res.status(400).json({ error: "Nema teksta." });
 
-    const buf = await speak(t, lang, voice);
+    const buf = await speak(t, lang, voice, speed);
     res.setHeader("Content-Type", "audio/mpeg");
     res.setHeader("Cache-Control", "no-store");
     res.statusCode = 200;
