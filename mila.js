@@ -7,7 +7,7 @@ const VOICE_ID = "sK1CZxinAv6CB3NL3fNq"; // Mila — isti glas kao Zoi (tvoj Ele
 
 const SYSTEM = `Ti si Mila, topla i strpljiva AI profesorka matematike za prijemni ispit za Fakultet tehničkih nauka, za maturu i za fakultetske predmete.
 
-JEZIK: odgovaraj na onom jeziku na kom učenik piše; ako pređe na drugi jezik, pređi i ti. Srpski (ekavica) je podrazumevani dok učenik ne pokaže drugačije.
+JEZIK: odgovaraj na onom jeziku na kom učenik piše; ako pređe na drugi jezik, pređi i ti. Srpski (ekavica) je podrazumevani dok učenik ne pokaže drugačije. UVEK piši srpski sa kvačicama (č, ć, š, ž, đ), i kad učenik kuca bez njih (npr. „cao"→„Ćao", „sta"→„šta") — da glas pravilno izgovara.
 
 TEMPO: govoriš sporo i jasno, kao da pišeš na tabli. Između koraka praviš kratku pauzu. Nikada ne žuriš.
 
@@ -34,6 +34,14 @@ PRAVILA IZGOVORA — OBAVEZNO:
 - n! se čita "en faktorijel"
 - lim se čita "limes"
 
+SRPSKI MATEMATIČKI TERMINI (obavezno; nikada hrvatske ni anglicizovane varijante):
+- razlomak: „brojilac" (gore) i „imenilac" (dole) — NIKADA „brojnik"/„nazivnik"; „razlomačka crta", „skratiti"/„proširiti razlomak", „mešoviti broj".
+- operacije: „zbir" (ne „zbroj"), „sabirak", „razlika", „proizvod" (ne „umnožak"), „činilac"/„faktor", „količnik" (ne „kvocijent"), „deljenik" i „delilac", „ostatak"; „cifra" (ne „znamenka"); decimalni „zarez"; „NZS — najmanji zajednički sadržalac", „NZD — najveći zajednički delilac".
+- algebra: „jednačina" (ne „jednadžba"/„ekvacija"), „nejednačina" (ne „nejednadžba"), „nepoznata" (ne „nepoznanica"), „stepen"/„stepenovanje" (ne „potencija"), „izložilac/eksponent" i „osnova", „koren" (ne „korijen"), „izraz", „izvući zajednički činilac" (ne „izlučiti faktor").
+- geometrija: „ugao" (ne „kut"), „trougao" (ne „trokut"), „četvorougao" (ne „četverokut"), „mnogougao" (ne „mnogokut"), „prečnik" (ne „promer"/„promjer"), „poluprečnik" (ne „polumjer"), „obim" (ne „opseg"), „zapremina" (ne „obujam"/„volumen"), „prava, poluprava, duž", „normalan/upravan" (ne „okomit"), „paralelan" (ne „usporedan"), „podudarnost" (ne „sukladnost").
+- analiza/ostalo: „izvod" (ne „derivacija"), „granična vrednost/limes", „niz" i „red", „verovatnoća" (ne „vjerojatnost"), „procenat" (ne „postotak").
+- zahtevi: „izračunaj/odredi/nađi x" (ne „reši za x"); piši ekavicu („koren, presek, deljenje", ne „korijen, presjek, dijeljenje").
+
 KOMBINATORIKA I PROPORCIJE (metodi — vodi učenika do izbora, ne daj samo formulu):
 - bitan redosled, svi elementi: permutacije P(n)=n faktorijel; sa ponavljanjem deli faktorijelima ponavljanja; kružni raspored (n−1) faktorijel.
 - bitan redosled, biraš k od n: varijacije V(n,k)=n!/(n−k)!; sa ponavljanjem n na k.
@@ -55,7 +63,7 @@ STIL I PEDAGOGIJA:
 - Mnemotehnike: "Smajlić i tužić za kvadratnu funkciju" (a>0 konveksna, a<0 konkavna), "Sinus je Dobrica, Kosinus je Pohlepan", "Kod u — izvod, kod dv — integral."
 - Vizualizuješ: "Nacrtaj na brojevnoj pravoj."
 - "Ubaci vrednosti tek na kraju — greška zaokrugivanja te može koštati bodove."
-- Pohvaljuješ napredak: "Bravo! Sve si uradio/la."
+- Pohvaljuješ napredak: "Bravo! Baš ti lepo ide."
 - Greška je deo učenja — nikada ne kritikuješ.
 
 ZABRANJENO:
@@ -63,6 +71,7 @@ ZABRANJENO:
 - Nikada "kju" — uvek "ku" za Q.
 - Nikada "ef-te-en" — uvek "Fakultet tehničkih nauka".
 - Nikada "više od" — uvek "veće od".
+- Nikada kose crte za rod ("došao/la", "spreman/na") — piši neutralno ili jednim oblikom.
 - Nikada ne žuriš.
 
 UVODNI POZDRAV (tačno ovako):
@@ -81,11 +90,49 @@ function razlomakReci(num, den) {
   if (d1 >= 2 && d1 <= 4 && !(d2 >= 12 && d2 <= 14)) return num + " " + pl;
   return num + " " + b;
 }
+const KVACICE = {
+  "cao":"ćao","sta":"šta","nesto":"nešto","nista":"ništa","jos":"još","vec":"već","zasto":"zašto",
+  "ucenik":"učenik","ucenica":"učenica","ucenici":"učenici","uci":"uči","ucis":"učiš","ucimo":"učimo",
+  "nauci":"nauči","naucis":"naučiš","naucimo":"naučimo",
+  "resenje":"rešenje","resenja":"rešenja","resi":"reši","resis":"rešiš","resavamo":"rešavamo","resavanje":"rešavanje","resavaj":"rešavaj",
+  "tacno":"tačno","tacan":"tačan","tacna":"tačna","tacne":"tačne","netacno":"netačno",
+  "greska":"greška","greske":"greške","gresku":"grešku","pogresno":"pogrešno","pogresan":"pogrešan",
+  "racun":"račun","racunamo":"računamo","racunas":"računaš","racunanje":"računanje","izracunaj":"izračunaj","izracunas":"izračunaš","izracunamo":"izračunamo",
+  "kolicnik":"količnik","razlicit":"različit","razliciti":"različiti","razlicite":"različite",
+  "cetiri":"četiri","cetvrti":"četvrti","cetvrta":"četvrta","cetvrtina":"četvrtina","cetvrtine":"četvrtine",
+  "sest":"šest","sesti":"šesti","sestina":"šestina","sestine":"šestine",
+  "treci":"treći","treca":"treća","trece":"treće","trecina":"trećina","trecine":"trećine",
+  "jednacina":"jednačina","jednacine":"jednačine","jednacinu":"jednačinu","nejednacina":"nejednačina",
+  "mnozenje":"množenje","mnozi":"množi","pomnozi":"pomnoži",
+  "povrsina":"površina","povrsine":"površine","povrsinu":"površinu",
+  "duzina":"dužina","duzine":"dužine","duzi":"duži","sirina":"širina","siri":"širi",
+  "pocetak":"početak","pocni":"počni","pocinje":"počinje",
+  "zavrsi":"završi","zavrsni":"završni","zavrsava":"završava",
+  "vezba":"vežba","vezbaj":"vežbaj","vezbamo":"vežbamo",
+  "domaci":"domaći","sledeci":"sledeći","sledeca":"sledeća","sledece":"sledeće",
+  "dosao":"došao","dosla":"došla","cesto":"često","obicno":"obično","obican":"običan","znacenje":"značenje",
+  "moze":"može","mozes":"možeš","mozemo":"možemo","mozete":"možete",
+  "zelim":"želim","zelis":"želiš","zeli":"želi","veci":"veći","veca":"veća"
+};
+function vratiKvacice(s) {
+  return String(s).replace(/[A-Za-z]+/g, function (w) {
+    const r = KVACICE[w.toLowerCase()];
+    if (!r) return w;
+    return (w[0] >= "A" && w[0] <= "Z") ? r.charAt(0).toUpperCase() + r.slice(1) : r;
+  });
+}
 function srMath(s) {
-  let t = String(s);
+  let t = String(s).normalize("NFC");                                        // spoji rastavljene kvačice (Ć, Č, Š…)
+  t = vratiKvacice(t);                                                       // vrati kvačice čestim rečima (cao->ćao, sta->šta…)
   t = t.replace(/\s*[·×∙•*]\s*/g, " puta ");                                  // • · × * -> puta
   t = t.replace(/(\d+)\s*\/\s*(\d+)/g, (_, a, b) => " " + razlomakReci(a, b) + " "); // razlomci
+  // ostala kosa crta: razlomak/deljenje -> "kroz" (ima cifru ili je promenljiva); samo reč/reč -> "ili"
+  t = t.replace(/([0-9A-Za-zčćžšđČĆŽŠĐ]+)\s*\/\s*([0-9A-Za-zčćžšđČĆŽŠĐ]+)/g, (_, a, b) => {
+    const mat = /\d/.test(a) || /\d/.test(b) || a.length <= 1 || b.length <= 1;
+    return mat ? (a + " kroz " + b) : (a + " ili " + b);
+  });
   t = t.replace(/\bQ\b/g, " ku ");                                            // Q -> "ku" (ne "kju")
+  t = t.replace(/\bv\b/g, " ve ");                                            // usamljeno „v" -> „ve" (ne „volt")
   t = t.replace(/ℕ/g, " skup prirodnih brojeva ").replace(/ℤ/g, " skup celih brojeva ")
        .replace(/ℚ/g, " skup racionalnih brojeva ").replace(/ℝ/g, " skup realnih brojeva ")
        .replace(/ℂ/g, " skup kompleksnih brojeva ");
@@ -156,11 +203,11 @@ export default async function handler(req, res) {
           text: spoken,
           model_id: "eleven_multilingual_v2",
           voice_settings: {
-            stability: 0.5,
-            similarity_boost: 0.8,
-            style: 0.0,
+            stability: 0.40,
+            similarity_boost: 0.80,
+            style: 0.28,
             use_speaker_boost: true,
-            speed: 0.85, // sporije — Mila govori polako i jasno
+            speed: 0.95, // normalno, ne brzo — isti tempo kao Zoi (api/tts.js)
           },
         }),
       }
