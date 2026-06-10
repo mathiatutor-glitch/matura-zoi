@@ -203,9 +203,9 @@ export default async function handler(req, res) {
           text: spoken,
           model_id: "eleven_multilingual_v2",
           voice_settings: {
-            stability: 0.5,
-            similarity_boost: 0.8,
-            style: 0.0,
+            stability: 0.40,
+            similarity_boost: 0.80,
+            style: 0.28,
             use_speaker_boost: true,
             speed: 0.95, // normalno, ne brzo — isti tempo kao Zoi (api/tts.js)
           },

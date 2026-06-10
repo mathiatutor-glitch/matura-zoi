@@ -43,7 +43,7 @@ function xmlEscape(s) {
 
 // ElevenLabs -> MP3 buffer
 async function synthEleven(text, voiceId, key, speed) {
-  const vs = { stability: 0.5, similarity_boost: 0.75, style: 0.0, use_speaker_boost: true };
+  const vs = { stability: 0.40, similarity_boost: 0.80, style: 0.28, use_speaker_boost: true };
   const sp = Number(speed);
   vs.speed = (sp >= 0.7 && sp <= 1.2) ? sp : 0.95; // podrazumevano 0.95 (normalno, ne brzo); data-rate/?speed= menja
   const r = await fetch(
