@@ -40,6 +40,10 @@ README.md
 - **Bolje čitanje matematike (oba):** razlomci („tri četvrtine"), `Q` -> „ku",
   `f(x)`/`f'(x)`/`f''(x)`, `|x|`, `n!`, `integral`, `Σ` -> „suma", `∂` -> „parcijalno",
   `x->0` -> „iks teži ka nuli", `=>` -> „sledi", skupovi `∈ ∪ ∩` i `ℕ ℤ ℚ ℝ ℂ`, `lim`, `arcsin/arctg`.
+- **Najnovije ispravke:** kosa crta razlomka -> „kroz" (a rod/alternative -> „ili", npr. „došao/la");
+  usamljeno „v" -> „ve" (ne „volt"); vraćanje kvačica kad se kuca golo (cao->ćao, sta->šta…) + NFC;
+  faktorijel i binomni koeficijent `n!/(k!(n-k)!)` ispravno; Zoi/Mila uvek pišu sa kvačicama i bez
+  rodnih kosih crta. Sa sajta uklonjeni „Zakaži čas"/Visibook, „online/uživo" i „Novi Sad".
 
 ---
 
@@ -85,7 +89,7 @@ povećaj broj u `?v=` da pregledači povuku novo (sad je v=16).
 
 Zoi — prijemni FTN:
 ```html
-<script src="https://mathia.rs/widget.js?v=16"
+<script src="https://mathia.rs/widget.js?v=18"
         data-api="https://mathia.rs/api/chat"
         data-mode="ftn" data-lang="sr"></script>
 ```
@@ -93,7 +97,7 @@ Zoi — mala matura: isto, samo `data-mode="matura"`.
 
 Mila (isti widget, ime + isti glas + sporije):
 ```html
-<script src="https://mathia.rs/widget.js?v=16"
+<script src="https://mathia.rs/widget.js?v=18"
         data-api="https://mathia.rs/api/chat"
         data-mode="ftn" data-name="Mila"
         data-voice="sK1CZxinAv6CB3NL3fNq"

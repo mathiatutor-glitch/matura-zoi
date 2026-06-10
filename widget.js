@@ -19,7 +19,7 @@
   var NAME = (script && script.getAttribute("data-name")) || "Zoi"; // ime asistenta (npr. "Mila")
   var VOICE = (script && script.getAttribute("data-voice")) || ""; // ElevenLabs Voice ID za srpski (prazno = podrazumevano)
   var AVATAR_OK = true;
-  var TTS = (script && script.getAttribute("data-tts")) || API.replace(/\/api\/chat\/?$/, "/api/tts");
+  var TTS = (script && script.getAttribute("data-tts")) || API.replace(/\/api\/[a-z-]+\/?$/, "/api/tts");
   var RATE = (script && script.getAttribute("data-rate")) || ""; // brzina govora (npr. "0.85" za sporije); prazno = normalno
 
   // ——— prevodi UI-ja (AI ionako odgovara na izabranom jeziku) ———
@@ -301,7 +301,42 @@
     return num + " " + b;                            // 5+, 11..14 -> jedninski/gen.mn. oblik
   }
   // izgovor matematike na srpskom (i bs/hr) — simboli -> reči
+  // Vraćanje srpskih kvačica za najčešće reči (kad se kuca bez č/ć/š/ž/đ).
+  // Potpuno automatsko vraćanje nije moguće (npr. "kuca" = "kuća" ili "kuca"); ovo je rečnik
+  // čestih, nedvosmislenih reči — glavni oslonac je da Zoi piše sa kvačicama.
+  var KVACICE = {
+    "cao":"ćao","sta":"šta","nesto":"nešto","nista":"ništa","jos":"još","vec":"već","zasto":"zašto",
+    "ucenik":"učenik","ucenica":"učenica","ucenici":"učenici","uci":"uči","ucis":"učiš","ucimo":"učimo",
+    "nauci":"nauči","naucis":"naučiš","naucimo":"naučimo",
+    "resenje":"rešenje","resenja":"rešenja","resi":"reši","resis":"rešiš","resavamo":"rešavamo","resavanje":"rešavanje","resavaj":"rešavaj",
+    "tacno":"tačno","tacan":"tačan","tacna":"tačna","tacne":"tačne","netacno":"netačno",
+    "greska":"greška","greske":"greške","gresku":"grešku","pogresno":"pogrešno","pogresan":"pogrešan",
+    "racun":"račun","racunamo":"računamo","racunas":"računaš","racunanje":"računanje","izracunaj":"izračunaj","izracunas":"izračunaš","izracunamo":"izračunamo",
+    "kolicnik":"količnik","razlicit":"različit","razliciti":"različiti","razlicite":"različite",
+    "cetiri":"četiri","cetvrti":"četvrti","cetvrta":"četvrta","cetvrtina":"četvrtina","cetvrtine":"četvrtine",
+    "sest":"šest","sesti":"šesti","sestina":"šestina","sestine":"šestine",
+    "treci":"treći","treca":"treća","trece":"treće","trecina":"trećina","trecine":"trećine",
+    "jednacina":"jednačina","jednacine":"jednačine","jednacinu":"jednačinu","nejednacina":"nejednačina",
+    "mnozenje":"množenje","mnozi":"množi","pomnozi":"pomnoži",
+    "povrsina":"površina","povrsine":"površine","povrsinu":"površinu",
+    "duzina":"dužina","duzine":"dužine","duzi":"duži","sirina":"širina","siri":"širi",
+    "pocetak":"početak","pocni":"počni","pocinje":"počinje",
+    "zavrsi":"završi","zavrsni":"završni","zavrsava":"završava",
+    "vezba":"vežba","vezbaj":"vežbaj","vezbamo":"vežbamo",
+    "domaci":"domaći","sledeci":"sledeći","sledeca":"sledeća","sledece":"sledeće",
+    "dosao":"došao","dosla":"došla","cesto":"često","obicno":"obično","obican":"običan","znacenje":"značenje",
+    "moze":"može","mozes":"možeš","mozemo":"možemo","mozete":"možete",
+    "zelim":"želim","zelis":"želiš","zeli":"želi","veci":"veći","veca":"veća"
+  };
+  function vratiKvacice(s) {
+    return String(s).replace(/[A-Za-z]+/g, function (w) {
+      var r = KVACICE[w.toLowerCase()];
+      if (!r) return w;
+      return (w[0] >= "A" && w[0] <= "Z") ? r.charAt(0).toUpperCase() + r.slice(1) : r;
+    });
+  }
   function mathSr(s) {
+    s = vratiKvacice(s);
     s = " " + s + " ";
     // grčka slova -> srpski izgovor (npr. „sin α" -> „sinus alfa"); π se rešava niže kao „pi"
     s = s.replace(/[αΑ]/g, " alfa ").replace(/[βΒ]/g, " beta ").replace(/[γΓ]/g, " gama ")
@@ -371,22 +406,26 @@
     s = s.replace(/∞/g, " beskonačno ");
     s = s.replace(/°/g, " stepeni ");
     s = s.replace(/[()\[\]{}]/g, " ");
+    // faktorijel: 5! -> „5 faktorijel", n! -> „en faktorijel" (pre razlomka, da „!" ne smeta kosoj crti)
+    s = s.replace(/(\d)\s*!/g, "$1 faktorijel ");
+    s = s.replace(/\b([nmk])\s*!/g, "$1 faktorijel ");
     // razlomak: brojni a/b -> imenovan ("3/4" -> "3 četvrtine")
     s = s.replace(/(\d+)\s*\/\s*(\d+)/g, function (_, a, b) { return " " + razlomakReci(a, b) + " "; });
-    // ostala kosa crta: kratki tokeni (promenljive/brojevi) -> "kroz" (deljenje); reči -> "ili" (npr. „došao/la", „online/uživo")
-    s = s.replace(/([0-9A-Za-zčćžšđČĆŽŠĐ]+)\s*\/\s*([0-9A-Za-zčćžšđČĆŽŠĐ]+)/g,
-      function (_, a, b) { return (a.length <= 2 && b.length <= 2) ? (a + " kroz " + b) : (a + " ili " + b); });
+    // ostala kosa crta: razlomak/deljenje -> "kroz" (ima cifru ili je promenljiva); samo reč/reč -> "ili" (npr. „došao/la")
+    s = s.replace(/([0-9A-Za-zčćžšđČĆŽŠĐ]+)\s*\/\s*([0-9A-Za-zčćžšđČĆŽŠĐ]+)/g, function (_, a, b) {
+      var mat = /\d/.test(a) || /\d/.test(b) || a.length <= 1 || b.length <= 1;
+      return mat ? (a + " kroz " + b) : (a + " ili " + b);
+    });
     // plus / minus
     s = s.replace(/\+/g, " plus ");
     s = s.replace(/−/g, " minus ");
     s = s.replace(/(\d|\s)\s*-\s*(\d|[A-Za-z])/g, "$1 minus $2");
     // implicitno množenje: 2x -> 2 iks, 4ac -> 4 ac
     s = s.replace(/(\d)(?=[A-Za-zπ])/g, "$1 ");
-    // faktorijel: 5! -> „5 faktorijel", n! -> „en faktorijel"
-    s = s.replace(/(\d)\s*!/g, "$1 faktorijel ");
-    s = s.replace(/\b([nmk])\s*!/g, "$1 faktorijel ");
     // slovo Q -> "ku" (da ne čita "kju"); ako Q kod tebe znači skup racionalnih, vidi napomenu
     s = s.replace(/\bQ\b/g, " ku ");
+    // usamljeno slovo „v" (opcija a/b/v/g, ili promenljiva) -> „ve" (da ne čita „volt")
+    s = s.replace(/\bv\b/g, " ve ");
     // promenljive bez srpskog ekvivalenta -> uvek matematika
     s = s.replace(/[xX]/g, " iks ");
     s = s.replace(/[yY]/g, " ipsilon ");
