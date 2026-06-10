@@ -7,7 +7,7 @@ const VOICE_ID = "sK1CZxinAv6CB3NL3fNq"; // Mila — isti glas kao Zoi (tvoj Ele
 
 const SYSTEM = `Ti si Mila, topla i strpljiva AI profesorka matematike za prijemni ispit za Fakultet tehničkih nauka, za maturu i za fakultetske predmete.
 
-JEZIK: odgovaraj na onom jeziku na kom učenik piše; ako pređe na drugi jezik, pređi i ti. Srpski (ekavica) je podrazumevani dok učenik ne pokaže drugačije.
+JEZIK: odgovaraj na onom jeziku na kom učenik piše; ako pređe na drugi jezik, pređi i ti. Srpski (ekavica) je podrazumevani dok učenik ne pokaže drugačije. UVEK piši srpski sa kvačicama (č, ć, š, ž, đ), i kad učenik kuca bez njih (npr. „cao"→„Ćao", „sta"→„šta") — da glas pravilno izgovara.
 
 TEMPO: govoriš sporo i jasno, kao da pišeš na tabli. Između koraka praviš kratku pauzu. Nikada ne žuriš.
 
@@ -82,14 +82,49 @@ function razlomakReci(num, den) {
   if (d1 >= 2 && d1 <= 4 && !(d2 >= 12 && d2 <= 14)) return num + " " + pl;
   return num + " " + b;
 }
+const KVACICE = {
+  "cao":"ćao","sta":"šta","nesto":"nešto","nista":"ništa","jos":"još","vec":"već","zasto":"zašto",
+  "ucenik":"učenik","ucenica":"učenica","ucenici":"učenici","uci":"uči","ucis":"učiš","ucimo":"učimo",
+  "nauci":"nauči","naucis":"naučiš","naucimo":"naučimo",
+  "resenje":"rešenje","resenja":"rešenja","resi":"reši","resis":"rešiš","resavamo":"rešavamo","resavanje":"rešavanje","resavaj":"rešavaj",
+  "tacno":"tačno","tacan":"tačan","tacna":"tačna","tacne":"tačne","netacno":"netačno",
+  "greska":"greška","greske":"greške","gresku":"grešku","pogresno":"pogrešno","pogresan":"pogrešan",
+  "racun":"račun","racunamo":"računamo","racunas":"računaš","racunanje":"računanje","izracunaj":"izračunaj","izracunas":"izračunaš","izracunamo":"izračunamo",
+  "kolicnik":"količnik","razlicit":"različit","razliciti":"različiti","razlicite":"različite",
+  "cetiri":"četiri","cetvrti":"četvrti","cetvrta":"četvrta","cetvrtina":"četvrtina","cetvrtine":"četvrtine",
+  "sest":"šest","sesti":"šesti","sestina":"šestina","sestine":"šestine",
+  "treci":"treći","treca":"treća","trece":"treće","trecina":"trećina","trecine":"trećine",
+  "jednacina":"jednačina","jednacine":"jednačine","jednacinu":"jednačinu","nejednacina":"nejednačina",
+  "mnozenje":"množenje","mnozi":"množi","pomnozi":"pomnoži",
+  "povrsina":"površina","povrsine":"površine","povrsinu":"površinu",
+  "duzina":"dužina","duzine":"dužine","duzi":"duži","sirina":"širina","siri":"širi",
+  "pocetak":"početak","pocni":"počni","pocinje":"počinje",
+  "zavrsi":"završi","zavrsni":"završni","zavrsava":"završava",
+  "vezba":"vežba","vezbaj":"vežbaj","vezbamo":"vežbamo",
+  "domaci":"domaći","sledeci":"sledeći","sledeca":"sledeća","sledece":"sledeće",
+  "dosao":"došao","dosla":"došla","cesto":"često","obicno":"obično","obican":"običan","znacenje":"značenje",
+  "moze":"može","mozes":"možeš","mozemo":"možemo","mozete":"možete",
+  "zelim":"želim","zelis":"želiš","zeli":"želi","veci":"veći","veca":"veća"
+};
+function vratiKvacice(s) {
+  return String(s).replace(/[A-Za-z]+/g, function (w) {
+    const r = KVACICE[w.toLowerCase()];
+    if (!r) return w;
+    return (w[0] >= "A" && w[0] <= "Z") ? r.charAt(0).toUpperCase() + r.slice(1) : r;
+  });
+}
 function srMath(s) {
   let t = String(s).normalize("NFC");                                        // spoji rastavljene kvačice (Ć, Č, Š…)
+  t = vratiKvacice(t);                                                       // vrati kvačice čestim rečima (cao->ćao, sta->šta…)
   t = t.replace(/\s*[·×∙•*]\s*/g, " puta ");                                  // • · × * -> puta
   t = t.replace(/(\d+)\s*\/\s*(\d+)/g, (_, a, b) => " " + razlomakReci(a, b) + " "); // razlomci
-  // ostala kosa crta: kratko -> "kroz" (deljenje), reči -> "ili" (npr. „došao/la", „online/uživo")
-  t = t.replace(/([0-9A-Za-zčćžšđČĆŽŠĐ]+)\s*\/\s*([0-9A-Za-zčćžšđČĆŽŠĐ]+)/g,
-    (_, a, b) => (a.length <= 2 && b.length <= 2) ? (a + " kroz " + b) : (a + " ili " + b));
+  // ostala kosa crta: razlomak/deljenje -> "kroz" (ima cifru ili je promenljiva); samo reč/reč -> "ili"
+  t = t.replace(/([0-9A-Za-zčćžšđČĆŽŠĐ]+)\s*\/\s*([0-9A-Za-zčćžšđČĆŽŠĐ]+)/g, (_, a, b) => {
+    const mat = /\d/.test(a) || /\d/.test(b) || a.length <= 1 || b.length <= 1;
+    return mat ? (a + " kroz " + b) : (a + " ili " + b);
+  });
   t = t.replace(/\bQ\b/g, " ku ");                                            // Q -> "ku" (ne "kju")
+  t = t.replace(/\bv\b/g, " ve ");                                            // usamljeno „v" -> „ve" (ne „volt")
   t = t.replace(/ℕ/g, " skup prirodnih brojeva ").replace(/ℤ/g, " skup celih brojeva ")
        .replace(/ℚ/g, " skup racionalnih brojeva ").replace(/ℝ/g, " skup realnih brojeva ")
        .replace(/ℂ/g, " skup kompleksnih brojeva ");
@@ -164,7 +199,7 @@ export default async function handler(req, res) {
             similarity_boost: 0.8,
             style: 0.0,
             use_speaker_boost: true,
-            speed: 0.85, // sporije — Mila govori polako i jasno
+            speed: 0.95, // normalno, ne brzo — isti tempo kao Zoi (api/tts.js)
           },
         }),
       }

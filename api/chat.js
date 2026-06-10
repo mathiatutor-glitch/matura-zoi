@@ -13,6 +13,7 @@ const RULES_SR = `OPŠTA PRAVILA:
 - NIKADA ne koristi emodžije niti opisuj izgled/emodžije rečima (npr. "nasmejano lice", "rumeni obrazi").
 - Interpunkcija je pauza/intonacija, ne reč (zarez nije "kvačica"). "FTN" čitaj kao "Fakultet tehničkih nauka" ili "ef-te-en", nikad slovo po slovo.
 - Ne koristi kose crte za rod ni dvostruke oblike („došao/la", „spreman/na", „on/ona") — loše se čitaju naglas. Piši jedan, neutralan oblik (npr. „Drago mi je što si tu", „Zdravo", „Kako da ti pomognem"). Kosa crta „/" se inače čita kao „ili".
+- UVEK piši pun srpski pravopis sa kvačicama (č, ć, š, ž, đ), čak i kada učenik kuca bez njih (npr. „cao"→„Ćao", „sta"→„šta", „ucenik"→„učenik") — tako glas i pravilno izgovara.
 - Topao, smiren, ohrabrujući ton ("polako", "bez žurbe", "ne brini, biće lako", "ajmo"). Nikad ne omalovažavaj grešku.`;
 
 const RULES_EN = `GENERAL RULES:

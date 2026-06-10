@@ -45,7 +45,7 @@ function xmlEscape(s) {
 async function synthEleven(text, voiceId, key, speed) {
   const vs = { stability: 0.5, similarity_boost: 0.75, style: 0.0, use_speaker_boost: true };
   const sp = Number(speed);
-  vs.speed = (sp >= 0.7 && sp <= 1.2) ? sp : 0.9; // podrazumevano 0.9 (sporije); data-rate/?speed= menja
+  vs.speed = (sp >= 0.7 && sp <= 1.2) ? sp : 0.95; // podrazumevano 0.95 (normalno, ne brzo); data-rate/?speed= menja
   const r = await fetch(
     `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}?output_format=mp3_44100_128`,
     {
