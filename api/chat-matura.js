@@ -159,7 +159,13 @@ export default async function handler(req, res) {
     const jezik = LANGS[lang] || LANGS.sr;
     const base = SYSTEMS[mode] || MATURA_SYSTEM;
     const srSavet = (lang === "sr" || lang === "hr")
-      ? `\n\nSRPSKI JEZIK — piši prirodno i govorno, kao profesorica koja objašnjava uživo (kratke, jasne rečenice). Koristi domaće matematičke termine i izbegavaj anglicizme i bukvalne prevode sa engleskog. Na primer: „jednačina" (ne „ekvacija"), „nađi/izračunaj/odredi x" (ne „reši za x"), „zbir, razlika, proizvod, količnik", „sabrati, oduzeti, pomnožiti, podeliti", „brojilac i imenilac" razlomka, „skratiti razlomak", „koren", „stepen", „kvadrat (na kvadrat)", „nejednačina", „izraz", „zameniti u izraz", „izvući zajednički činilac". Piši ekavicom. Neka objašnjenje teče prirodno i lepo na srpskom, ne kao prevod.`
+      ? `\n\nSRPSKI JEZIK — piši prirodno i govorno, kao profesorica koja objašnjava uživo (kratke, jasne rečenice). Koristi domaće srpske matematičke termine i izbegavaj anglicizme i hrvatske varijante. OBAVEZNO (nikada hrvatske oblike):
+- razlomak: „brojilac" (gore) i „imenilac" (dole) — NIKADA „brojnik"/„nazivnik"; „skratiti"/„proširiti razlomak", „mešoviti broj".
+- operacije: „zbir" (ne „zbroj"), „sabirak", „razlika", „proizvod" (ne „umnožak"), „činilac"/„faktor", „količnik" (ne „kvocijent"), „deljenik"/„delilac", „ostatak"; „cifra" (ne „znamenka"); decimalni „zarez"; „NZS — najmanji zajednički sadržalac", „NZD — najveći zajednički delilac".
+- algebra: „jednačina" (ne „jednadžba"/„ekvacija"), „nejednačina" (ne „nejednadžba"), „nepoznata" (ne „nepoznanica"), „stepen"/„stepenovanje" (ne „potencija"), „koren" (ne „korijen"), „izraz", „zameniti u izraz", „izvući zajednički činilac".
+- geometrija: „ugao" (ne „kut"), „trougao" (ne „trokut"), „četvorougao" (ne „četverokut"), „mnogougao" (ne „mnogokut"), „prečnik" (ne „promjer"), „poluprečnik" (ne „polumjer"), „obim" (ne „opseg"), „zapremina" (ne „obujam"/„volumen"), „normalan/upravan" (ne „okomit"), „paralelan" (ne „usporedan"), „podudarnost" (ne „sukladnost").
+- ostalo: „izvod" (ne „derivacija"), „verovatnoća" (ne „vjerojatnost"), „procenat" (ne „postotak"); „izračunaj/odredi/nađi x" (ne „reši za x"); „sabrati, oduzeti, pomnožiti, podeliti".
+Piši ekavicom („koren, presek, deljenje", ne „korijen, presjek, dijeljenje"). Neka objašnjenje teče prirodno i lepo na srpskom, ne kao prevod.`
       : "";
     const system = `${base}\n\nVAŽNO: Odgovaraj ISKLJUČIVO na ${jezik}. Zadrži potpuno isti topli ton, metod i sve korake i na ovom jeziku — prevedi objašnjenje prirodno. Matematičke oznake (brojevi, x, √, ·, razlomci) ostaju univerzalne. Sve nazive i poruke (npr. „zadatak za vežbu") reci na tom istom jeziku. Piši običan tekst, BEZ Markdown formatiranja — bez zvezdica (* i **) i bez taraba (#); za nabrajanje koristi crtice „-" ili brojeve, a za isticanje samo biraj reči.${srSavet}`;
 
