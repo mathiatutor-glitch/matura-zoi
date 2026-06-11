@@ -22,8 +22,13 @@ body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:var(--ink);backg
 .topbar .seal{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--navy);font-weight:800;font-size:17px;font-family:'Playfair Display',serif;background:linear-gradient(155deg,#d3b86e,#b48a3e 72%);}
 .topbar .wm{color:#fff;font-weight:800;font-size:18px;font-family:'Playfair Display',serif;}
 .topbar .wm .ia{color:var(--goldlt);}
-.back{color:#cfd6e6;text-decoration:none;font-size:13.5px;font-weight:600;padding:6px 13px;border:1px solid rgba(255,255,255,.2);border-radius:999px;transition:color .15s,border-color .15s;}
+.back{color:#cfd6e6;text-decoration:none;font-size:13.5px;font-weight:600;padding:6px 13px;border:1px solid rgba(255,255,255,.2);border-radius:999px;transition:color .15s,border-color .15s;white-space:nowrap;}
 .back:hover{color:#fff;border-color:var(--goldlt);}
+.langrow{border-top:1px solid rgba(255,255,255,.08);}
+.langs{max-width:1040px;margin:0 auto;display:flex;justify-content:center;gap:4px;flex-wrap:wrap;padding:8px 22px;font-size:12px;font-weight:600;}
+.lang{padding:4px 10px;border-radius:999px;cursor:pointer;color:#aab2c6;transition:color .15s,background .15s;white-space:nowrap;}
+.lang:hover{color:#fff;}
+.lang.on{background:linear-gradient(150deg,var(--goldlt),var(--goldln));color:var(--navy);font-weight:700;}
 
 /* hero */
 .hero{position:relative;overflow:hidden;text-align:center;color:#fff;padding:54px 22px 66px;
@@ -53,6 +58,8 @@ body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:var(--ink);backg
 .preview .nm{font-weight:700;color:#fff;font-size:14.5px;}
 .preview .nm small{display:block;font-weight:400;color:#9fb0cf;font-size:11.5px;}
 .preview .bub{background:#fff;color:#1c2030;border-radius:6px 16px 16px 16px;padding:12px 14px;font-size:14px;line-height:1.5;box-shadow:0 6px 18px -10px rgba(0,0,0,.5);}
+html[dir="rtl"] .preview{text-align:right;}
+html[dir="rtl"] .preview .bub{border-radius:16px 6px 16px 16px;}
 
 /* sections */
 .sec{padding:56px 0;}
@@ -71,6 +78,7 @@ body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:var(--ink);backg
 .card .em{font-size:26px;line-height:1;margin-bottom:11px;display:block;}
 .card h3{font-family:'Playfair Display',serif;font-size:17.5px;font-weight:600;margin:0 0 5px;color:var(--navy);}
 .card p{font-size:13px;color:var(--muted);font-weight:500;line-height:1.5;}
+html[dir="rtl"] .card{text-align:right;}
 @media(max-width:900px){.card{width:46%;}}
 @media(max-width:520px){.card{width:96%;}}
 
@@ -91,7 +99,8 @@ body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:var(--ink);backg
 .plan .price small{font-size:14px;font-weight:500;color:var(--muted);}
 .plan ul{list-style:none;text-align:left;margin:18px auto 22px;max-width:300px;display:inline-block;}
 .plan li{font-size:14px;color:var(--ink);padding:7px 0;border-bottom:1px dashed #eee3cf;display:flex;gap:9px;align-items:flex-start;}
-.plan li:last-child{border-bottom:0;} .plan li span{color:var(--mint);font-weight:800;}
+.plan li:last-child{border-bottom:0;} .plan li span:first-child{color:var(--mint);font-weight:800;}
+html[dir="rtl"] .plan ul{text-align:right;}
 
 /* band */
 .band{background:linear-gradient(160deg,#1b2748,#141a30);border-radius:22px;padding:38px 26px;text-align:center;color:#fff;border:1px solid rgba(205,164,78,.3);}
@@ -109,113 +118,155 @@ body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:var(--ink);backg
 .pill.alt2{background:#eef0f4;color:#5a6273;}
 .btn-line{background:#fff;color:var(--mintdk);border:1.5px solid #bfe4d9;}
 .btn-line:hover{border-color:var(--mint);background:var(--mintbg2);}
+.mila-hint{position:fixed;right:22px;bottom:92px;z-index:40;display:flex;flex-direction:column;align-items:flex-end;gap:1px;pointer-events:none;}
+.mila-hint .mh-text{background:#141a30;color:#fff;font-size:12.5px;font-weight:700;padding:7px 13px;border-radius:999px;box-shadow:0 8px 18px -6px rgba(0,0,0,.55);white-space:nowrap;border:1px solid rgba(205,164,78,.55);}
+.mila-hint .mh-arrow{font-size:22px;line-height:1;margin-right:14px;animation:mhb 1.4s ease-in-out infinite;}
+@keyframes mhb{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+@media(max-width:520px){.mila-hint{bottom:86px;right:16px;} .mila-hint .mh-text{font-size:11.5px;}}
 </style>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2314223E'/%3E%3Ctext x='50%25' y='56%25' font-family='Georgia,serif' font-size='40' font-weight='700' fill='%23C2A14D' text-anchor='middle' dominant-baseline='middle'%3EM%3C/text%3E%3C/svg%3E">
 </head>
 <body>
 
-<div class="topbar"><div class="row">
-  <a class="bz" href="index.html"><span class="seal">M</span><span class="wm">Math<span class="ia">IA</span></span></a>
-  <a class="back" href="index.html">← Početna</a>
-</div></div>
+<div class="topbar">
+  <div class="row">
+    <a class="bz" href="index.html"><span class="seal">M</span><span class="wm">Math<span class="ia">IA</span></span></a>
+    <a class="back" href="index.html" data-i18n="back"></a>
+  </div>
+  <div class="langrow"><div class="langs" id="langbar">
+    <span class="lang on" data-lang="sr">Srpski</span><span class="lang" data-lang="en">English</span><span class="lang" data-lang="de">Deutsch</span><span class="lang" data-lang="ru">Русский</span><span class="lang" data-lang="fr">Français</span><span class="lang" data-lang="es">Español</span><span class="lang" data-lang="it">Italiano</span><span class="lang" data-lang="tr">Türkçe</span><span class="lang" data-lang="zh">中文</span><span class="lang" data-lang="ar">العربية</span>
+  </div></div>
+</div>
 
 <section class="hero">
-  <span class="badge">Mala matura · 8. razred</span>
+  <span class="badge" data-i18n="badge"></span>
   <div class="shine"></div>
-  <h1 class="serif">Spremi malu maturu <span class="g">bez stresa</span> 🎈</h1>
-  <p class="lead">Završni ispit iz matematike — uz tutorku <b>Milu</b> koja ti objasni svaki zadatak, koliko god puta treba. Svojim tempom, bez pritiska. 💛</p>
+  <h1 class="serif" id="heroH1"></h1>
+  <p class="lead" id="heroLead"></p>
   <div class="cta">
-    <a class="btn btn-gold" href="#cena">Kreni u pripremu</a>
-    <a class="btn btn-ghost" href="#kako">Kako funkcioniše?</a>
+    <a class="btn btn-gold" href="#cena" data-i18n="cta1"></a>
+    <a class="btn btn-ghost" href="#kako" data-i18n="cta2"></a>
   </div>
   <div class="preview">
     <div class="top">
       <div class="ava">🦊</div>
-      <div class="nm">Mila <small>tvoja tutorka · onlajn</small></div>
+      <div class="nm">Mila <small data-i18n="milaRole"></small></div>
     </div>
-    <div class="bub">Zdravo! 👋 Pošalji mi zadatak koji ti zadaje muke — rešavamo ga zajedno, korak po korak, dok ti ne postane lako. 😊</div>
+    <div class="bub" data-i18n="milaBub"></div>
   </div>
 </section>
 
 <section class="sec"><div class="wrap">
-  <h2>Šta te čeka na maloj maturi</h2>
-  <div class="sub">Sve oblasti iz završnog ispita — objašnjene jednostavno, sa puno primera.</div>
+  <h2 data-i18n="s1h"></h2>
+  <div class="sub" data-i18n="s1sub"></div>
   <div class="grid">
-    <div class="card"><span class="em">🔢</span><h3>Brojevi i operacije</h3><p>Razlomci, decimale, procenti, stepeni i koren — bez zbrke.</p></div>
-    <div class="card"><span class="em">➗</span><h3>Algebra i izrazi</h3><p>Izrazi, jednačine i nejednačine, proporcije i zavisnosti.</p></div>
-    <div class="card"><span class="em">📐</span><h3>Geometrija</h3><p>Površine, zapremine, Pitagorina teorema, uglovi i sličnost.</p></div>
-    <div class="card"><span class="em">📊</span><h3>Obrada podataka</h3><p>Tabele, grafikoni, srednja vrednost i osnovi verovatnoće.</p></div>
+    <div class="card"><span class="em">🔢</span><h3 data-i18n="a1t"></h3><p data-i18n="a1p"></p></div>
+    <div class="card"><span class="em">➗</span><h3 data-i18n="a2t"></h3><p data-i18n="a2p"></p></div>
+    <div class="card"><span class="em">📐</span><h3 data-i18n="a3t"></h3><p data-i18n="a3p"></p></div>
+    <div class="card"><span class="em">📊</span><h3 data-i18n="a4t"></h3><p data-i18n="a4p"></p></div>
   </div>
 </div></section>
 
 <section class="sec alt"><div class="wrap">
-  <h2>Šta dobijaš uz MathIA</h2>
-  <div class="sub">Sve na jednom mestu — i neko ko je uvek tu da pomogne.</div>
+  <h2 data-i18n="s2h"></h2>
+  <div class="sub" data-i18n="s2sub"></div>
   <div class="grid">
-    <div class="card"><span class="em">💬</span><h3>Tutorka Mila</h3><p>Objašnjava korak po korak, 24/7. Pitaš koliko god puta treba — nikad se ne ljuti. 💛</p></div>
-    <div class="card"><span class="em">📘</span><h3>E-priručnik za svaku oblast</h3><p>Svaka oblast jasno objašnjena — sve na jednom mestu.</p></div>
-    <div class="card"><span class="em">📑</span><h3>E-knjižica sa formulama</h3><p>Najbitniji pojmovi i sve formule — uvek pri ruci.</p></div>
-    <div class="card"><span class="em">🧮</span><h3>Zbirka zadataka</h3><p>Mnogo rešenih primera i zadataka za vežbu, od lakših ka težim.</p></div>
-    <div class="card"><span class="em">📝</span><h3>Probni testovi</h3><p>Vežbaš kao na pravom ispitu i pratiš svoj napredak.</p></div>
+    <div class="card"><span class="em">💬</span><h3 data-i18n="b1t"></h3><p data-i18n="b1p"></p></div>
+    <div class="card"><span class="em">📘</span><h3 data-i18n="b2t"></h3><p data-i18n="b2p"></p></div>
+    <div class="card"><span class="em">📑</span><h3 data-i18n="b3t"></h3><p data-i18n="b3p"></p></div>
+    <div class="card"><span class="em">🧮</span><h3 data-i18n="b4t"></h3><p data-i18n="b4p"></p></div>
+    <div class="card"><span class="em">📝</span><h3 data-i18n="b5t"></h3><p data-i18n="b5p"></p></div>
   </div>
 </div></section>
 
 <section class="sec" id="kako"><div class="wrap">
-  <h2>Kako funkcioniše</h2>
-  <div class="sub">Jednostavno je kao tri koraka. ✨</div>
+  <h2 data-i18n="s3h"></h2>
+  <div class="sub" data-i18n="s3sub"></div>
   <div class="steps">
-    <div class="step"><div class="stepnum">1</div><h3>Pitaš</h3><p>Napišeš ili slikaš zadatak koji ne razumeš.</p></div>
-    <div class="step"><div class="stepnum">2</div><h3>Mila objasni</h3><p>Vodi te korak po korak — dok ti ne „klikne". 💡</p></div>
-    <div class="step"><div class="stepnum">3</div><h3>Vežbaš</h3><p>Rešavaš slične zadatke i postaješ sve sigurniji.</p></div>
+    <div class="step"><div class="stepnum">1</div><h3 data-i18n="st1t"></h3><p data-i18n="st1p"></p></div>
+    <div class="step"><div class="stepnum">2</div><h3 data-i18n="st2t"></h3><p data-i18n="st2p"></p></div>
+    <div class="step"><div class="stepnum">3</div><h3 data-i18n="st3t"></h3><p data-i18n="st3p"></p></div>
   </div>
 </div></section>
 
 <section class="sec alt" id="cena"><div class="wrap">
-  <h2>Cene i paketi</h2>
-  <div class="sub">Izaberi šta ti najviše odgovara — uvek možeš da nadogradiš kasnije.</div>
+  <h2 data-i18n="s4h"></h2>
+  <div class="sub" data-i18n="s4sub"></div>
   <div class="plans">
     <div class="plan">
-      <span class="pill alt2">Osnovni</span>
-      <h3>Samo Mila</h3>
-      <div class="price">3.990 RSD <small>/ mesečno</small></div>
+      <span class="pill alt2" data-i18n="pill1"></span>
+      <h3 data-i18n="plan1t"></h3>
+      <div class="price">3.990 RSD <small data-i18n="per"></small></div>
       <ul>
-        <li><span>✓</span> Tutorka Mila — neograničena pitanja, 24/7</li>
-        <li><span>✓</span> Objašnjenja korak po korak</li>
-        <li><span>✓</span> Pomoć kad god ti zatreba</li>
+        <li><span>✓</span> <span data-i18n="p1l1"></span></li>
+        <li><span>✓</span> <span data-i18n="p1l2"></span></li>
+        <li><span>✓</span> <span data-i18n="p1l3"></span></li>
       </ul>
-      <div><a class="btn btn-line" href="mathia_ponuda.html">Izaberi</a></div>
+      <div><a class="btn btn-line" href="mathia_ponuda.html" data-i18n="btn1"></a></div>
     </div>
     <div class="plan feat">
-      <span class="pill">Najpopularnije</span>
-      <h3>Kompletan paket</h3>
-      <div class="price">4.990 RSD <small>/ mesečno</small></div>
+      <span class="pill" data-i18n="pill2"></span>
+      <h3 data-i18n="plan2t"></h3>
+      <div class="price">4.990 RSD <small data-i18n="per"></small></div>
       <ul>
-        <li><span>✓</span> Sve iz paketa „Samo Mila"</li>
-        <li><span>✓</span> E-priručnik za svaku oblast</li>
-        <li><span>✓</span> E-knjižica sa najbitnijim pojmovima i formulama</li>
-        <li><span>✓</span> Zbirka rešenih zadataka</li>
-        <li><span>✓</span> Probni testovi i praćenje napretka</li>
+        <li><span>✓</span> <span data-i18n="p2l1"></span></li>
+        <li><span>✓</span> <span data-i18n="p2l2"></span></li>
+        <li><span>✓</span> <span data-i18n="p2l3"></span></li>
+        <li><span>✓</span> <span data-i18n="p2l4"></span></li>
+        <li><span>✓</span> <span data-i18n="p2l5"></span></li>
       </ul>
-      <div><a class="btn btn-mint" href="mathia_ponuda.html">Kreni odmah</a></div>
+      <div><a class="btn btn-mint" href="mathia_ponuda.html" data-i18n="btn2"></a></div>
     </div>
   </div>
 </div></section>
 
 <section class="sec"><div class="wrap">
   <div class="band">
-    <h2>Svako ko vežba — napreduje. 🌟</h2>
-    <p>Ne moraš da znaš sve odmah. Mila je tu na svakom koraku, strpljiva i nasmejana — a ti ideš svojim tempom.</p>
-    <a class="btn btn-gold" href="#cena">Spremi malu maturu</a>
+    <h2 data-i18n="bandh"></h2>
+    <p data-i18n="bandp"></p>
+    <a class="btn btn-gold" href="#cena" data-i18n="bandbtn"></a>
   </div>
 </div></section>
 
-<div class="trust">Nezavisna obrazovna platforma · Materijali iz opšteg gradiva i javno dostupnih izvora</div>
+<div class="trust" data-i18n="trust"></div>
 
 <footer class="foot">
   <div class="wm">Math<span class="ia">IA</span></div>
   mathia.rs
-  <div class="disc">MathIA je nezavisna obrazovna platforma. Materijali su pripremljeni iz opšteg gradiva i javno dostupnih izvora i nisu povezani ni sa jednom obrazovnom ustanovom.</div>
+  <div class="disc" data-i18n="footDisc"></div>
 </footer>
+
+<div class="mila-hint" id="milaHint">
+  <span class="mh-text" data-i18n="hint"></span>
+  <span class="mh-arrow">👇</span>
+</div>
+
+<script>
+var T={
+sr:{back:"← Početna",badge:"Mala matura · 8. razred",h1:'Spremi malu maturu <span class="g">bez stresa</span> 🎈',lead:"Završni ispit iz matematike — uz tutorku <b>Milu</b> koja ti objasni svaki zadatak, koliko god puta treba. Svojim tempom, bez pritiska. 💛",cta1:"Kreni u pripremu",cta2:"Kako funkcioniše?",milaRole:"tvoja tutorka · onlajn",milaBub:"Zdravo! 👋 Pošalji mi zadatak koji ti zadaje muke — rešavamo ga zajedno, korak po korak, dok ti ne postane lako. 😊",s1h:"Šta te čeka na maloj maturi",s1sub:"Sve oblasti iz završnog ispita — objašnjene jednostavno, sa puno primera.",a1t:"Brojevi i operacije",a1p:"Razlomci, decimale, procenti, stepeni i koren — bez zbrke.",a2t:"Algebra i izrazi",a2p:"Izrazi, jednačine i nejednačine, proporcije i zavisnosti.",a3t:"Geometrija",a3p:"Površine, zapremine, Pitagorina teorema, uglovi i sličnost.",a4t:"Obrada podataka",a4p:"Tabele, grafikoni, srednja vrednost i osnovi verovatnoće.",s2h:"Šta dobijaš uz MathIA",s2sub:"Sve na jednom mestu — i neko ko je uvek tu da pomogne.",b1t:"Tutorka Mila",b1p:"Objašnjava korak po korak, 24/7. Pitaš koliko god puta treba — nikad se ne ljuti. 💛",b2t:"E-priručnik za svaku oblast",b2p:"Svaka oblast jasno objašnjena — sve na jednom mestu.",b3t:"E-knjižica sa formulama",b3p:"Najbitniji pojmovi i sve formule — uvek pri ruci.",b4t:"Zbirka zadataka",b4p:"Mnogo rešenih primera i zadataka za vežbu, od lakših ka težim.",b5t:"Probni testovi",b5p:"Vežbaš kao na pravom ispitu i pratiš svoj napredak.",s3h:"Kako funkcioniše",s3sub:"Jednostavno je kao tri koraka. ✨",st1t:"Pitaš",st1p:"Napišeš ili slikaš zadatak koji ne razumeš.",st2t:"Mila objasni",st2p:"Vodi te korak po korak — dok ti ne „klikne“. 💡",st3t:"Vežbaš",st3p:"Rešavaš slične zadatke i postaješ sve sigurniji.",s4h:"Cene i paketi",s4sub:"Izaberi šta ti najviše odgovara — uvek možeš da nadogradiš kasnije.",pill1:"Osnovni",plan1t:"Samo Mila",per:"/ mesečno",p1l1:"Tutorka Mila — neograničena pitanja, 24/7",p1l2:"Objašnjenja korak po korak",p1l3:"Pomoć kad god ti zatreba",btn1:"Izaberi",pill2:"Najpopularnije",plan2t:"Kompletan paket",p2l1:"Sve iz paketa „Samo Mila“",p2l2:"E-priručnik za svaku oblast",p2l3:"E-knjižica sa najbitnijim pojmovima i formulama",p2l4:"Zbirka rešenih zadataka",p2l5:"Probni testovi i praćenje napretka",btn2:"Kreni odmah",bandh:"Svako ko vežba — napreduje. 🌟",bandp:"Ne moraš da znaš sve odmah. Mila je tu na svakom koraku, strpljiva i nasmejana — a ti ideš svojim tempom.",bandbtn:"Spremi malu maturu",trust:"Nezavisna obrazovna platforma · Materijali iz opšteg gradiva i javno dostupnih izvora",footDisc:"MathIA je nezavisna obrazovna platforma. Materijali su pripremljeni iz opšteg gradiva i javno dostupnih izvora i nisu povezani ni sa jednom obrazovnom ustanovom.",hint:"Tu je Mila — pitaj je! 💬"},
+en:{back:"← Home",badge:"Final exam · 8th grade",h1:'Ace the final exam, <span class="g">stress-free</span> 🎈',lead:"The final math exam — with tutor <b>Mila</b>, who explains every problem as many times as you need. At your own pace, no pressure. 💛",cta1:"Start preparing",cta2:"How it works?",milaRole:"your tutor · online",milaBub:"Hi! 👋 Send me the problem that’s giving you trouble — we’ll solve it together, step by step, until it feels easy. 😊",s1h:"What’s on the final exam",s1sub:"Every topic from the final exam — explained simply, with lots of examples.",a1t:"Numbers & operations",a1p:"Fractions, decimals, percentages, powers and roots — no confusion.",a2t:"Algebra & expressions",a2p:"Expressions, equations and inequalities, ratios and relationships.",a3t:"Geometry",a3p:"Areas, volumes, the Pythagorean theorem, angles and similarity.",a4t:"Data handling",a4p:"Tables, charts, averages and the basics of probability.",s2h:"What you get with MathIA",s2sub:"Everything in one place — and someone always there to help.",b1t:"Tutor Mila",b1p:"Explains step by step, 24/7. Ask as many times as you need — she never minds. 💛",b2t:"E-handbook for every topic",b2p:"Every topic clearly explained — all in one place.",b3t:"Formula e-booklet",b3p:"Key concepts and all the formulas — always at hand.",b4t:"Problem collection",b4p:"Lots of solved examples and practice problems, from easy to hard.",b5t:"Practice tests",b5p:"Practice like the real exam and track your progress.",s3h:"How it works",s3sub:"As easy as three steps. ✨",st1t:"Ask",st1p:"Type or snap a photo of the problem you’re stuck on.",st2t:"Mila explains",st2p:"She guides you step by step — until it clicks. 💡",st3t:"Practice",st3p:"Solve similar problems and grow more confident.",s4h:"Plans & pricing",s4sub:"Pick what suits you best — you can always upgrade later.",pill1:"Basic",plan1t:"Mila only",per:"/ month",p1l1:"Tutor Mila — unlimited questions, 24/7",p1l2:"Step-by-step explanations",p1l3:"Help whenever you need it",btn1:"Choose",pill2:"Most popular",plan2t:"Complete package",p2l1:"Everything in “Mila only”",p2l2:"E-handbook for every topic",p2l3:"Formula e-booklet with key concepts",p2l4:"Collection of solved problems",p2l5:"Practice tests and progress tracking",btn2:"Get started",bandh:"Everyone who practices — improves. 🌟",bandp:"You don’t have to know it all at once. Mila is there at every step — patient and kind — while you go at your own pace.",bandbtn:"Prep for the final exam",trust:"Independent educational platform · Materials from general curriculum and public sources",footDisc:"MathIA is an independent educational platform. Materials are prepared from general curriculum and publicly available sources and are not affiliated with any educational institution.",hint:"Mila is here — ask her! 💬"},
+de:{back:"← Startseite",badge:"Abschlussprüfung · 8. Klasse",h1:'Meistere die Abschlussprüfung <span class="g">ohne Stress</span> 🎈',lead:"Die Mathe-Abschlussprüfung — mit Tutorin <b>Mila</b>, die dir jede Aufgabe so oft erklärt, wie du willst. In deinem Tempo, ohne Druck. 💛",cta1:"Vorbereitung starten",cta2:"Wie funktioniert’s?",milaRole:"deine Tutorin · online",milaBub:"Hallo! 👋 Schick mir die Aufgabe, die dir Probleme macht — wir lösen sie zusammen, Schritt für Schritt, bis es leicht wird. 😊",s1h:"Was dich in der Prüfung erwartet",s1sub:"Alle Themen der Abschlussprüfung — einfach erklärt, mit vielen Beispielen.",a1t:"Zahlen & Rechnen",a1p:"Brüche, Dezimalzahlen, Prozente, Potenzen und Wurzeln — ohne Verwirrung.",a2t:"Algebra & Terme",a2p:"Terme, Gleichungen und Ungleichungen, Verhältnisse und Zusammenhänge.",a3t:"Geometrie",a3p:"Flächen, Volumen, Satz des Pythagoras, Winkel und Ähnlichkeit.",a4t:"Daten & Statistik",a4p:"Tabellen, Diagramme, Mittelwert und Grundlagen der Wahrscheinlichkeit.",s2h:"Was du mit MathIA bekommst",s2sub:"Alles an einem Ort — und jemand, der immer hilft.",b1t:"Tutorin Mila",b1p:"Erklärt Schritt für Schritt, rund um die Uhr. Frag so oft du willst — nie genervt. 💛",b2t:"E-Handbuch für jedes Thema",b2p:"Jedes Thema klar erklärt — alles an einem Ort.",b3t:"Formel-E-Heft",b3p:"Wichtigste Begriffe und alle Formeln — immer griffbereit.",b4t:"Aufgabensammlung",b4p:"Viele gelöste Beispiele und Übungsaufgaben, von leicht bis schwer.",b5t:"Probetests",b5p:"Übe wie in der echten Prüfung und verfolge deinen Fortschritt.",s3h:"So funktioniert’s",s3sub:"So einfach wie drei Schritte. ✨",st1t:"Fragen",st1p:"Tippe die Aufgabe ein oder fotografiere sie.",st2t:"Mila erklärt",st2p:"Sie führt dich Schritt für Schritt — bis der Groschen fällt. 💡",st3t:"Üben",st3p:"Löse ähnliche Aufgaben und wirst immer sicherer.",s4h:"Pakete & Preise",s4sub:"Wähle, was am besten passt — du kannst jederzeit upgraden.",pill1:"Basis",plan1t:"Nur Mila",per:"/ Monat",p1l1:"Tutorin Mila — unbegrenzte Fragen, 24/7",p1l2:"Schritt-für-Schritt-Erklärungen",p1l3:"Hilfe, wann immer du sie brauchst",btn1:"Auswählen",pill2:"Am beliebtesten",plan2t:"Komplettpaket",p2l1:"Alles aus „Nur Mila“",p2l2:"E-Handbuch für jedes Thema",p2l3:"Formel-E-Heft mit den wichtigsten Begriffen",p2l4:"Sammlung gelöster Aufgaben",p2l5:"Probetests und Fortschrittsverfolgung",btn2:"Jetzt starten",bandh:"Jeder, der übt, wird besser. 🌟",bandp:"Du musst nicht alles sofort können. Mila ist bei jedem Schritt dabei — geduldig und freundlich — während du in deinem Tempo lernst.",bandbtn:"Für die Prüfung lernen",trust:"Unabhängige Bildungsplattform · Materialien aus dem allgemeinen Lehrplan und öffentlichen Quellen",footDisc:"MathIA ist eine unabhängige Bildungsplattform. Die Materialien stammen aus dem allgemeinen Lehrplan und öffentlich zugänglichen Quellen und stehen in keiner Verbindung zu einer Bildungseinrichtung.",hint:"Mila ist hier — frag sie! 💬"},
+ru:{back:"← На главную",badge:"Выпускной · 8 класс",h1:'Сдай выпускной <span class="g">без стресса</span> 🎈',lead:"Выпускной экзамен по математике — с репетитором <b>Mila</b>, которая объяснит каждую задачу столько раз, сколько нужно. В своём темпе, без давления. 💛",cta1:"Начать подготовку",cta2:"Как это работает?",milaRole:"твой репетитор · онлайн",milaBub:"Привет! 👋 Пришли мне задачу, с которой не получается — решим её вместе, шаг за шагом, пока не станет легко. 😊",s1h:"Что тебя ждёт на экзамене",s1sub:"Все темы выпускного экзамена — объяснены просто, с множеством примеров.",a1t:"Числа и действия",a1p:"Дроби, десятичные, проценты, степени и корни — без путаницы.",a2t:"Алгебра и выражения",a2p:"Выражения, уравнения и неравенства, пропорции и зависимости.",a3t:"Геометрия",a3p:"Площади, объёмы, теорема Пифагора, углы и подобие.",a4t:"Обработка данных",a4p:"Таблицы, графики, среднее и основы вероятности.",s2h:"Что ты получаешь с MathIA",s2sub:"Всё в одном месте — и кто-то, кто всегда поможет.",b1t:"Репетитор Mila",b1p:"Объясняет шаг за шагом, 24/7. Спрашивай сколько нужно — она никогда не сердится. 💛",b2t:"Э-справочник по каждой теме",b2p:"Каждая тема ясно объяснена — всё в одном месте.",b3t:"Э-книжечка с формулами",b3p:"Главные понятия и все формулы — всегда под рукой.",b4t:"Сборник задач",b4p:"Много решённых примеров и задач для практики, от лёгких к сложным.",b5t:"Пробные тесты",b5p:"Тренируйся как на настоящем экзамене и следи за прогрессом.",s3h:"Как это работает",s3sub:"Просто, как три шага. ✨",st1t:"Спрашиваешь",st1p:"Напиши или сфотографируй задачу, которую не понимаешь.",st2t:"Mila объясняет",st2p:"Ведёт тебя шаг за шагом — пока не щёлкнет. 💡",st3t:"Тренируешься",st3p:"Решаешь похожие задачи и становишься увереннее.",s4h:"Тарифы и пакеты",s4sub:"Выбери, что подходит — обновить можно в любой момент.",pill1:"Базовый",plan1t:"Только Mila",per:"/ месяц",p1l1:"Репетитор Mila — безлимит вопросов, 24/7",p1l2:"Пошаговые объяснения",p1l3:"Помощь, когда нужно",btn1:"Выбрать",pill2:"Популярное",plan2t:"Полный пакет",p2l1:"Всё из «Только Mila»",p2l2:"Э-справочник по каждой теме",p2l3:"Э-книжечка с формулами и ключевыми понятиями",p2l4:"Сборник решённых задач",p2l5:"Пробные тесты и отслеживание прогресса",btn2:"Начать",bandh:"Кто тренируется — тот растёт. 🌟",bandp:"Не нужно знать всё сразу. Mila рядом на каждом шаге — терпеливая и добрая — а ты идёшь в своём темпе.",bandbtn:"Готовиться к экзамену",trust:"Независимая образовательная платформа · Материалы из общей программы и открытых источников",footDisc:"MathIA — независимая образовательная платформа. Материалы подготовлены по общей программе и из общедоступных источников и не связаны ни с одним учебным заведением.",hint:"Mila здесь — спроси её! 💬"},
+fr:{back:"← Accueil",badge:"Examen final · 8e année",h1:'Réussis ton examen <span class="g">sans stress</span> 🎈',lead:"L’examen final de maths — avec la tutrice <b>Mila</b>, qui t’explique chaque exercice autant de fois qu’il faut. À ton rythme, sans pression. 💛",cta1:"Commencer la prépa",cta2:"Comment ça marche ?",milaRole:"ta tutrice · en ligne",milaBub:"Salut ! 👋 Envoie-moi l’exercice qui te pose problème — on le résout ensemble, étape par étape, jusqu’à ce que ce soit facile. 😊",s1h:"Ce qui t’attend à l’examen",s1sub:"Tous les thèmes de l’examen — expliqués simplement, avec beaucoup d’exemples.",a1t:"Nombres et opérations",a1p:"Fractions, décimaux, pourcentages, puissances et racines — sans confusion.",a2t:"Algèbre et expressions",a2p:"Expressions, équations et inéquations, proportions et relations.",a3t:"Géométrie",a3p:"Aires, volumes, théorème de Pythagore, angles et similitude.",a4t:"Traitement des données",a4p:"Tableaux, graphiques, moyenne et bases des probabilités.",s2h:"Ce que tu obtiens avec MathIA",s2sub:"Tout au même endroit — et quelqu’un toujours là pour aider.",b1t:"Tutrice Mila",b1p:"Explique étape par étape, 24h/24. Demande autant que tu veux — jamais agacée. 💛",b2t:"E-manuel pour chaque thème",b2p:"Chaque thème clairement expliqué — tout au même endroit.",b3t:"E-livret de formules",b3p:"Notions clés et toutes les formules — toujours à portée.",b4t:"Recueil d’exercices",b4p:"Beaucoup d’exemples résolus et d’exercices, du plus facile au plus difficile.",b5t:"Tests blancs",b5p:"Entraîne-toi comme au vrai examen et suis tes progrès.",s3h:"Comment ça marche",s3sub:"Aussi simple qu’en trois étapes. ✨",st1t:"Demande",st1p:"Écris ou photographie l’exercice qui te bloque.",st2t:"Mila explique",st2p:"Elle te guide étape par étape — jusqu’au déclic. 💡",st3t:"Entraîne-toi",st3p:"Résous des exercices similaires et gagne en confiance.",s4h:"Offres et tarifs",s4sub:"Choisis ce qui te convient — tu peux passer à l’offre supérieure quand tu veux.",pill1:"Essentiel",plan1t:"Mila seule",per:"/ mois",p1l1:"Tutrice Mila — questions illimitées, 24h/24",p1l2:"Explications étape par étape",p1l3:"De l’aide quand tu en as besoin",btn1:"Choisir",pill2:"Le plus populaire",plan2t:"Pack complet",p2l1:"Tout de l’offre « Mila seule »",p2l2:"E-manuel pour chaque thème",p2l3:"E-livret de formules avec les notions clés",p2l4:"Recueil d’exercices résolus",p2l5:"Tests blancs et suivi des progrès",btn2:"Commencer",bandh:"Qui s’entraîne — progresse. 🌟",bandp:"Tu n’as pas à tout savoir d’un coup. Mila est là à chaque étape — patiente et bienveillante — pendant que tu avances à ton rythme.",bandbtn:"Prépare l’examen",trust:"Plateforme éducative indépendante · Supports issus du programme général et de sources publiques",footDisc:"MathIA est une plateforme éducative indépendante. Les supports sont préparés à partir du programme général et de sources publiques et ne sont affiliés à aucun établissement.",hint:"Mila est là — pose-lui ta question ! 💬"},
+es:{back:"← Inicio",badge:"Examen final · 8.º grado",h1:'Aprueba tu examen final <span class="g">sin estrés</span> 🎈',lead:"El examen final de mates — con la tutora <b>Mila</b>, que te explica cada ejercicio las veces que necesites. A tu ritmo, sin presión. 💛",cta1:"Empezar a prepararte",cta2:"¿Cómo funciona?",milaRole:"tu tutora · en línea",milaBub:"¡Hola! 👋 Envíame el ejercicio que te cuesta — lo resolvemos juntas, paso a paso, hasta que te resulte fácil. 😊",s1h:"Qué te espera en el examen",s1sub:"Todos los temas del examen — explicados de forma sencilla, con muchos ejemplos.",a1t:"Números y operaciones",a1p:"Fracciones, decimales, porcentajes, potencias y raíces — sin líos.",a2t:"Álgebra y expresiones",a2p:"Expresiones, ecuaciones e inecuaciones, proporciones y relaciones.",a3t:"Geometría",a3p:"Áreas, volúmenes, teorema de Pitágoras, ángulos y semejanza.",a4t:"Tratamiento de datos",a4p:"Tablas, gráficos, media y nociones de probabilidad.",s2h:"Qué obtienes con MathIA",s2sub:"Todo en un solo lugar — y alguien siempre dispuesto a ayudar.",b1t:"Tutora Mila",b1p:"Explica paso a paso, 24/7. Pregunta las veces que quieras — nunca se enfada. 💛",b2t:"E-manual para cada tema",b2p:"Cada tema explicado con claridad — todo en un lugar.",b3t:"E-cuadernillo de fórmulas",b3p:"Conceptos clave y todas las fórmulas — siempre a mano.",b4t:"Colección de ejercicios",b4p:"Muchos ejemplos resueltos y ejercicios, de fácil a difícil.",b5t:"Exámenes de práctica",b5p:"Practica como en el examen real y sigue tu progreso.",s3h:"Cómo funciona",s3sub:"Tan fácil como tres pasos. ✨",st1t:"Pregunta",st1p:"Escribe o haz una foto del ejercicio que no entiendes.",st2t:"Mila explica",st2p:"Te guía paso a paso — hasta que hace clic. 💡",st3t:"Practica",st3p:"Resuelve ejercicios parecidos y gana confianza.",s4h:"Planes y precios",s4sub:"Elige lo que mejor te venga — siempre puedes mejorar después.",pill1:"Básico",plan1t:"Solo Mila",per:"/ mes",p1l1:"Tutora Mila — preguntas ilimitadas, 24/7",p1l2:"Explicaciones paso a paso",p1l3:"Ayuda cuando la necesites",btn1:"Elegir",pill2:"Más popular",plan2t:"Paquete completo",p2l1:"Todo lo de «Solo Mila»",p2l2:"E-manual para cada tema",p2l3:"E-cuadernillo de fórmulas con conceptos clave",p2l4:"Colección de ejercicios resueltos",p2l5:"Exámenes de práctica y seguimiento del progreso",btn2:"Empezar",bandh:"Quien practica — mejora. 🌟",bandp:"No tienes que saberlo todo de golpe. Mila está en cada paso — paciente y amable — mientras avanzas a tu ritmo.",bandbtn:"Prepara el examen",trust:"Plataforma educativa independiente · Materiales del currículo general y fuentes públicas",footDisc:"MathIA es una plataforma educativa independiente. Los materiales se preparan a partir del currículo general y de fuentes públicas y no están afiliados a ninguna institución.",hint:"Mila está aquí — ¡pregúntale! 💬"},
+it:{back:"← Home",badge:"Esame finale · 8ª classe",h1:'Supera l’esame <span class="g">senza stress</span> 🎈',lead:"L’esame finale di matematica — con la tutor <b>Mila</b>, che ti spiega ogni esercizio tutte le volte che serve. Al tuo ritmo, senza pressione. 💛",cta1:"Inizia la preparazione",cta2:"Come funziona?",milaRole:"la tua tutor · online",milaBub:"Ciao! 👋 Mandami l’esercizio che ti dà problemi — lo risolviamo insieme, passo dopo passo, finché non diventa facile. 😊",s1h:"Cosa ti aspetta all’esame",s1sub:"Tutti gli argomenti dell’esame — spiegati in modo semplice, con tanti esempi.",a1t:"Numeri e operazioni",a1p:"Frazioni, decimali, percentuali, potenze e radici — senza confusione.",a2t:"Algebra ed espressioni",a2p:"Espressioni, equazioni e disequazioni, proporzioni e relazioni.",a3t:"Geometria",a3p:"Aree, volumi, teorema di Pitagora, angoli e similitudine.",a4t:"Dati e statistica",a4p:"Tabelle, grafici, media e basi di probabilità.",s2h:"Cosa ottieni con MathIA",s2sub:"Tutto in un posto — e qualcuno sempre pronto ad aiutarti.",b1t:"Tutor Mila",b1p:"Spiega passo dopo passo, 24/7. Chiedi quante volte vuoi — non si arrabbia mai. 💛",b2t:"E-manuale per ogni argomento",b2p:"Ogni argomento spiegato con chiarezza — tutto in un posto.",b3t:"E-libretto di formule",b3p:"Concetti chiave e tutte le formule — sempre a portata.",b4t:"Raccolta di esercizi",b4p:"Tanti esempi risolti ed esercizi, dal facile al difficile.",b5t:"Test di prova",b5p:"Esercitati come all’esame vero e segui i tuoi progressi.",s3h:"Come funziona",s3sub:"Semplice come tre passi. ✨",st1t:"Chiedi",st1p:"Scrivi o fotografa l’esercizio che non capisci.",st2t:"Mila spiega",st2p:"Ti guida passo dopo passo — finché non scatta. 💡",st3t:"Esercitati",st3p:"Risolvi esercizi simili e diventi più sicuro.",s4h:"Piani e prezzi",s4sub:"Scegli ciò che fa per te — puoi sempre passare a un piano superiore.",pill1:"Base",plan1t:"Solo Mila",per:"/ mese",p1l1:"Tutor Mila — domande illimitate, 24/7",p1l2:"Spiegazioni passo dopo passo",p1l3:"Aiuto quando ti serve",btn1:"Scegli",pill2:"Più popolare",plan2t:"Pacchetto completo",p2l1:"Tutto del piano «Solo Mila»",p2l2:"E-manuale per ogni argomento",p2l3:"E-libretto di formule con i concetti chiave",p2l4:"Raccolta di esercizi risolti",p2l5:"Test di prova e monitoraggio dei progressi",btn2:"Inizia ora",bandh:"Chi si esercita — migliora. 🌟",bandp:"Non devi sapere tutto subito. Mila è lì a ogni passo — paziente e gentile — mentre vai al tuo ritmo.",bandbtn:"Preparati all’esame",trust:"Piattaforma educativa indipendente · Materiali dal programma generale e da fonti pubbliche",footDisc:"MathIA è una piattaforma educativa indipendente. I materiali sono preparati dal programma generale e da fonti pubbliche e non sono affiliati ad alcuna istituzione.",hint:"Mila è qui — chiedile! 💬"},
+tr:{back:"← Ana sayfa",badge:"Bitirme sınavı · 8. sınıf",h1:'Sınavına <span class="g">stressiz</span> hazırlan 🎈',lead:"Matematik bitirme sınavı — öğretmen <b>Mila</b> ile; her soruyu istediğin kadar açıklar. Kendi hızında, baskı olmadan. 💛",cta1:"Hazırlığa başla",cta2:"Nasıl çalışır?",milaRole:"öğretmenin · çevrimiçi",milaBub:"Merhaba! 👋 Zorlandığın soruyu bana gönder — birlikte adım adım çözeriz, kolaylaşana kadar. 😊",s1h:"Sınavda seni ne bekliyor",s1sub:"Sınavdaki tüm konular — bol örnekle, basitçe anlatılmış.",a1t:"Sayılar ve işlemler",a1p:"Kesirler, ondalıklar, yüzdeler, üsler ve kökler — kafa karışıklığı yok.",a2t:"Cebir ve ifadeler",a2p:"İfadeler, denklemler ve eşitsizlikler, oranlar ve ilişkiler.",a3t:"Geometri",a3p:"Alanlar, hacimler, Pisagor teoremi, açılar ve benzerlik.",a4t:"Veri işleme",a4p:"Tablolar, grafikler, ortalama ve olasılığın temelleri.",s2h:"MathIA ile neler alırsın",s2sub:"Her şey tek yerde — ve her zaman yardıma hazır biri.",b1t:"Öğretmen Mila",b1p:"Adım adım anlatır, 7/24. İstediğin kadar sor — asla kızmaz. 💛",b2t:"Her konu için e-kılavuz",b2p:"Her konu açıkça anlatılmış — hepsi tek yerde.",b3t:"Formül e-kitapçığı",b3p:"Önemli kavramlar ve tüm formüller — her zaman elinin altında.",b4t:"Soru bankası",b4p:"Bol çözümlü örnek ve alıştırma, kolaydan zora.",b5t:"Deneme sınavları",b5p:"Gerçek sınav gibi çalış ve ilerlemeni takip et.",s3h:"Nasıl çalışır",s3sub:"Üç adım kadar kolay. ✨",st1t:"Sor",st1p:"Anlamadığın soruyu yaz ya da fotoğrafını çek.",st2t:"Mila anlatır",st2p:"Seni adım adım yönlendirir — kafanda şimşek çakana kadar. 💡",st3t:"Alıştırma yap",st3p:"Benzer soruları çöz ve özgüvenin artsın.",s4h:"Paketler ve fiyatlar",s4sub:"Sana en uygun olanı seç — istediğin zaman yükseltebilirsin.",pill1:"Temel",plan1t:"Sadece Mila",per:"/ ay",p1l1:"Öğretmen Mila — sınırsız soru, 7/24",p1l2:"Adım adım açıklamalar",p1l3:"İhtiyacın olduğunda yardım",btn1:"Seç",pill2:"En popüler",plan2t:"Tam paket",p2l1:"“Sadece Mila” paketindeki her şey",p2l2:"Her konu için e-kılavuz",p2l3:"Önemli kavramlar ve formüllerle e-kitapçık",p2l4:"Çözümlü soru bankası",p2l5:"Deneme sınavları ve ilerleme takibi",btn2:"Hemen başla",bandh:"Çalışan herkes — ilerler. 🌟",bandp:"Her şeyi bir anda bilmek zorunda değilsin. Mila her adımda yanında — sabırlı ve güler yüzlü — sen kendi hızında ilerlerken.",bandbtn:"Sınava hazırlan",trust:"Bağımsız eğitim platformu · Genel müfredat ve kamuya açık kaynaklardan materyaller",footDisc:"MathIA bağımsız bir eğitim platformudur. Materyaller genel müfredattan ve kamuya açık kaynaklardan hazırlanmıştır ve hiçbir kurumla bağlantılı değildir.",hint:"Mila burada — ona sor! 💬"},
+zh:{back:"← 首页",badge:"毕业考试 · 八年级",h1:'<span class="g">轻松</span>备考毕业考试 🎈',lead:"数学毕业考试——有导师 <b>Mila</b> 陪你，每道题想问几遍就问几遍。按自己的节奏，没有压力。💛",cta1:"开始备考",cta2:"如何使用？",milaRole:"你的导师 · 在线",milaBub:"你好！👋 把难住你的题发给我——我们一步步一起做，直到你觉得简单。😊",s1h:"毕业考试考什么",s1sub:"毕业考试的所有知识点——讲解简单，例题丰富。",a1t:"数与运算",a1p:"分数、小数、百分比、乘方与开方——清清楚楚。",a2t:"代数与表达式",a2p:"表达式、方程与不等式、比例与关系。",a3t:"几何",a3p:"面积、体积、勾股定理、角与相似。",a4t:"数据处理",a4p:"表格、图表、平均数与概率基础。",s2h:"MathIA 给你什么",s2sub:"全部集中在一处——还有人随时帮你。",b1t:"导师 Mila",b1p:"全天候一步步讲解。想问多少遍都行——她从不嫌烦。💛",b2t:"每个知识点的电子手册",b2p:"每个知识点都讲得清楚——全在一处。",b3t:"公式电子小册",b3p:"重点概念和所有公式——随手可查。",b4t:"习题集",b4p:"大量例题与练习，由易到难。",b5t:"模拟测验",b5p:"像真实考试一样练习，并追踪你的进步。",s3h:"如何使用",s3sub:"简单到只需三步。✨",st1t:"提问",st1p:"把不会的题打出来或拍照发来。",st2t:"Mila 讲解",st2p:"她一步步带着你——直到豁然开朗。💡",st3t:"练习",st3p:"做类似的题，越来越有信心。",s4h:"套餐与价格",s4sub:"选择最适合你的——随时可以升级。",pill1:"基础",plan1t:"仅 Mila",per:"/ 每月",p1l1:"导师 Mila——无限提问，全天候",p1l2:"一步步讲解",p1l3:"随时为你解答",btn1:"选择",pill2:"最受欢迎",plan2t:"完整套餐",p2l1:"“仅 Mila”套餐的全部内容",p2l2:"每个知识点的电子手册",p2l3:"含重点概念与公式的电子小册",p2l4:"解题习题集",p2l5:"模拟测验与进度追踪",btn2:"立即开始",bandh:"只要练习，就会进步。🌟",bandp:"你不必一下子全会。Mila 在每一步都陪着你——耐心又温柔——而你按自己的节奏前进。",bandbtn:"备战毕业考",trust:"独立教育平台 · 资料源自通用课程与公开来源",footDisc:"MathIA 是一个独立的教育平台。资料依据通用课程与公开来源编写，与任何教育机构无关。",hint:"Mila 在这里——问问她！💬"},
+ar:{back:"→ الرئيسية",badge:"الامتحان النهائي · الصف الثامن",h1:'استعد للامتحان <span class="g">دون توتر</span> 🎈',lead:"امتحان الرياضيات النهائي — مع المعلّمة <b>Mila</b> التي تشرح لك كل مسألة بقدر ما تحتاج. بإيقاعك الخاص، دون ضغط. 💛",cta1:"ابدأ التحضير",cta2:"كيف يعمل؟",milaRole:"معلّمتك · متصلة",milaBub:"مرحبًا! 👋 أرسل لي المسألة التي تصعب عليك — نحلها معًا خطوة بخطوة حتى تصبح سهلة. 😊",s1h:"ماذا ينتظرك في الامتحان",s1sub:"كل مواضيع الامتحان — مشروحة ببساطة ومع أمثلة كثيرة.",a1t:"الأعداد والعمليات",a1p:"الكسور والعشرية والنسب المئوية والقوى والجذور — دون التباس.",a2t:"الجبر والعبارات",a2p:"العبارات والمعادلات والمتباينات والنسب والعلاقات.",a3t:"الهندسة",a3p:"المساحات والأحجام ونظرية فيثاغورس والزوايا والتشابه.",a4t:"معالجة البيانات",a4p:"الجداول والرسوم البيانية والمتوسط وأساسيات الاحتمال.",s2h:"ماذا تحصل عليه مع MathIA",s2sub:"كل شيء في مكان واحد — ومعك من يساعدك دائمًا.",b1t:"المعلّمة Mila",b1p:"تشرح خطوة بخطوة على مدار الساعة. اسأل بقدر ما تشاء — لا تنزعج أبدًا. 💛",b2t:"دليل إلكتروني لكل موضوع",b2p:"كل موضوع مشروح بوضوح — كله في مكان واحد.",b3t:"كُتيّب إلكتروني للصيغ",b3p:"أهم المفاهيم وكل الصيغ — دائمًا في متناولك.",b4t:"مجموعة تمارين",b4p:"أمثلة محلولة وتمارين كثيرة، من السهل إلى الصعب.",b5t:"اختبارات تجريبية",b5p:"تدرّب كأنه الامتحان الحقيقي وتابع تقدّمك.",s3h:"كيف يعمل",s3sub:"بسهولة ثلاث خطوات. ✨",st1t:"اسأل",st1p:"اكتب المسألة التي لا تفهمها أو صوّرها.",st2t:"Mila تشرح",st2p:"ترشدك خطوة بخطوة — حتى تفهمها تمامًا. 💡",st3t:"تدرّب",st3p:"حُلّ مسائل مشابهة وتزداد ثقتك.",s4h:"الباقات والأسعار",s4sub:"اختر ما يناسبك — يمكنك الترقية لاحقًا في أي وقت.",pill1:"أساسي",plan1t:"Mila فقط",per:"/ شهريًا",p1l1:"المعلّمة Mila — أسئلة غير محدودة، على مدار الساعة",p1l2:"شروحات خطوة بخطوة",p1l3:"مساعدة وقتما تحتاج",btn1:"اختر",pill2:"الأكثر شيوعًا",plan2t:"الباقة الكاملة",p2l1:"كل ما في باقة «Mila فقط»",p2l2:"دليل إلكتروني لكل موضوع",p2l3:"كُتيّب إلكتروني بأهم المفاهيم والصيغ",p2l4:"مجموعة تمارين محلولة",p2l5:"اختبارات تجريبية وتتبّع التقدّم",btn2:"ابدأ الآن",bandh:"كل من يتدرّب — يتقدّم. 🌟",bandp:"لست مضطرًا لمعرفة كل شيء دفعة واحدة. Mila معك في كل خطوة — صبورة ولطيفة — وأنت تتقدّم بإيقاعك الخاص.",bandbtn:"استعد للامتحان",trust:"منصة تعليمية مستقلة · مواد من المنهج العام ومصادر متاحة للعموم",footDisc:"MathIA منصة تعليمية مستقلة. أُعدّت المواد من المنهج العام ومصادر متاحة للعموم وليست تابعة لأي مؤسسة تعليمية.",hint:"Mila هنا — اسألها! 💬"}
+};
+function setLang(code){
+ var t=T[code]||T.sr;
+ document.documentElement.lang=code; document.documentElement.dir=(code==='ar')?'rtl':'ltr';
+ document.getElementById('heroH1').innerHTML=t.h1;
+ document.getElementById('heroLead').innerHTML=t.lead;
+ var els=document.querySelectorAll('[data-i18n]');
+ for(var i=0;i<els.length;i++){var k=els[i].getAttribute('data-i18n');if(t[k]!==undefined)els[i].textContent=t[k];}
+ var ls=document.querySelectorAll('.lang');
+ for(var j=0;j<ls.length;j++){ls[j].className=(ls[j].getAttribute('data-lang')===code)?'lang on':'lang';}
+}
+document.getElementById('langbar').addEventListener('click',function(e){var b=e.target.closest('.lang');if(b)setLang(b.getAttribute('data-lang'));});
+setLang('sr');
+</script>
 
 <!-- ZOI / MILA WIDGET -->
 <script src="https://project-y23je.vercel.app/widget.js"
