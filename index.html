@@ -1,473 +1,189 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="sr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MathIA — Privatni profesor matematike i platforma za učenje</title>
-<meta name="description" content="Privatni profesor matematike i platforma za učenje, uz AI tutora koji objašnjava korak po korak. Pripreme za prijemne, kursevi i e-knjige.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23201d24'/%3E%3Ctext x='50%25' y='54%25' font-family='Georgia,serif' font-size='38' font-weight='700' fill='%23cda44e' text-anchor='middle' dominant-baseline='middle'%3EM%3C/text%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<script>document.documentElement.classList.add('js')</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MathIA</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Nunito:wght@400;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#fbfaf7; --bg-2:#f4efe6; --card:#ffffff;
-    --ink:#1f1d22; --muted:#5c6479; --navy:#201d24; --navy-soft:#383440;
-    --gold:#a87d33; --gold-line:#cda44e; --gold-2:#e6cf95;
-    --line:#ece5d7; --line-2:#e3dccd;
-    --sh-sm:0 8px 22px -16px rgba(26,22,30,.28);
-    --sh:0 22px 50px -28px rgba(26,22,30,.30);
-    --sh-gold:0 24px 60px -30px rgba(168,125,51,.45);
-    --maxw:1140px;
-  }
-  *{margin:0;padding:0;box-sizing:border-box}
-  ::selection{background:rgba(205,164,78,.28);color:var(--navy)}
-  html{scroll-behavior:smooth;background:var(--bg)}
-  body{font-family:'Plus Jakarta Sans',sans-serif;color:var(--ink);background:var(--bg);
-    line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-  body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
-    background:
-      radial-gradient(48% 42% at 15% -2%, rgba(205,164,78,.12), transparent 60%),
-      radial-gradient(54% 48% at 92% 6%, rgba(214,178,120,.11), transparent 62%),
-      radial-gradient(72% 60% at 50% 118%, rgba(32,29,36,.05), transparent 60%)}
-  body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");background-size:180px 180px}
-  .langbar,.hero,.statband,.section,footer{position:relative;z-index:1}
-  a{color:inherit;text-decoration:none}
-  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 26px}
-  .serif{font-family:'Playfair Display',serif}
-  h1,h2,h3{font-family:'Playfair Display',serif;color:var(--navy);font-weight:600;letter-spacing:-.015em;line-height:1.12}
-  .eyebrow{font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
-  .muted{color:var(--muted)}
-  .section{padding:116px 0;position:relative}
-  .section.alt{background:rgba(244,239,230,.6)}
-  .section-head{max-width:640px;margin-bottom:58px}
-  .section-head .eyebrow{display:inline-flex;align-items:center;gap:11px;margin-bottom:15px}
-  .section-head .eyebrow::before{content:"\25C6";color:var(--gold-line);font-size:9px;line-height:1}
-  .section-head h2{font-size:clamp(34px,5.4vw,56px)}
-  .section-head p{color:var(--muted);margin-top:14px;font-size:17px;font-weight:300}
-
-  .btn{display:inline-flex;align-items:center;gap:.5em;border:none;cursor:pointer;font-family:inherit;
-    border-radius:13px;font-weight:600;font-size:15.5px;transition:transform .16s ease,box-shadow .25s ease,background .2s,border-color .2s}
-  .btn-gold{background:linear-gradient(160deg,var(--gold-2),var(--gold-line));color:#241a07;padding:14px 28px;box-shadow:var(--sh-gold)}
-  .btn-gold:hover{transform:translateY(-2px);box-shadow:0 30px 66px -28px rgba(168,125,51,.6)}
-  .btn-ghost{background:#fff;border:1px solid var(--line-2);color:var(--navy);padding:14px 26px;box-shadow:var(--sh-sm)}
-  .btn-ghost:hover{transform:translateY(-2px);border-color:var(--gold-line)}
-
-  /* langbar + nav */
-  .langbar{background:var(--navy);color:#cdd5e6;font-size:12.5px;letter-spacing:.04em}
-  .langbar .wrap{display:flex;justify-content:flex-end;gap:14px;padding-top:8px;padding-bottom:8px}
-  .langbar a{opacity:.7;transition:.15s}.langbar a:hover{opacity:1;color:#fff}
-  .langbar a.on{opacity:1;color:var(--gold-2);font-weight:600}
-  .nav{position:sticky;top:0;z-index:50;background:rgba(251,250,247,.82);backdrop-filter:blur(12px);border-bottom:1px solid transparent;transition:.25s}
-  .nav.scrolled{border-bottom-color:var(--line);box-shadow:0 10px 30px -24px rgba(26,22,30,.35)}
-  .nav-inner{max-width:var(--maxw);margin:0 auto;padding:15px 26px;display:flex;align-items:center;justify-content:space-between}
-  .brand{display:flex;align-items:center;gap:11px;font-family:'Playfair Display',serif;font-weight:700;font-size:23px;color:var(--navy)}
-  .brand .badge{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-size:18px;color:#fff;
-    background:linear-gradient(160deg,var(--navy-soft),var(--navy));box-shadow:var(--sh-sm)}
-  .brand .badge b{color:var(--gold-2);font-weight:700}
-  .nav-links{display:flex;align-items:center;gap:28px}
-  .nav-links a{font-size:15px;color:var(--ink);font-weight:500;opacity:.85;transition:.15s}
-  .nav-links a:hover{opacity:1;color:var(--navy)}
-  .nav-cta{font-size:14.5px;padding:11px 22px}
-  .burger{display:none;background:#fff;border:1px solid var(--line-2);border-radius:10px;padding:9px 11px;cursor:pointer}
-  .burger span{display:block;width:20px;height:2px;background:var(--navy);margin:4px 0;border-radius:2px}
-
-  /* hero */
-  .hero{position:relative;overflow:hidden;padding:84px 0 96px}
-  .hero::before{content:"";position:absolute;width:760px;height:760px;right:-180px;top:-280px;border-radius:50%;
-    background:radial-gradient(circle,rgba(205,164,78,.16),transparent 62%);pointer-events:none}
-  .hero::after{content:"";position:absolute;width:560px;height:560px;left:-200px;bottom:-260px;border-radius:50%;
-    background:radial-gradient(circle,rgba(70,62,80,.08),transparent 64%);pointer-events:none}
-  .hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.05fr .95fr;gap:54px;align-items:center}
-  .hero .eyebrow{display:block;margin-bottom:20px}
-  .hero h1{font-size:clamp(42px,6.6vw,78px);font-weight:700;letter-spacing:-.028em;line-height:1.04}
-  .u{position:relative;white-space:nowrap;color:var(--navy)}
-  .u svg{position:absolute;left:-2%;width:104%;bottom:-.22em;height:.36em;overflow:visible}
-  .hero p{color:var(--muted);font-size:clamp(16px,1.5vw,18.5px);font-weight:300;margin:24px 0 32px;max-width:520px}
-  .hero-cta{display:flex;gap:13px;flex-wrap:wrap}
-  .trust{display:flex;gap:22px;flex-wrap:wrap;margin-top:30px;color:var(--muted);font-size:13.5px;font-weight:500}
-  .trust span{display:inline-flex;align-items:center;gap:8px}
-  .trust .dot{width:6px;height:6px;border-radius:50%;background:var(--gold-line)}
-
-  /* hero preview card */
-  .preview{position:relative;z-index:2;overflow:hidden;background:var(--card);border:1px solid var(--line);border-radius:22px;
-    box-shadow:0 34px 82px -34px rgba(26,22,30,.42);padding:27px 24px 22px;max-width:442px;margin-left:auto}
-  .preview .pv-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-  .preview .pv-tag{display:flex;align-items:center;gap:9px;font-size:12.5px;font-weight:600;color:var(--navy)}
-  .preview .pv-tag .b{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;color:#fff;font-family:'Playfair Display',serif;font-weight:700;font-size:14px;background:linear-gradient(160deg,var(--navy-soft),var(--navy));box-shadow:0 0 0 3px rgba(205,164,78,.18)}
-  .preview .pv-live{font-size:11px;color:var(--gold);font-weight:700;letter-spacing:.08em;text-transform:uppercase}
-  .preview .pv-q{background:var(--bg-2);border:1px solid var(--line);border-radius:12px;padding:13px 15px;font-weight:600;color:var(--navy);font-size:16px}
-  .preview .pv-steps{margin-top:14px;display:flex;flex-direction:column;gap:10px}
-  .pv-step{display:flex;align-items:flex-start;gap:11px;font-size:15px}
-  .pv-step .n{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:rgba(205,164,78,.16);color:var(--gold);
-    font-size:12px;font-weight:700;display:grid;place-items:center;margin-top:1px}
-  .pv-step .t{color:var(--ink)}.pv-step .t b{color:var(--navy)}
-  .pv-step.final .n{background:linear-gradient(160deg,var(--gold-2),var(--gold-line));color:#241a07}
-  .preview .pv-foot{margin-top:16px;padding-top:14px;border-top:1px dashed var(--line-2);font-size:13px;color:var(--muted)}
-
-  /* value points */
-  .points{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:6px}
-  .point{display:flex;gap:15px;align-items:flex-start}
-  .point .ic{flex:0 0 auto;width:46px;height:46px;border-radius:13px;display:grid;place-items:center;background:#fff;border:1px solid var(--line);box-shadow:var(--sh-sm)}
-  .point .ic svg{width:23px;height:23px;stroke:var(--gold);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-  .point h3{font-size:18.5px;margin-bottom:3px}
-  .point p{color:var(--muted);font-size:14.5px;font-weight:300}
-
-  /* cards */
-  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-  .card{position:relative;display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);
-    border-radius:20px;padding:30px 28px;box-shadow:var(--sh-sm);transition:transform .2s ease,box-shadow .25s ease,border-color .2s}
-  .card::before{content:"";position:absolute;top:0;left:22px;right:22px;height:2px;border-radius:2px;
-    background:linear-gradient(90deg,transparent,var(--gold-line),transparent);opacity:0;transition:.25s}
-  .card:hover{transform:translateY(-8px);box-shadow:0 34px 72px -32px rgba(26,22,30,.42);border-color:var(--line-2)}
-  .card:hover::before{opacity:1}
-  .pill{align-self:flex-start;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:5px 11px;border-radius:8px;margin-bottom:16px}
-  .pill.on{color:#5f4912;background:rgba(205,164,78,.18)}
-  .pill.soon{color:var(--muted);background:#fff;border:1px solid var(--line-2)}
-  .card h3{font-size:20px;margin-bottom:9px;line-height:1.25}
-  .card p{color:var(--muted);font-size:14.5px;font-weight:300;flex:1}
-  .card .go{margin-top:18px;color:var(--gold);font-weight:600;font-size:14.5px;display:inline-flex;gap:.4em;transition:gap .2s}
-  .card:hover .go{gap:.72em}
-  .yrs{display:flex;flex-wrap:wrap;gap:7px;margin-top:6px}
-  .yrs span{font-size:12px;color:var(--navy);background:var(--bg-2);border:1px solid var(--line);border-radius:7px;padding:4px 9px;font-weight:500}
-
-  .group{margin-top:42px}
-  .group:first-of-type{margin-top:0}
-  .group-title{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--navy);margin-bottom:18px;display:flex;align-items:center;gap:13px}
-  .group-title::after{content:"";flex:1;height:1px;background:var(--line-2)}
-  .chips{display:flex;flex-wrap:wrap;gap:11px}
-  .chip{display:inline-flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:12px;
-    padding:12px 16px;font-size:14.5px;color:var(--ink);font-weight:500;box-shadow:var(--sh-sm);transition:.18s}
-  .chip:hover{transform:translateY(-2px);border-color:var(--gold-line)}
-  .chip .s{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
-  .chip .d{width:7px;height:7px;border-radius:50%;background:var(--gold-line)}
-
-  /* subscription */
-  .sub{background:linear-gradient(180deg,#2b2730,var(--navy));border-radius:26px;padding:58px 40px;text-align:center;position:relative;overflow:hidden;box-shadow:var(--sh)}
-  .sub::before{content:"";position:absolute;width:520px;height:520px;left:50%;top:-300px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(circle,rgba(205,164,78,.22),transparent 60%)}
-  .sub .eyebrow{color:var(--gold-2);position:relative}
-  .sub h2{color:#fff;font-size:clamp(26px,3.8vw,38px);margin:13px 0 0;position:relative}
-  .sub p{color:#c7cee0;font-weight:300;max-width:540px;margin:15px auto 30px;position:relative}
-  .sub p b{color:#fff;font-weight:600}
-  .tiers{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:28px;position:relative}
-  .tier{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);border-radius:15px;padding:20px 26px;min-width:170px;transition:.2s}
-  .tier:hover{transform:translateY(-3px);border-color:rgba(205,164,78,.6)}
-  .tier.best{border-color:var(--gold-line);background:rgba(205,164,78,.12);position:relative}
-  .tier.best::before{content:"★ Preporuka";position:absolute;top:-12px;left:50%;transform:translateX(-50%);font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#241a07;background:linear-gradient(160deg,var(--gold-2),var(--gold-line));padding:4px 12px;border-radius:999px;white-space:nowrap}
-  .tier b{font-family:'Playfair Display',serif;color:#fff;font-size:19px;display:block;margin-bottom:3px}
-  .tier span{font-size:12.5px;color:#b9c1d6}
-  .sub .note{color:#9aa3bd;font-size:13px;margin-top:10px;position:relative}
-
-  /* closing cta */
-  .cta{text-align:center}
-  .cta h2{font-size:clamp(28px,4.4vw,44px)}
-  .cta p{color:var(--muted);font-weight:300;margin:12px 0 26px}
-  .cta .small{margin-top:14px;color:var(--muted);font-size:13.5px}
-
-  footer{background:var(--navy);color:#c4cce0;padding:54px 0 36px}
-  .foot-inner{display:flex;justify-content:space-between;flex-wrap:wrap;gap:30px}
-  .foot-brand .brand{color:#fff;margin-bottom:12px}
-  .foot-brand .brand .badge{background:rgba(255,255,255,.08)}
-  .foot-brand p{color:#9aa3bd;font-size:14px;font-weight:300;max-width:280px}
-  .foot-col h4{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-2);margin-bottom:14px}
-  .foot-col a{display:block;color:#c4cce0;font-size:14px;font-weight:300;margin-bottom:9px;opacity:.85;transition:.15s}
-  .foot-col a:hover{opacity:1;color:#fff}
-  .foot-links{display:flex;gap:46px;flex-wrap:wrap}
-  .foot-bottom{margin-top:38px;padding-top:20px;border-top:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;color:#8a93ad;font-size:13px;flex-wrap:wrap;gap:10px}
-
-  .reveal{opacity:1}
-  .js .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.6,.2,1)}
-  .js .reveal.in{opacity:1;transform:none}
-  @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}.js .reveal{opacity:1;transform:none}}
-
-  @media(max-width:920px){
-    .hero-grid{grid-template-columns:1fr;gap:40px}
-    .preview{margin:0 auto}
-    .points,.cards{grid-template-columns:1fr}
-  }
-  @media(max-width:760px){
-    .nav-links{position:fixed;inset:104px 0 auto 0;flex-direction:column;gap:0;background:#fff;border-bottom:1px solid var(--line);
-      max-height:0;overflow:hidden;transition:max-height .3s ease;box-shadow:var(--sh)}
-    .nav-links.open{max-height:440px}
-    .nav-links a{padding:15px 26px;width:100%;border-top:1px solid var(--line)}
-    .nav-links .btn{margin:14px 26px}
-    .burger{display:block}
-    .section{padding:72px 0}
-    .sub{padding:42px 22px}
-  }
-  /* —— jače + luksuznije —— */
-  .u svg path{stroke-dasharray:240;stroke-dashoffset:240;animation:drawu 1.1s ease .55s forwards}
-  @keyframes drawu{to{stroke-dashoffset:0}}
-  .btn-gold{position:relative;overflow:hidden}
-  .btn-gold::after{content:"";position:absolute;top:0;left:-60%;width:42%;height:100%;transform:skewX(-20deg);
-    background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);transition:left .55s ease}
-  .btn-gold:hover::after{left:130%}
-  .statband{background:linear-gradient(180deg,#2b2730,var(--navy));color:#fff;position:relative;overflow:hidden;border-top:1px solid rgba(205,164,78,.28);border-bottom:1px solid rgba(205,164,78,.28)}
-  .statband::before{content:"";position:absolute;left:50%;top:-280px;width:600px;height:600px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(circle,rgba(205,164,78,.16),transparent 60%)}
-  .statband-inner{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;padding:42px 26px;position:relative;z-index:1}
-  .stat{min-width:140px}
-  .stat b{font-family:'Playfair Display',serif;font-weight:600;font-size:31px;display:block;color:#e6cf95;
-    background:linear-gradient(160deg,var(--gold-2),var(--gold-line));-webkit-background-clip:text;background-clip:text}
-  @supports ((-webkit-background-clip:text) or (background-clip:text)){.stat b{color:transparent}}
-  .stat span{color:#aab2c8;font-size:13.5px;font-weight:500;letter-spacing:.03em}
-  @media(max-width:760px){.stat{min-width:42%}}
-  .pv-bar{position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--gold-line),var(--gold-2),#f9eccf,var(--gold-2),var(--gold-line));background-size:220% 100%;animation:barshine 4.5s linear infinite}
-  @keyframes barshine{0%{background-position:200% 0}100%{background-position:-200% 0}}
-  .statband-inner .stat + .stat{border-left:1px solid rgba(255,255,255,.1);padding-left:26px}
-  .hero-mono{position:absolute;left:-26px;bottom:-150px;font-family:'Playfair Display',serif;font-weight:700;font-size:500px;line-height:1;color:var(--navy);opacity:.03;pointer-events:none;z-index:0;user-select:none}
-  @media(max-width:760px){.statband-inner .stat + .stat{border-left:none;padding-left:0}.hero-mono{font-size:300px;bottom:-60px}}
+:root{--navy:#14223E;--navy2:#1E3157;--gold:#C2A14D;--golddk:#9C7E33;--goldlt:#E6CE86;
+  --cream:#FAF7F0;--card:#FFFFFF;--ink:#1A1F2B;--muted:#7C8190;--bord:#E9E1CD;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Nunito',system-ui,sans-serif;color:var(--ink);background:var(--cream);}
+.serif{font-family:'Playfair Display',Georgia,serif;}
+.wrap{max-width:1080px;margin:0 auto;padding:0 22px;}
+.langbar{background:#0F1A30;border-bottom:1px solid rgba(194,161,77,.3);}
+.langbar .row{max-width:1080px;margin:0 auto;display:flex;justify-content:center;gap:6px;flex-wrap:wrap;padding:9px 22px;font-size:12.5px;font-weight:700;}
+.lang{padding:3px 10px;border-radius:999px;cursor:pointer;color:#aeb7cc;transition:color .15s;}
+.lang:hover{color:#fff;} .lang.on{background:var(--gold);color:#14223E;font-weight:900;}
+.hero{background:radial-gradient(circle at 50% -28%,#27406e 0%,#1E3157 40%,#14223E 84%);color:#fff;text-align:center;
+  padding:70px 22px 84px;position:relative;overflow:hidden;box-shadow:inset 0 -3px 0 var(--gold);}
+.hero:before,.hero:after{content:"\2605";position:absolute;color:rgba(194,161,77,.10);font-size:160px;line-height:1;}
+.hero:before{top:-8px;left:16px;} .hero:after{bottom:-48px;right:22px;font-size:210px;}
+.brand{display:inline-flex;align-items:center;gap:14px;margin-bottom:26px;position:relative;}
+.seal{width:58px;height:58px;border-radius:50%;background:radial-gradient(circle at 34% 30%,#F4E2A8,#C2A14D 56%,#8E7230);
+  display:flex;align-items:center;justify-content:center;color:#14223E;font-weight:800;font-size:30px;
+  font-family:'Playfair Display',serif;box-shadow:0 8px 24px rgba(0,0,0,.42),0 0 0 4px rgba(230,206,134,.22);}
+.wm{font-weight:900;font-size:30px;letter-spacing:.4px;} .wm .ia{color:var(--gold);}
+.stars{color:var(--gold);letter-spacing:9px;font-size:14px;margin-bottom:18px;position:relative;}
+.hero h1{font-size:52px;line-height:1.06;font-weight:800;margin-bottom:18px;position:relative;letter-spacing:-.5px;text-shadow:0 2px 20px rgba(0,0,0,.28);}
+.hero h1 .g{color:var(--goldlt);}
+.hero p.lead{font-size:18.5px;color:#dbe2ef;max-width:660px;margin:0 auto 32px;font-weight:500;position:relative;line-height:1.55;}
+.cta{display:inline-flex;gap:14px;flex-wrap:wrap;justify-content:center;position:relative;}
+.btn{display:inline-block;text-decoration:none;border-radius:13px;padding:15px 32px;font-weight:800;font-size:16px;transition:transform .15s,box-shadow .15s;cursor:pointer;}
+.btn:hover{transform:translateY(-2px);}
+.btn-gold{background:linear-gradient(135deg,#F0DCA0,#C2A14D 58%,#9C7E33);color:#14223E;box-shadow:0 10px 28px rgba(156,126,51,.5);}
+.btn-ghost{background:rgba(255,255,255,.06);color:#fff;border:1.5px solid rgba(230,206,134,.6);}
+.btn-ghost:hover{background:rgba(255,255,255,.12);}
+.offer{background:#0F1A30;color:#fff;text-align:center;padding:15px 22px;font-weight:700;font-size:15px;letter-spacing:.2px;}
+.offer .star{color:var(--gold);} .offer b{background:linear-gradient(135deg,#E6CE86,#C2A14D);color:#14223E;padding:2px 9px;border-radius:7px;font-weight:800;}
+.sec{padding:60px 0;}
+.sec h2{font-family:'Playfair Display',serif;font-size:34px;font-weight:800;text-align:center;position:relative;padding-bottom:14px;color:var(--navy);}
+.sec h2:after{content:"";position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:64px;height:2px;background:linear-gradient(90deg,transparent,#C2A14D,transparent);}
+.sec .sub{text-align:center;color:var(--muted);font-weight:500;font-size:16px;margin:16px 0 34px;font-style:italic;}
+.ico{display:inline-flex;align-items:center;justify-content:center;width:58px;height:58px;border-radius:50%;
+  background:linear-gradient(135deg,#FBF3DD,#F1E3BC);border:1px solid rgba(194,161,77,.45);box-shadow:0 4px 12px rgba(156,126,51,.16);}
+.ico svg{width:26px;height:26px;}
+.grid{text-align:center;font-size:0;}
+.pillar{display:inline-block;width:23%;min-width:200px;margin:0 .9% 18px;vertical-align:top;text-align:center;font-size:14px;padding:8px 10px;}
+@media(max-width:820px){.pillar{width:46%;margin-bottom:26px;}} @media(max-width:480px){.pillar{width:94%;}}
+.pillar h3{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;margin:14px 0 6px;color:var(--navy);}
+.pillar p{font-size:13.5px;color:var(--muted);font-weight:500;line-height:1.5;}
+.card{display:inline-block;width:31.5%;min-width:230px;margin:0 .7% 18px;vertical-align:top;text-align:left;font-size:14px;
+  background:var(--card);border:1px solid var(--bord);border-radius:18px;padding:24px;position:relative;
+  box-shadow:0 4px 16px rgba(20,34,62,.05);transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease;}
+@media(max-width:760px){.card{width:46%;}} @media(max-width:520px){.card{width:96%;}}
+.card:not(.soon):hover{transform:translateY(-5px);box-shadow:0 18px 40px rgba(20,34,62,.13);border-color:var(--gold);}
+.card .ico{width:50px;height:50px;margin-bottom:14px;} .card .ico svg{width:23px;height:23px;}
+.card h3{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;margin:0 0 5px;color:var(--navy);}
+.card p{font-size:13px;color:var(--muted);font-weight:600;margin-bottom:12px;line-height:1.45;}
+.card .go{font-size:13.5px;font-weight:800;color:var(--golddk);letter-spacing:.3px;}
+.card.soon{opacity:.72;background:#FCFAF4;}
+.soonbadge{position:absolute;top:18px;right:18px;background:#F2EEE2;color:var(--golddk);font-size:10.5px;font-weight:900;padding:3px 9px;border-radius:999px;text-transform:uppercase;letter-spacing:.5px;}
+.quizband{background:radial-gradient(circle at 50% 0,#27406e,#14223E 80%);border-radius:20px;padding:34px 24px;text-align:center;color:#fff;box-shadow:inset 0 0 0 1px rgba(194,161,77,.4);}
+.quizband h2{font-family:'Playfair Display',serif;font-size:25px;font-weight:800;margin-bottom:18px;color:#fff;}
+.trust{text-align:center;padding:30px 22px;color:var(--golddk);font-weight:700;font-size:14px;letter-spacing:.4px;border-top:1px solid var(--bord);border-bottom:1px solid var(--bord);background:#fff;}
+.foot{background:#0F1A30;color:#aeb7cc;text-align:center;padding:36px 22px;font-size:13px;font-weight:500;border-top:1px solid rgba(194,161,77,.3);}
+.foot .wm{font-size:20px;color:#fff;margin-bottom:8px;}
+.foot .disc{max-width:720px;margin:8px auto 0;line-height:1.6;}
+a.card{text-decoration:none;color:var(--ink);}
+html[dir="rtl"] .card{text-align:right;}
 </style>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2314223E'/%3E%3Ctext x='50%25' y='56%25' font-family='Georgia,serif' font-size='40' font-weight='700' fill='%23C2A14D' text-anchor='middle' dominant-baseline='middle'%3EM%3C/text%3E%3C/svg%3E">
 </head>
 <body>
-
-<div class="langbar"><div class="wrap"><a class="on" href="index.html">SR</a><a href="en.html">EN</a></div></div>
-
-<nav class="nav" id="nav">
-  <div class="nav-inner">
-    <a class="brand" href="#top"><span class="badge"><b>M</b></span><span>MathIA</span></a>
-    <div class="nav-links" id="navlinks">
-      <a href="#vodic">Vodič</a>
-      <a href="#pripreme">Pripreme</a>
-      <a href="#eknjige">E-knjige</a>
-      <a href="#pretplata">Pretplata</a>
-    </div>
-    <button class="burger" id="burger" aria-label="Meni"><span></span><span></span><span></span></button>
-  </div>
-</nav>
-
-<header class="hero" id="top">
-  <div class="hero-mono" aria-hidden="true">M</div>
-  <div class="wrap">
-    <div class="hero-grid">
-      <div class="hero-text">
-        <span class="eyebrow reveal">Artificial Intelligence Education</span>
-        <h1 class="reveal" style="transition-delay:.05s">Tvoj privatni profesor <span class="u">matematike<svg viewBox="0 0 200 16" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="gshine" x1="0" y1="0" x2="0.5" y2="0"><stop offset="0%" stop-color="#b88a3e"/><stop offset="42%" stop-color="#e7cf90"/><stop offset="50%" stop-color="#f9eccf"/><stop offset="58%" stop-color="#e7cf90"/><stop offset="100%" stop-color="#b88a3e"/><animate attributeName="x1" values="-0.6;1.2" dur="3.6s" repeatCount="indefinite"/><animate attributeName="x2" values="0;1.8" dur="3.6s" repeatCount="indefinite"/></linearGradient></defs><path d="M3,11 C54,4 150,4 197,9" fill="none" stroke="url(#gshine)" stroke-width="4.5" stroke-linecap="round"/></svg></span> — uvek uz tebe.</h1>
-        <p class="reveal" style="transition-delay:.1s">Platforma za učenje sa AI tutorom koji objašnjava korak po korak. Pripreme za prijemne ispite, kursevi i e-knjige.</p>
-        <div class="hero-cta reveal" style="transition-delay:.15s">
-          <a class="btn btn-gold" href="#vodic">Otkrij svoj put ↓</a>
-        </div>
-        <div class="trust reveal" style="transition-delay:.2s">
-          <span><span class="dot"></span>Vodi profesor matematike</span>
-          <span><span class="dot"></span>Korak po korak</span>
-        </div>
-      </div>
-      <div class="preview reveal" style="transition-delay:.18s">
-        <span class="pv-bar"></span>
-        <div class="pv-top">
-          <div class="pv-tag"><span class="b">M</span> MathIA · korak po korak</div>
-        </div>
-        <div class="pv-q">Reši: x² − 6x + 8 = 0</div>
-        <div class="pv-steps">
-          <div class="pv-step"><span class="n">1</span><span class="t">Diskriminanta: <b>D = 6² − 4·8 = 4</b></span></div>
-          <div class="pv-step"><span class="n">2</span><span class="t">Koreni: <b>x = (6 ± 2) / 2</b></span></div>
-          <div class="pv-step final"><span class="n">✓</span><span class="t">Rešenja: <b>x = 4</b> i <b>x = 2</b> — sa objašnjenjem.</span></div>
-        </div>
-        <div class="pv-foot">Ne dobijaš samo rezultat — dobijaš postupak koji razumeš.</div>
-      </div>
-    </div>
-  </div>
-</header>
-
-<div class="statband"><div class="wrap statband-inner">
-  <div class="stat"><b>0–24</b><span>AI tutor dostupan</span></div>
-  <div class="stat"><b>11+</b><span>predmeta i kurseva</span></div>
-  <div class="stat"><b>1‑na‑1</b><span>ili u grupi</span></div>
+<div class="langbar"><div class="row" id="langbar">
+<span class="lang on" data-lang="sr">Srpski</span><span class="lang" data-lang="en">English</span><span class="lang" data-lang="de">Deutsch</span><span class="lang" data-lang="ru">Русский</span><span class="lang" data-lang="fr">Français</span><span class="lang" data-lang="es">Español</span><span class="lang" data-lang="it">Italiano</span><span class="lang" data-lang="tr">Türkçe</span><span class="lang" data-lang="zh">中文</span><span class="lang" data-lang="ar">العربية</span>
 </div></div>
 
-<section class="section" style="padding-top:46px">
-  <div class="wrap">
-    <div class="points">
-      <div class="point reveal">
-        <div class="ic"><svg viewBox="0 0 24 24"><polyline points="3 19 8 19 8 14 13 14 13 9 18 9 18 4 21 4"/></svg></div>
-        <div><h3>Korak po korak</h3><p>AI tutor objašnjava postupak, ne samo krajnje rešenje.</p></div>
-      </div>
-      <div class="point reveal" style="transition-delay:.08s">
-        <div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg></div>
-        <div><h3>Uvek dostupno</h3><p>Učiš svojim tempom, kad god ti odgovara.</p></div>
-      </div>
-      <div class="point reveal" style="transition-delay:.16s">
-        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 4 2 9l10 5 10-5z"/><path d="M6 11v5c0 1.4 2.7 2.6 6 2.6s6-1.2 6-2.6v-5"/></svg></div>
-        <div><h3>Vodi profesor</h3><p>Sadržaj kreira profesor matematike.</p></div>
-      </div>
-    </div>
-  </div>
+<section class="hero">
+  <div class="brand"><div class="seal">M</div><div class="wm">Math<span class="ia">IA</span></div></div>
+  <div class="stars">&#9733; &#9733; &#9733; &#9733; &#9733;</div>
+  <h1 class="serif" id="heroH1"></h1>
+  <p class="lead" data-i18n="lead"></p>
+  <div class="cta"><a class="btn btn-gold" href="#sta" data-i18n="cta1"></a><a class="btn btn-ghost" href="#zoi" data-i18n="cta2"></a><a class="btn btn-ghost" id="cenBtn" href="#cenovnik"></a></div>
 </section>
+<div class="offer" id="offerLine"></div>
 
-<section class="section alt" id="vodic">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <span class="eyebrow">Pronađi svoj put</span>
-      <h2>Vodič za izbor</h2>
-      <p>Kratki, besplatni vodiči koji ti daju konkretan odgovor sa alternativama — pre nego što doneseš veliku odluku.</p>
-    </div>
-    <div class="cards">
-      <a class="card reveal" href="kviz.html">
-        <span class="pill on">Dostupno</span>
-        <h3>Koji smer na FTN-u je za tebe?</h3>
-        <p>8 pitanja i dobijaš predlog smera + alternative, uz tip prijemnog ispita.</p>
-        <span class="go">Započni →</span>
-      </a>
-      <a class="card reveal" href="vodic-fakultet.html" style="transition-delay:.08s">
-        <span class="pill on">Dostupno</span>
-        <h3>Koji fakultet je za tebe?</h3>
-        <p>Konkretan predlog fakulteta i smera, sa alternativama.</p>
-        <span class="go">Započni →</span>
-      </a>
-      <a class="card reveal" href="vodic-skola.html" style="transition-delay:.16s">
-        <span class="pill on">Dostupno</span>
-        <h3>Koja srednja škola je za tebe?</h3>
-        <p>Za osnovce — konkretna škola sa alternativama, prema sklonostima.</p>
-        <span class="go">Započni →</span>
-      </a>
+<section class="sec"><div class="wrap">
+  <h2 data-i18n="nudimoH2"></h2>
+  <div class="grid">
+    <div class="pillar"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#9C7E33" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M2 8l10-4 10 4-10 4z"/><path d="M6 10.5V15c0 1.2 2.7 3 6 3s6-1.8 6-3v-4.5"/><path d="M22 8v5"/></svg></span><h3 data-i18n="p1n"></h3><p data-i18n="p1d"></p></div>
+    <div class="pillar"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#9C7E33" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M6 3h11a2 2 0 0 1 2 2v14H8a2 2 0 0 0-2 2z"/><path d="M6 19a2 2 0 0 1 2-2h11"/><path d="M10 7h6M10 10h6"/></svg></span><h3 data-i18n="p2n"></h3><p data-i18n="p2d"></p></div>
+    <div class="pillar"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#9C7E33" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 12l9 5 9-5"/><path d="M3 16l9 5 9-5"/></svg></span><h3 data-i18n="p3n"></h3><p data-i18n="p3d"></p></div>
+    <div class="pillar"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#9C7E33" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2.2 4.8L8.5 15.5l2.2-4.8z"/></svg></span><h3 data-i18n="p4n"></h3><p data-i18n="p4d"></p></div>
+  </div>
+</div></section>
+
+<section class="sec" id="sta" style="background:#fff;border-top:1px solid var(--bord);border-bottom:1px solid var(--bord);"><div class="wrap">
+  <h2 data-i18n="chooserH2"></h2><div class="sub" data-i18n="chooserSub"></div>
+  <div class="grid">
+    <a class="card" href="mathia_ponuda.html"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#9C7E33" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M2 8l10-4 10 4-10 4z"/><path d="M6 10.5V15c0 1.2 2.7 3 6 3s6-1.8 6-3v-4.5"/></svg></span><h3 data-i18n="c1t"></h3><p data-i18n="c1p"></p><div class="go" data-i18n="go"></div></a>
+    <a class="card" href="mathia_ponuda.html"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#9C7E33" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M6 3h11a2 2 0 0 1 2 2v14H8a2 2 0 0 0-2 2z"/><path d="M10 7h6M10 10h6"/></svg></span><h3 data-i18n="c2t"></h3><p data-i18n="c2p"></p><div class="go" data-i18n="go"></div></a>
+    <a class="card" href="mathia_fakultet.html"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#9C7E33" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M3 9l9-5 9 5"/><path d="M5 9v9M9 9v9M15 9v9M19 9v9"/><path d="M3 20h18"/></svg></span><h3 data-i18n="c3t"></h3><p data-i18n="c3p"></p><div class="go" data-i18n="go"></div></a>
+    <a class="card soon"><span class="soonbadge" data-i18n="soon"></span><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#9C7E33" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M7 5h10l-6 7 6 7H7"/></svg></span><h3 data-i18n="c4t"></h3><p data-i18n="c4p"></p></a>
+    <a class="card soon"><span class="soonbadge" data-i18n="soon"></span><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#9C7E33" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><circle cx="12" cy="12" r="2"/><ellipse cx="12" cy="12" rx="10" ry="4.2"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(120 12 12)"/></svg></span><h3 data-i18n="c5t"></h3><p data-i18n="c5p"></p></a>
+    <a class="card soon"><span class="soonbadge" data-i18n="soon"></span><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#9C7E33" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M9 3h6v3H9z"/><path d="M9 11h6M9 15h4"/></svg></span><h3 data-i18n="c6t"></h3><p data-i18n="c6p"></p></a>
+  </div>
+</div></section>
+
+<section class="sec" id="cenovnik" style="background:#fff;border-top:1px solid var(--bord);border-bottom:1px solid var(--bord);"><div class="wrap">
+  <h2 id="cenH2"></h2>
+  <div id="cenSpecial" style="text-align:center;margin:18px auto 28px;max-width:700px;background:radial-gradient(circle at 50% 0,#27406e,#14223E 85%);color:#fff;border:1.5px solid var(--gold);border-radius:13px;padding:13px 18px;font-weight:700;font-size:14px;"></div>
+  <div class="grid">
+    <div class="card" style="width:23%;min-width:200px;text-align:center;"><h3 id="pcMM"></h3><div id="pcMMv" style="font-size:20px;font-weight:900;color:var(--navy);margin:8px 0;"></div><a class="go" data-i18n="go" href="mathia_ponuda.html" style="text-decoration:none;"></a></div>
+    <div class="card" style="width:23%;min-width:200px;text-align:center;"><h3 id="pcPR"></h3><div id="pcPRv" style="font-size:20px;font-weight:900;color:var(--navy);margin:8px 0;"></div><a class="go" data-i18n="go" href="mathia_ponuda.html" style="text-decoration:none;"></a></div>
+    <div class="card" style="width:23%;min-width:200px;text-align:center;"><h3 id="pcFA"></h3><div id="pcFAv" style="font-size:20px;font-weight:900;color:var(--navy);margin:8px 0;"></div><a class="go" data-i18n="go" href="mathia_fakultet.html" style="text-decoration:none;"></a></div>
+    <div class="card" style="width:23%;min-width:200px;text-align:center;"><h3 id="pcTU"></h3><div id="pcTUv" style="font-size:20px;font-weight:900;color:var(--navy);margin:8px 0;"></div><a class="go" data-i18n="go" href="mathia_ponuda.html" style="text-decoration:none;"></a></div>
+  </div>
+</div></section>
+<section class="sec" id="zoi"><div class="wrap">
+  <div class="quizband">
+    <h2 id="quizH2"></h2>
+    <div style="display:inline-flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+      <a class="btn btn-gold" id="quizFac" href="mathia_kviz_fakultet.html"></a>
+      <a class="btn btn-ghost" id="quizHs" href="mathia_kviz_srednja.html"></a>
     </div>
   </div>
-</section>
+</div></section>
 
-<section class="section" id="pripreme">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <span class="eyebrow">Pripreme i kursevi</span>
-      <h2>AI tutor koji rešava korak po korak</h2>
-      <p>Svaki kurs vodi AI tutor obučen za tačno taj ispit ili predmet — objašnjava postupak, ne samo rešenje. Prva četiri su skoro gotova; ostalo stiže.</p>
-    </div>
+<div class="trust" id="trust"></div>
 
-    <div class="group reveal">
-      <div class="group-title">Prijemni ispiti</div>
-      <div class="cards" style="grid-template-columns:repeat(2,1fr)">
-        <a class="card" href="prijemni-ftn.html">
-          <span class="pill on">Dostupno</span>
-          <h3>Prijemni iz matematike — FTN</h3>
-          <p>Priprema za prijemni iz matematike za FTN u Novom Sadu — zadaci i postupci korak po korak, uz AI profesoricu Zoi.</p>
-          <span class="go">Otvori pripremu →</span>
-        </a>
-        <a class="card" href="mala-matura.html">
-          <span class="pill on">Dostupno</span>
-          <h3>Prijemni — mala matura (matematika)</h3>
-          <p>Priprema za malu maturu iz matematike — sve oblasti, korak po korak, uz AI profesoricu Zoi. Dostupno na više jezika.</p>
-          <span class="go">Otvori pripremu →</span>
-        </a>
-      </div>
-    </div>
-
-    <div class="group reveal">
-      <div class="group-title">Srednja škola</div>
-      <div class="cards" style="grid-template-columns:repeat(2,1fr)">
-        <div class="card">
-          <span class="pill soon">U pripremi</span>
-          <h3>Matematika — gimnazija</h3>
-          <p>Kompletno gradivo po godinama, usklađeno sa programom.</p>
-          <div class="yrs"><span>1. godina</span><span>2. godina</span><span>3. godina</span><span>4. godina</span></div>
-          <a class="go" href="mailto:kontakt@mathia.rs?subject=Matematika%20gimnazija%20-%20interesovanje" style="margin-top:16px">Prijavi interesovanje →</a>
-        </div>
-        <div class="card">
-          <span class="pill soon">U pripremi</span>
-          <h3>Fizika — gimnazija</h3>
-          <p>Kompletno gradivo po godinama, sa zadacima i objašnjenjima.</p>
-          <div class="yrs"><span>1. godina</span><span>2. godina</span><span>3. godina</span><span>4. godina</span></div>
-          <a class="go" href="mailto:kontakt@mathia.rs?subject=Fizika%20gimnazija%20-%20interesovanje" style="margin-top:16px">Prijavi interesovanje →</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="group reveal">
-      <div class="group-title">Fakultet</div>
-      <div class="chips">
-        <a class="chip" href="mailto:kontakt@mathia.rs?subject=Matematicka%20analiza%201%20-%20interesovanje"><span class="d"></span>Matematička analiza 1 <span class="s">u pripremi</span></a>
-        <a class="chip" href="mailto:kontakt@mathia.rs?subject=Matematicka%20analiza%202%20-%20interesovanje"><span class="d"></span>Matematička analiza 2 <span class="s">u pripremi</span></a>
-        <a class="chip" href="mailto:kontakt@mathia.rs?subject=Algebra%20-%20interesovanje"><span class="d"></span>Algebra <span class="s">u pripremi</span></a>
-        <a class="chip" href="mailto:kontakt@mathia.rs?subject=Mehanika%20-%20interesovanje"><span class="d"></span>Mehanika <span class="s">u pripremi</span></a>
-        <a class="chip" href="mailto:kontakt@mathia.rs?subject=Fizika%20fakultet%20-%20interesovanje"><span class="d"></span>Fizika <span class="s">u pripremi</span></a>
-        <a class="chip" href="mailto:kontakt@mathia.rs?subject=Osnove%20elektrotehnike%201%20-%20interesovanje"><span class="d"></span>Osnove elektrotehnike 1 <span class="s">u pripremi</span></a>
-        <a class="chip" href="mailto:kontakt@mathia.rs?subject=Osnove%20elektrotehnike%202%20-%20interesovanje"><span class="d"></span>Osnove elektrotehnike 2 <span class="s">u pripremi</span></a>
-        <a class="chip" href="mailto:kontakt@mathia.rs?subject=Uvod%20u%20elektroniku%20-%20interesovanje"><span class="d"></span>Uvod u elektroniku <span class="s">u pripremi</span></a>
-        <a class="chip" href="mailto:kontakt@mathia.rs?subject=Elektricna%20merenja%20-%20interesovanje"><span class="d"></span>Električna merenja <span class="s">uskoro</span></a>
-        <a class="chip" href="mailto:kontakt@mathia.rs?subject=Verovatnoca%20i%20statistika%20-%20interesovanje"><span class="d"></span>Verovatnoća i statistika <span class="s">uskoro</span></a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section alt" id="eknjige">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <span class="eyebrow">Materijali</span>
-      <h2>E-knjige i zbirke</h2>
-      <p>Priručnici i zbirke zadataka za samostalno učenje — zasebno ili uz pretplatu na kurseve.</p>
-    </div>
-    <div class="cards" style="grid-template-columns:repeat(2,1fr)">
-      <div class="card reveal">
-        <span class="pill soon">Uskoro</span>
-        <h3>Zbirke zadataka</h3>
-        <p>Rešeni zadaci sa prijemnih i probni testovi, po oblastima.</p>
-        <a class="go" href="mailto:kontakt@mathia.rs?subject=E-knjige%20zbirke%20-%20interesovanje">Najavi me →</a>
-      </div>
-      <div class="card reveal" style="transition-delay:.08s">
-        <span class="pill soon">Uskoro</span>
-        <h3>Priručnici</h3>
-        <p>Sažeti vodiči kroz gradivo — teorija i formule na jednom mestu.</p>
-        <a class="go" href="mailto:kontakt@mathia.rs?subject=Prirucnici%20-%20interesovanje">Najavi me →</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="pretplata">
-  <div class="wrap">
-    <div class="sub reveal">
-      <span class="eyebrow">Specijalna ponuda za prve</span>
-      <h2>Pretplata — kreni sa jednim, dobij više</h2>
-      <p>Pretplati se na jedan predmet, ili uzmi paket više predmeta uz <b>specijalnu ponudu</b>. E-knjige zasebno ili uključene u paket — jedan nalog, sve na jednom mestu.</p>
-      <div class="tiers">
-        <a class="tier" href="mailto:kontakt@mathia.rs?subject=Pretplata%20-%201%20predmet"><b>1 predmet</b><span>kreni fokusirano</span></a>
-        <a class="tier best" href="mailto:kontakt@mathia.rs?subject=Pretplata%20-%20paket%20predmeta"><b>Paket</b><span>najbolja vrednost</span></a>
-        <a class="tier" href="mailto:kontakt@mathia.rs?subject=Pretplata%20-%20sve%20i%20e-knjige"><b>Sve + e-knjige</b><span>pun pristup</span></a>
-      </div>
-      <a class="btn btn-gold" href="mailto:kontakt@mathia.rs?subject=Specijalna%20ponuda%20-%20lista%20prvih">Uđi na listu prvih →</a>
-      <div class="note">Prvi pretplatnici dobijaju specijalnu ponudu. Javljamo ti čim krene.</div>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="wrap">
-    <div class="foot-inner">
-      <div class="foot-brand">
-        <a class="brand" href="#top"><span class="badge"><b>M</b></span><span>MathIA</span></a>
-        <p>Privatni profesor matematike — i platforma za učenje, uvek uz tebe.</p>
-      </div>
-      <div class="foot-links">
-        <div class="foot-col">
-          <h4>Sadržaj</h4>
-          <a href="#vodic">Vodič za izbor</a>
-          <a href="#pripreme">Pripreme i kursevi</a>
-          <a href="#eknjige">E-knjige</a>
-          <a href="#pretplata">Pretplata</a>
-        </div>
-        <div class="foot-col">
-          <h4>Prati nas</h4>
-          <a href="https://www.instagram.com/mathia.ai" target="_blank" rel="noopener">Instagram</a>
-          <a href="https://www.youtube.com/@mathiatutor" target="_blank" rel="noopener">YouTube</a>
-          <a href="https://www.facebook.com/share/18dx5g7XjZ/?mibextid=wwXIfr" target="_blank" rel="noopener">Facebook</a>
-          <a href="mailto:kontakt@mathia.rs">kontakt@mathia.rs</a>
-        </div>
-      </div>
-    </div>
-    <div class="foot-bottom">
-      <span>© <span id="yr"></span> MathIA · mathia.rs</span>
-    </div>
-  </div>
+<footer class="foot">
+  <div class="wm serif">Math<span style="color:#C2A14D">IA</span></div>
+  mathia.rs
+  <div class="disc" data-i18n="footDisc"></div>
 </footer>
 
 <script>
-  document.getElementById('yr').textContent=new Date().getFullYear();
-  var nav=document.getElementById('nav');
-  addEventListener('scroll',function(){ nav.classList.toggle('scrolled', scrollY>10); });
-  var burger=document.getElementById('burger'), links=document.getElementById('navlinks');
-  burger.addEventListener('click',function(){ links.classList.toggle('open'); });
-  links.querySelectorAll('a').forEach(function(a){ a.addEventListener('click',function(){ links.classList.remove('open'); }); });
-  var io=new IntersectionObserver(function(es){es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }});},{threshold:.12});
-  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+var T={
+sr:{heroA:"Spremi se uz ",heroB:", korak po korak",lead:"Tvoj AI tutor i vrhunski materijali — matematika i fizika, od male mature do fakulteta.",cta1:"Šta spremaš?",cta2:"Pričaj sa Zoi",offerA:"Specijalna ponuda: ",offerMid:" na sve, kodom ",offerB:" — uvodni popust",nudimoH2:"Šta nudimo",p1n:"Tutor Zoi",p1d:"Objašnjava svaki korak — kad god ti zatreba.",p2n:"Premium materijali",p2d:"Knjige, e-skripte i formule — jasno i precizno.",p3n:"Svi nivoi",p3d:"Mala matura, srednja, prijemni i fakultet.",p4n:"Kvizovi",p4d:"Otkrij koji fakultet i škola su baš za tebe.",chooserH2:"Šta spremaš?",chooserSub:"Izaberi i kreni — uz tutora Zoi i materijale.",c1t:"Prijemni iz matematike",c1p:"Za tehničke i matematičke fakultete",c2t:"Mala matura",c2p:"Završni ispit, 8. razred",c3t:"Fakultetski predmeti",c3p:"Verovatnoća, Analiza 1, Merenja…",c4t:"Srednja škola — matematika",c4p:"Sve 4 godine",c5t:"Srednja škola — fizika",c5p:"Sve 4 godine",c6t:"Testovi sklonosti",c6p:"Po školi i izboru",go:"Pogledaj →",soon:"Uskoro",quizH2:"Nisi siguran/na šta da upišeš?",quizFac:"Koji fakultet je za tebe?",quizHs:"Koja srednja škola je za tebe?",trust:"Dostupno na 10 jezika · Nezavisna obrazovna platforma",footDisc:"MathIA je nezavisna obrazovna platforma. Materijali su pripremljeni iz opšteg gradiva i javno dostupnih izvora i nisu povezani ni sa jednom obrazovnom ustanovom."},
+en:{heroA:"Get ready with ",heroB:", step by step",lead:"AI tutor and premium materials for math and physics — from the primary-school final exam, through high school, to university.",cta1:"What are you studying?",cta2:"Chat with Zoi",offerA:"Special offer: ",offerMid:" off everything, with code ",offerB:" — intro discount",nudimoH2:"What we offer",p1n:"Tutor Zoi",p1d:"An AI teacher who explains step by step, whenever you need.",p2n:"Premium materials",p2d:"Books, e-scripts, formulas and topics — clear and tidy.",p3n:"All levels",p3d:"Primary final exam, high school, entrance exams and university subjects.",p4n:"Quizzes",p4d:"Discover which faculty and which high school suit you best.",chooserH2:"What are you studying?",chooserSub:"Choose and start — with tutor Zoi and materials.",c1t:"Math entrance exam",c1p:"For technical and math faculties",c2t:"Primary final exam",c2p:"Final exam, 8th grade",c3t:"University subjects",c3p:"Probability, Calculus 1, Measurements…",c4t:"High school — math",c4p:"All 4 years",c5t:"High school — physics",c5p:"All 4 years",c6t:"Aptitude tests",c6p:"By school and choice",go:"View →",soon:"Soon",quizH2:"Not sure what to enroll in?",quizFac:"Which faculty is for you?",quizHs:"Which high school is for you?",trust:"Available in 10 languages · Independent educational platform",footDisc:"MathIA is an independent educational platform. Materials are prepared from general curriculum and publicly available sources and are not affiliated with any educational institution."},
+de:{heroA:"Mach dich bereit mit ",heroB:", Schritt für Schritt",lead:"KI-Tutor und Premium-Materialien für Mathe und Physik — von der Grundschul-Abschlussprüfung über die Oberschule bis zur Universität.",cta1:"Was lernst du?",cta2:"Mit Zoi chatten",offerA:"Sonderangebot: ",offerMid:" auf alles, mit Code ",offerB:" — Einführungsrabatt",nudimoH2:"Was wir bieten",p1n:"Tutorin Zoi",p1d:"Eine KI-Lehrerin, die Schritt für Schritt erklärt, wann immer du willst.",p2n:"Premium-Materialien",p2d:"Bücher, E-Skripte, Formeln und Themen — klar und übersichtlich.",p3n:"Alle Stufen",p3d:"Grundschulabschluss, Oberschule, Aufnahmeprüfungen und Universitätsfächer.",p4n:"Quizze",p4d:"Finde heraus, welche Fakultät und welche Oberschule am besten zu dir passen.",chooserH2:"Was lernst du?",chooserSub:"Wähle und leg los — mit Tutorin Zoi und Materialien.",c1t:"Mathe-Aufnahmeprüfung",c1p:"Für technische und mathematische Fakultäten",c2t:"Grundschulabschluss",c2p:"Abschlussprüfung, 8. Klasse",c3t:"Universitätsfächer",c3p:"Wahrscheinlichkeit, Analysis 1, Messungen…",c4t:"Oberschule — Mathe",c4p:"Alle 4 Jahre",c5t:"Oberschule — Physik",c5p:"Alle 4 Jahre",c6t:"Eignungstests",c6p:"Nach Schule und Wahl",go:"Ansehen →",soon:"Bald",quizH2:"Unsicher, was du wählen sollst?",quizFac:"Welche Fakultät passt zu dir?",quizHs:"Welche Oberschule passt zu dir?",trust:"In 10 Sprachen verfügbar · Unabhängige Bildungsplattform",footDisc:"MathIA ist eine unabhängige Bildungsplattform. Die Materialien stammen aus dem allgemeinen Lehrplan und öffentlich zugänglichen Quellen und stehen in keiner Verbindung zu einer Bildungseinrichtung."},
+ru:{heroA:"Готовься с ",heroB:", шаг за шагом",lead:"ИИ-репетитор и премиум-материалы по математике и физике — от выпускного экзамена начальной школы до университета.",cta1:"Что готовишь?",cta2:"Поговорить с Zoi",offerA:"Спецпредложение: ",offerMid:" на всё, по коду ",offerB:" — вводная скидка",nudimoH2:"Что мы предлагаем",p1n:"Репетитор Zoi",p1d:"ИИ-преподаватель, который объясняет шаг за шагом, когда нужно.",p2n:"Премиум-материалы",p2d:"Книги, э-конспекты, формулы и темы — ясно и аккуратно.",p3n:"Все уровни",p3d:"Выпускной (8 класс), школа, вступительные и университетские предметы.",p4n:"Тесты",p4d:"Узнай, какой факультет и какая школа тебе больше всего подходят.",chooserH2:"Что готовишь?",chooserSub:"Выбери и начни — с репетитором Zoi и материалами.",c1t:"Вступительный по математике",c1p:"Для технических и математических факультетов",c2t:"Выпускной (8 класс)",c2p:"Выпускной экзамен, 8 класс",c3t:"Университетские предметы",c3p:"Вероятность, Анализ 1, Измерения…",c4t:"Школа — математика",c4p:"Все 4 года",c5t:"Школа — физика",c5p:"Все 4 года",c6t:"Тесты способностей",c6p:"По школе и выбору",go:"Смотреть →",soon:"Скоро",quizH2:"Не знаешь, что выбрать?",quizFac:"Какой факультет тебе подходит?",quizHs:"Какая школа тебе подходит?",trust:"Доступно на 10 языках · Независимая образовательная платформа",footDisc:"MathIA — независимая образовательная платформа. Материалы подготовлены по общей программе и из общедоступных источников и не связаны ни с одним учебным заведением."},
+fr:{heroA:"Prépare-toi avec ",heroB:", étape par étape",lead:"Tuteur IA et supports premium en maths et physique — de l’examen de fin de primaire au lycée et à l’université.",cta1:"Que prépares-tu ?",cta2:"Discuter avec Zoi",offerA:"Offre spéciale : ",offerMid:" sur tout, avec le code ",offerB:" — remise de lancement",nudimoH2:"Ce que nous offrons",p1n:"Tutrice Zoi",p1d:"Une enseignante IA qui explique étape par étape, quand tu veux.",p2n:"Supports premium",p2d:"Livres, e-scripts, formules et thèmes — clairs et nets.",p3n:"Tous les niveaux",p3d:"Examen de fin de primaire, lycée, concours et matières universitaires.",p4n:"Quiz",p4d:"Découvre quelle faculté et quel lycée te conviennent le mieux.",chooserH2:"Que prépares-tu ?",chooserSub:"Choisis et commence — avec la tutrice Zoi et les supports.",c1t:"Concours de maths",c1p:"Pour facultés techniques et de maths",c2t:"Fin de primaire",c2p:"Examen final, 8e année",c3t:"Matières universitaires",c3p:"Probabilités, Analyse 1, Mesures…",c4t:"Lycée — maths",c4p:"Les 4 années",c5t:"Lycée — physique",c5p:"Les 4 années",c6t:"Tests d’aptitude",c6p:"Selon l’école et le choix",go:"Voir →",soon:"Bientôt",quizH2:"Tu hésites sur ton choix ?",quizFac:"Quelle faculté est faite pour toi ?",quizHs:"Quel lycée est fait pour toi ?",trust:"Disponible en 10 langues · Plateforme éducative indépendante",footDisc:"MathIA est une plateforme éducative indépendante. Les supports sont préparés à partir du programme général et de sources publiques et ne sont affiliés à aucun établissement."},
+es:{heroA:"Prepárate con ",heroB:", paso a paso",lead:"Tutor con IA y materiales premium de mates y física — desde el examen final de primaria hasta la universidad.",cta1:"¿Qué preparas?",cta2:"Habla con Zoi",offerA:"Oferta especial: ",offerMid:" en todo, con el código ",offerB:" — descuento de bienvenida",nudimoH2:"Qué ofrecemos",p1n:"Tutora Zoi",p1d:"Una profesora con IA que explica paso a paso, cuando lo necesites.",p2n:"Materiales premium",p2d:"Libros, apuntes digitales, fórmulas y temas — claros y ordenados.",p3n:"Todos los niveles",p3d:"Examen final de primaria, secundaria, exámenes de acceso y asignaturas universitarias.",p4n:"Cuestionarios",p4d:"Descubre qué facultad y qué instituto te convienen más.",chooserH2:"¿Qué preparas?",chooserSub:"Elige y empieza — con la tutora Zoi y los materiales.",c1t:"Examen de acceso de mates",c1p:"Para facultades técnicas y de matemáticas",c2t:"Fin de primaria",c2p:"Examen final, 8.º grado",c3t:"Asignaturas universitarias",c3p:"Probabilidad, Análisis 1, Mediciones…",c4t:"Secundaria — mates",c4p:"Los 4 años",c5t:"Secundaria — física",c5p:"Los 4 años",c6t:"Pruebas de aptitud",c6p:"Según escuela y elección",go:"Ver →",soon:"Pronto",quizH2:"¿No sabes qué elegir?",quizFac:"¿Qué facultad es para ti?",quizHs:"¿Qué instituto es para ti?",trust:"Disponible en 10 idiomas · Plataforma educativa independiente",footDisc:"MathIA es una plataforma educativa independiente. Los materiales se preparan a partir del currículo general y de fuentes públicas y no están afiliados a ninguna institución."},
+it:{heroA:"Preparati con ",heroB:", passo dopo passo",lead:"Tutor IA e materiali premium di matematica e fisica — dall’esame di fine primaria fino all’università.",cta1:"Cosa prepari?",cta2:"Parla con Zoi",offerA:"Offerta speciale: ",offerMid:" su tutto, con il codice ",offerB:" — sconto di lancio",nudimoH2:"Cosa offriamo",p1n:"Tutor Zoi",p1d:"Un’insegnante IA che spiega passo dopo passo, quando vuoi.",p2n:"Materiali premium",p2d:"Libri, e-dispense, formule e argomenti — chiari e ordinati.",p3n:"Tutti i livelli",p3d:"Esame di fine primaria, superiori, test d’ingresso e materie universitarie.",p4n:"Quiz",p4d:"Scopri quale facoltà e quale scuola superiore fanno per te.",chooserH2:"Cosa prepari?",chooserSub:"Scegli e inizia — con la tutor Zoi e i materiali.",c1t:"Test d’ingresso di matematica",c1p:"Per facoltà tecniche e di matematica",c2t:"Fine primaria",c2p:"Esame finale, 8ª classe",c3t:"Materie universitarie",c3p:"Probabilità, Analisi 1, Misure…",c4t:"Superiori — matematica",c4p:"Tutti e 4 gli anni",c5t:"Superiori — fisica",c5p:"Tutti e 4 gli anni",c6t:"Test attitudinali",c6p:"Per scuola e scelta",go:"Guarda →",soon:"Presto",quizH2:"Non sai cosa scegliere?",quizFac:"Quale facoltà fa per te?",quizHs:"Quale scuola superiore fa per te?",trust:"Disponibile in 10 lingue · Piattaforma educativa indipendente",footDisc:"MathIA è una piattaforma educativa indipendente. I materiali sono preparati dal programma generale e da fonti pubbliche e non sono affiliati ad alcuna istituzione."},
+tr:{heroA:"",heroB:" ile adım adım hazırlan",lead:"Matematik ve fizik için yapay zekâ öğretmen ve premium materyaller — ilkokul bitirme sınavından üniversiteye kadar.",cta1:"Neye hazırlanıyorsun?",cta2:"Zoi ile konuş",offerA:"Özel teklif: ",offerMid:" her şeyde, kodla ",offerB:" — tanıtım indirimi",nudimoH2:"Neler sunuyoruz",p1n:"Öğretmen Zoi",p1d:"Adım adım açıklayan, istediğin an yanında bir yapay zekâ öğretmeni.",p2n:"Premium materyaller",p2d:"Kitaplar, e-notlar, formüller ve konular — açık ve düzenli.",p3n:"Tüm seviyeler",p3d:"İlkokul bitirme, lise, giriş sınavları ve üniversite dersleri.",p4n:"Testler",p4d:"Hangi fakülte ve hangi lise sana en uygun, keşfet.",chooserH2:"Neye hazırlanıyorsun?",chooserSub:"Seç ve başla — öğretmen Zoi ve materyallerle.",c1t:"Matematik giriş sınavı",c1p:"Teknik ve matematik fakülteleri için",c2t:"İlkokul bitirme",c2p:"Bitirme sınavı, 8. sınıf",c3t:"Üniversite dersleri",c3p:"Olasılık, Analiz 1, Ölçümler…",c4t:"Lise — matematik",c4p:"4 yıl boyunca",c5t:"Lise — fizik",c5p:"4 yıl boyunca",c6t:"Yetenek testleri",c6p:"Okula ve seçime göre",go:"Gör →",soon:"Yakında",quizH2:"Ne seçeceğinden emin değil misin?",quizFac:"Hangi fakülte sana uygun?",quizHs:"Hangi lise sana uygun?",trust:"10 dilde mevcut · Bağımsız eğitim platformu",footDisc:"MathIA bağımsız bir eğitim platformudur. Materyaller genel müfredattan ve kamuya açık kaynaklardan hazırlanmıştır ve hiçbir kurumla bağlantılı değildir."},
+zh:{heroA:"",heroB:" 陪你一步步备考",lead:"数学和物理的 AI 导师与优质资料——从小学毕业考试到高中，再到大学。",cta1:"你在备考什么？",cta2:"和 Zoi 聊聊",offerA:"特别优惠：",offerMid:" 全场，使用代码 ",offerB:" —— 新用户折扣",nudimoH2:"我们提供什么",p1n:"导师 Zoi",p1d:"随时为你一步步讲解的 AI 老师。",p2n:"优质资料",p2d:"书籍、电子讲义、公式与专题——清晰整洁。",p3n:"所有阶段",p3d:"小学毕业、高中、入学考试与大学课程。",p4n:"测验",p4d:"发现最适合你的学院和高中。",chooserH2:"你在备考什么？",chooserSub:"选择并开始——有导师 Zoi 和资料。",c1t:"数学入学考试",c1p:"面向理工与数学院系",c2t:"小学毕业考试",c2p:"毕业考试，八年级",c3t:"大学课程",c3p:"概率、分析 1、测量……",c4t:"高中——数学",c4p:"全部四年",c5t:"高中——物理",c5p:"全部四年",c6t:"能力测试",c6p:"按学校与选择",go:"查看 →",soon:"即将",quizH2:"不确定该选什么？",quizFac:"哪个学院适合你？",quizHs:"哪所高中适合你？",trust:"支持 10 种语言 · 独立教育平台",footDisc:"MathIA 是一个独立的教育平台。资料依据通用课程与公开来源编写，与任何教育机构无关。"},
+ar:{heroA:"",heroB:" استعدّ خطوة بخطوة",lead:"معلّم بالذكاء الاصطناعي ومواد مميزة في الرياضيات والفيزياء — من امتحان نهاية الابتدائية حتى الجامعة.",cta1:"ماذا تُحضّر؟",cta2:"تحدّث مع Zoi",offerA:"عرض خاص: ",offerMid:" على كل شيء، بالكود ",offerB:" — خصم تعريفي",nudimoH2:"ماذا نقدّم",p1n:"المعلّمة Zoi",p1d:"معلّمة بالذكاء الاصطناعي تشرح خطوة بخطوة وقتما تشاء.",p2n:"مواد مميزة",p2d:"كتب، ملخصات إلكترونية، صيغ ومواضيع — واضحة ومرتبة.",p3n:"كل المستويات",p3d:"امتحان نهاية الابتدائية، الثانوية، امتحانات القبول والمواد الجامعية.",p4n:"اختبارات",p4d:"اكتشف أي كلية وأي مدرسة ثانوية تناسبك أكثر.",chooserH2:"ماذا تُحضّر؟",chooserSub:"اختر وابدأ — مع المعلّمة Zoi والمواد.",c1t:"امتحان القبول في الرياضيات",c1p:"للكليات التقنية والرياضية",c2t:"امتحان نهاية الابتدائية",c2p:"الامتحان النهائي، الصف الثامن",c3t:"مواد جامعية",c3p:"الاحتمالات، التحليل 1، القياسات…",c4t:"الثانوية — رياضيات",c4p:"السنوات الأربع",c5t:"الثانوية — فيزياء",c5p:"السنوات الأربع",c6t:"اختبارات الميول",c6p:"حسب المدرسة والاختيار",go:"عرض ←",soon:"قريبًا",quizH2:"غير متأكد ماذا تختار؟",quizFac:"أي كلية تناسبك؟",quizHs:"أي مدرسة ثانوية تناسبك؟",trust:"متوفر بعشر لغات · منصة تعليمية مستقلة",footDisc:"MathIA منصة تعليمية مستقلة. أُعدّت المواد من المنهج العام ومصادر متاحة للعموم وليست تابعة لأي مؤسسة تعليمية."}
+};
+var CN={
+ sr:{btn:"Cenovnik",h2:"Cenovnik",from:"od",special:"Specijalne ponude: −20% kodom START20 · paket 2+ predmeta −15%",tutor:"Tutor Zoi"},
+ en:{btn:"Price list",h2:"Price list",from:"from",special:"Special offers: −20% with code START20 · bundle of 2+ −15%",tutor:"Tutor Zoi"},
+ de:{btn:"Preisliste",h2:"Preisliste",from:"ab",special:"Sonderangebote: −20% mit Code START20 · Paket ab 2 −15%",tutor:"Tutorin Zoi"},
+ ru:{btn:"Цены",h2:"Цены",from:"от",special:"Спецпредложения: −20% по коду START20 · пакет 2+ −15%",tutor:"Репетитор Zoi"},
+ fr:{btn:"Tarifs",h2:"Tarifs",from:"dès",special:"Offres spéciales : −20% avec le code START20 · pack 2+ −15%",tutor:"Tutrice Zoi"},
+ es:{btn:"Precios",h2:"Precios",from:"desde",special:"Ofertas especiales: −20% con el código START20 · pack 2+ −15%",tutor:"Tutora Zoi"},
+ it:{btn:"Prezzi",h2:"Prezzi",from:"da",special:"Offerte speciali: −20% con il codice START20 · pacchetto 2+ −15%",tutor:"Tutor Zoi"},
+ tr:{btn:"Fiyatlar",h2:"Fiyatlar",from:"başlangıç",special:"Özel teklifler: −20% kod START20 · 2+ paket −15%",tutor:"Öğretmen Zoi"},
+ zh:{btn:"价格",h2:"价格",from:"起价",special:"特别优惠：−20% 代码 START20 · 2项以上套餐 −15%",tutor:"导师 Zoi"},
+ ar:{btn:"الأسعار",h2:"الأسعار",from:"ابتداءً من",special:"عروض خاصة: −20% بالكود START20 · باقة 2+ −15%",tutor:"المعلّمة Zoi"}
+};
+function setLang(code){
+ var t=T[code]||T.sr;
+ document.documentElement.lang=code; document.documentElement.dir=(code==='ar')?'rtl':'ltr';
+ document.getElementById('heroH1').innerHTML=t.heroA+'<span class="g">Zoi</span>'+t.heroB;
+ document.getElementById('offerLine').innerHTML='<span class="star">&#9733;</span> '+t.offerA+'<b>&#8722;20%</b>'+t.offerMid+'<b>START20</b>'+t.offerB;
+ var els=document.querySelectorAll('[data-i18n]');
+ for(var i=0;i<els.length;i++){var k=els[i].getAttribute('data-i18n');if(t[k]!==undefined)els[i].textContent=t[k];}
+ document.getElementById('quizH2').textContent=t.quizH2;
+ document.getElementById('quizFac').textContent=t.quizFac;
+ document.getElementById('quizHs').textContent=t.quizHs;
+ document.getElementById('trust').textContent=t.trust;
+  var cn=CN[code]||CN.sr;
+  document.getElementById('cenBtn').textContent=cn.btn;
+  document.getElementById('cenH2').textContent=cn.h2;
+  document.getElementById('cenSpecial').innerHTML=cn.special.replace('−20%','<b style="background:linear-gradient(135deg,#E6CE86,#C2A14D);color:#14223E;padding:2px 8px;border-radius:6px;">−20%</b>').replace('START20','<b style="background:linear-gradient(135deg,#E6CE86,#C2A14D);color:#14223E;padding:2px 8px;border-radius:6px;">START20</b>').replace('−15%','<b style="background:linear-gradient(135deg,#E6CE86,#C2A14D);color:#14223E;padding:2px 8px;border-radius:6px;">−15%</b>');
+  document.getElementById('pcMM').textContent=t.c2t;document.getElementById('pcMMv').textContent=cn.from+' 490 RSD';
+  document.getElementById('pcPR').textContent=t.c1t;document.getElementById('pcPRv').textContent=cn.from+' 990 RSD';
+  document.getElementById('pcFA').textContent=t.c3t;document.getElementById('pcFAv').textContent=cn.from+' 390 RSD';
+  document.getElementById('pcTU').textContent=cn.tutor;document.getElementById('pcTUv').textContent=cn.from+' 990 RSD';
+ var ls=document.querySelectorAll('.lang');
+ for(var j=0;j<ls.length;j++){ls[j].className=(ls[j].getAttribute('data-lang')===code)?'lang on':'lang';}
+}
+document.getElementById('langbar').addEventListener('click',function(e){var b=e.target.closest('.lang');if(b)setLang(b.getAttribute('data-lang'));});
+setLang('sr');
 </script>
 <!-- ZOI WIDGET -->
 <script src="https://project-y23je.vercel.app/widget.js"
