@@ -83,6 +83,7 @@ html[dir="rtl"] .card{text-align:right;}
 .tag{font-size:11.5px;font-weight:700;padding:4px 11px;border-radius:999px;line-height:1.25;}
 .tag.avail{background:#e7f5ee;color:#1f6f60;}
 .tag.price{background:#f6efdd;color:#8a6418;}
+.tag.mila{background:#fbf4e3;color:#8a6418;border:1px solid #e6cf95;}
 </style>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2314223E'/%3E%3Ctext x='50%25' y='56%25' font-family='Georgia,serif' font-size='40' font-weight='700' fill='%23C2A14D' text-anchor='middle' dominant-baseline='middle'%3EM%3C/text%3E%3C/svg%3E">
 </head>
@@ -114,7 +115,7 @@ html[dir="rtl"] .card{text-align:right;}
   <h2 data-i18n="chooserH2"></h2><div class="sub" data-i18n="chooserSub"></div>
   <div class="grid">
     <a class="card" href="mathia_ponuda.html"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#9C7E33" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M2 8l10-4 10 4-10 4z"/><path d="M6 10.5V15c0 1.2 2.7 3 6 3s6-1.8 6-3v-4.5"/></svg></span><h3 data-i18n="c1t"></h3><p data-i18n="c1p"></p><div class="tags"><span class="tag avail"></span><span class="tag price" id="prC1"></span></div><div class="go" data-i18n="go"></div></a>
-    <a class="card" href="mala-matura.html"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#9C7E33" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M6 3h11a2 2 0 0 1 2 2v14H8a2 2 0 0 0-2 2z"/><path d="M10 7h6M10 10h6"/></svg></span><h3 data-i18n="c2t"></h3><p data-i18n="c2p"></p><div class="tags"><span class="tag avail"></span><span class="tag price" id="prC2"></span></div><div class="go" data-i18n="go"></div></a>
+    <a class="card" href="mala-matura.html"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#9C7E33" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M6 3h11a2 2 0 0 1 2 2v14H8a2 2 0 0 0-2 2z"/><path d="M10 7h6M10 10h6"/></svg></span><h3 data-i18n="c2t"></h3><p data-i18n="c2p"></p><div class="tags"><span class="tag avail"></span><span class="tag mila" id="milaC2"></span></div><div class="go" data-i18n="go"></div></a>
     <a class="card" href="mathia_fakultet.html"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#9C7E33" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M3 9l9-5 9 5"/><path d="M5 9v9M9 9v9M15 9v9M19 9v9"/><path d="M3 20h18"/></svg></span><h3 data-i18n="c3t"></h3><p data-i18n="c3p"></p><div class="tags"><span class="tag avail"></span><span class="tag price" id="prC3"></span></div><div class="go" data-i18n="go"></div></a>
     <a class="card soon"><span class="soonbadge" data-i18n="soon"></span><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#9C7E33" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M7 5h10l-6 7 6 7H7"/></svg></span><h3 data-i18n="c4t"></h3><p data-i18n="c4p"></p></a>
     <a class="card soon"><span class="soonbadge" data-i18n="soon"></span><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#9C7E33" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><circle cx="12" cy="12" r="2"/><ellipse cx="12" cy="12" rx="10" ry="4.2"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(120 12 12)"/></svg></span><h3 data-i18n="c5t"></h3><p data-i18n="c5p"></p></a>
@@ -190,14 +191,15 @@ function setLang(code){
   document.getElementById('cenBtn').textContent=cn.btn;
   document.getElementById('cenH2').textContent=cn.h2;
   
-  document.getElementById('pcMM').textContent=t.c2t;document.getElementById('pcMMv').textContent=cn.from+' 490 RSD';
+  document.getElementById('pcMM').textContent=t.c2t;document.getElementById('pcMMv').textContent='';
   document.getElementById('pcPR').textContent=t.c1t;document.getElementById('pcPRv').textContent=cn.from+' 990 RSD';
   document.getElementById('pcFA').textContent=t.c3t;document.getElementById('pcFAv').textContent=cn.from+' 390 RSD';
   document.getElementById('pcTU').textContent=cn.tutor;document.getElementById('pcTUv').textContent=cn.from+' 990 RSD';
   var dispTxt={sr:'Dostupno',en:'Available',de:'Verfügbar',ru:'Доступно',fr:'Disponible',es:'Disponible',it:'Disponibile',tr:'Mevcut',zh:'可用',ar:'متاح'}[code]||'Dostupno';
   var avs=document.querySelectorAll('.tag.avail');for(var a=0;a<avs.length;a++)avs[a].textContent=dispTxt;
   var pc1=document.getElementById('prC1');if(pc1)pc1.textContent=cn.from+' 990 RSD';
-  var pc2=document.getElementById('prC2');if(pc2)pc2.textContent=cn.from+' 490 RSD';
+  var milaTxt={sr:'Ovde je Mila',en:'Meet Mila',de:'Das ist Mila',ru:'Это Mila',fr:'Voici Mila',es:'Conoce a Mila',it:'Ecco Mila',tr:'İşte Mila',zh:'这是 Mila',ar:'هذه ميلا'}[code]||'Ovde je Mila';
+  var mc2=document.getElementById('milaC2');if(mc2)mc2.textContent=milaTxt;
   var pc3=document.getElementById('prC3');if(pc3)pc3.textContent=cn.from+' 390 RSD';
  var ls=document.querySelectorAll('.lang');
  for(var j=0;j<ls.length;j++){ls[j].className=(ls[j].getAttribute('data-lang')===code)?'lang on':'lang';}

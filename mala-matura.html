@@ -103,6 +103,12 @@ body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:var(--ink);backg
 .foot .wm{font-size:20px;color:#fff;margin-bottom:6px;font-family:'Playfair Display',serif;}
 .foot .wm .ia{color:var(--goldlt);}
 .foot .disc{max-width:720px;margin:8px auto 0;line-height:1.6;}
+.plans{display:flex;gap:22px;justify-content:center;flex-wrap:wrap;align-items:flex-start;}
+.plans .plan{margin:0;max-width:360px;flex:1 1 300px;}
+.plan.feat{border-color:#bfe4d9;box-shadow:0 16px 44px -22px rgba(31,125,104,.5);}
+.pill.alt2{background:#eef0f4;color:#5a6273;}
+.btn-line{background:#fff;color:var(--mintdk);border:1.5px solid #bfe4d9;}
+.btn-line:hover{border-color:var(--mint);background:var(--mintbg2);}
 </style>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2314223E'/%3E%3Ctext x='50%25' y='56%25' font-family='Georgia,serif' font-size='40' font-weight='700' fill='%23C2A14D' text-anchor='middle' dominant-baseline='middle'%3EM%3C/text%3E%3C/svg%3E">
 </head>
@@ -147,7 +153,8 @@ body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:var(--ink);backg
   <div class="sub">Sve na jednom mestu — i neko ko je uvek tu da pomogne.</div>
   <div class="grid">
     <div class="card"><span class="em">💬</span><h3>Tutorka Mila</h3><p>Objašnjava korak po korak, 24/7. Pitaš koliko god puta treba — nikad se ne ljuti. 💛</p></div>
-    <div class="card"><span class="em">📘</span><h3>E-knjiga</h3><p>Cela mala matura na jednom mestu, jasno i jednostavno.</p></div>
+    <div class="card"><span class="em">📘</span><h3>E-priručnik za svaku oblast</h3><p>Svaka oblast jasno objašnjena — sve na jednom mestu.</p></div>
+    <div class="card"><span class="em">📑</span><h3>E-knjižica sa formulama</h3><p>Najbitniji pojmovi i sve formule — uvek pri ruci.</p></div>
     <div class="card"><span class="em">🧮</span><h3>Zbirka zadataka</h3><p>Mnogo rešenih primera i zadataka za vežbu, od lakših ka težim.</p></div>
     <div class="card"><span class="em">📝</span><h3>Probni testovi</h3><p>Vežbaš kao na pravom ispitu i pratiš svoj napredak.</p></div>
   </div>
@@ -164,20 +171,33 @@ body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:var(--ink);backg
 </div></section>
 
 <section class="sec alt" id="cena"><div class="wrap">
-  <h2>Cena</h2>
-  <div class="sub">Sve što ti treba za malu maturu, u jednom paketu.</div>
-  <div class="plan">
-    <span class="pill">Najpopularnije za osnovce</span>
-    <h3>Mala matura — kompletan paket</h3>
-    <div class="price">od 490 RSD <small>/ mesečno</small></div>
-    <ul>
-      <li><span>✓</span> Tutorka Mila — neograničena pitanja</li>
-      <li><span>✓</span> E-knjiga za malu maturu</li>
-      <li><span>✓</span> Zbirka rešenih zadataka</li>
-      <li><span>✓</span> Probni testovi i praćenje napretka</li>
-      <li><span>✓</span> Sve formule na jednom mestu</li>
-    </ul>
-    <div><a class="btn btn-mint" href="mathia_ponuda.html">Kreni odmah</a></div>
+  <h2>Cene i paketi</h2>
+  <div class="sub">Izaberi šta ti najviše odgovara — uvek možeš da nadogradiš kasnije.</div>
+  <div class="plans">
+    <div class="plan">
+      <span class="pill alt2">Osnovni</span>
+      <h3>Samo Mila</h3>
+      <div class="price">3.990 RSD <small>/ mesečno</small></div>
+      <ul>
+        <li><span>✓</span> Tutorka Mila — neograničena pitanja, 24/7</li>
+        <li><span>✓</span> Objašnjenja korak po korak</li>
+        <li><span>✓</span> Pomoć kad god ti zatreba</li>
+      </ul>
+      <div><a class="btn btn-line" href="mathia_ponuda.html">Izaberi</a></div>
+    </div>
+    <div class="plan feat">
+      <span class="pill">Najpopularnije</span>
+      <h3>Kompletan paket</h3>
+      <div class="price">4.990 RSD <small>/ mesečno</small></div>
+      <ul>
+        <li><span>✓</span> Sve iz paketa „Samo Mila"</li>
+        <li><span>✓</span> E-priručnik za svaku oblast</li>
+        <li><span>✓</span> E-knjižica sa najbitnijim pojmovima i formulama</li>
+        <li><span>✓</span> Zbirka rešenih zadataka</li>
+        <li><span>✓</span> Probni testovi i praćenje napretka</li>
+      </ul>
+      <div><a class="btn btn-mint" href="mathia_ponuda.html">Kreni odmah</a></div>
+    </div>
   </div>
 </div></section>
 
