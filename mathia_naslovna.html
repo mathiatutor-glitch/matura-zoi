@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="sr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MathIA</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Nunito:wght@400;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#14223E;--navy2:#1E3157;--gold:#C2A14D;--golddk:#9C7E33;--goldlt:#E6CE86;
+  --cream:#FAF7F0;--card:#FFFFFF;--ink:#1A1F2B;--muted:#7C8190;--bord:#E9E1CD;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Nunito',system-ui,sans-serif;color:var(--ink);background:var(--cream);}
+.serif{font-family:'Playfair Display',Georgia,serif;}
+.wrap{max-width:1080px;margin:0 auto;padding:0 22px;}
+.langbar{background:#0F1A30;border-bottom:1px solid rgba(194,161,77,.3);}
+.langbar .row{max-width:1080px;margin:0 auto;display:flex;justify-content:center;gap:6px;flex-wrap:wrap;padding:9px 22px;font-size:12.5px;font-weight:700;}
+.lang{padding:3px 10px;border-radius:999px;cursor:pointer;color:#aeb7cc;transition:color .15s;}
+.lang:hover{color:#fff;} .lang.on{background:var(--gold);color:#14223E;font-weight:900;}
+.hero{background:radial-gradient(circle at 50% -28%,#27406e 0%,#1E3157 40%,#14223E 84%);color:#fff;text-align:center;
+  padding:70px 22px 84px;position:relative;overflow:hidden;box-shadow:inset 0 -3px 0 var(--gold);}
+.hero:before,.hero:after{content:"\2605";position:absolute;color:rgba(194,161,77,.10);font-size:160px;line-height:1;}
+.hero:before{top:-8px;left:16px;} .hero:after{bottom:-48px;right:22px;font-size:210px;}
+.brand{display:inline-flex;align-items:center;gap:14px;margin-bottom:26px;position:relative;}
+.seal{width:58px;height:58px;border-radius:50%;background:radial-gradient(circle at 34% 30%,#F4E2A8,#C2A14D 56%,#8E7230);
+  display:flex;align-items:center;justify-content:center;color:#14223E;font-weight:800;font-size:30px;
+  font-family:'Playfair Display',serif;box-shadow:0 8px 24px rgba(0,0,0,.42),0 0 0 4px rgba(230,206,134,.22);}
+.wm{font-weight:900;font-size:30px;letter-spacing:.4px;} .wm .ia{color:var(--gold);}
+.stars{color:var(--gold);letter-spacing:9px;font-size:14px;margin-bottom:18px;position:relative;}
+.hero h1{font-size:52px;line-height:1.06;font-weight:800;margin-bottom:18px;position:relative;letter-spacing:-.5px;text-shadow:0 2px 20px rgba(0,0,0,.28);}
+.hero h1 .g{color:var(--goldlt);}
+.hero p.lead{font-size:18.5px;color:#dbe2ef;max-width:660px;margin:0 auto 32px;font-weight:500;position:relative;line-height:1.55;}
+.cta{display:inline-flex;gap:14px;flex-wrap:wrap;justify-content:center;position:relative;}
+.btn{display:inline-block;text-decoration:none;border-radius:13px;padding:15px 32px;font-weight:800;font-size:16px;transition:transform .15s,box-shadow .15s;cursor:pointer;}
+.btn:hover{transform:translateY(-2px);}
+.btn-gold{background:linear-gradient(135deg,#F0DCA0,#C2A14D 58%,#9C7E33);color:#14223E;box-shadow:0 10px 28px rgba(156,126,51,.5);}
+.btn-ghost{background:rgba(255,255,255,.06);color:#fff;border:1.5px solid rgba(230,206,134,.6);}
+.btn-ghost:hover{background:rgba(255,255,255,.12);}
+.offer{background:#0F1A30;color:#fff;text-align:center;padding:15px 22px;font-weight:700;font-size:15px;letter-spacing:.2px;}
+.offer .star{color:var(--gold);} .offer b{background:linear-gradient(135deg,#E6CE86,#C2A14D);color:#14223E;padding:2px 9px;border-radius:7px;font-weight:800;}
+.sec{padding:60px 0;}
+.sec h2{font-family:'Playfair Display',serif;font-size:34px;font-weight:800;text-align:center;position:relative;padding-bottom:14px;color:var(--navy);}
+.sec h2:after{content:"";position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:64px;height:2px;background:linear-gradient(90deg,transparent,#C2A14D,transparent);}
+.sec .sub{text-align:center;color:var(--muted);font-weight:500;font-size:16px;margin:16px 0 34px;font-style:italic;}
+.ico{display:inline-flex;align-items:center;justify-content:center;width:58px;height:58px;border-radius:50%;
+  background:linear-gradient(135deg,#FBF3DD,#F1E3BC);border:1px solid rgba(194,161,77,.45);box-shadow:0 4px 12px rgba(156,126,51,.16);}
+.ico svg{width:26px;height:26px;}
+.grid{text-align:center;font-size:0;}
+.pillar{display:inline-block;width:23%;min-width:200px;margin:0 .9% 18px;vertical-align:top;text-align:center;font-size:14px;padding:8px 10px;}
+@media(max-width:820px){.pillar{width:46%;margin-bottom:26px;}} @media(max-width:480px){.pillar{width:94%;}}
+.pillar h3{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;margin:14px 0 6px;color:var(--navy);}
+.pillar p{font-size:13.5px;color:var(--muted);font-weight:500;line-height:1.5;}
+.card{display:inline-block;width:31.5%;min-width:230px;margin:0 .7% 18px;vertical-align:top;text-align:left;font-size:14px;
+  background:var(--card);border:1px solid var(--bord);border-radius:18px;padding:24px;position:relative;
+  box-shadow:0 4px 16px rgba(20,34,62,.05);transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease;}
+@media(max-width:760px){.card{width:46%;}} @media(max-width:520px){.card{width:96%;}}
+.card:not(.soon):hover{transform:translateY(-5px);box-shadow:0 18px 40px rgba(20,34,62,.13);border-color:var(--gold);}
+.card .ico{width:50px;height:50px;margin-bottom:14px;} .card .ico svg{width:23px;height:23px;}
+.card h3{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;margin:0 0 5px;color:var(--navy);}
+.card p{font-size:13px;color:var(--muted);font-weight:600;margin-bottom:12px;line-height:1.45;}
+.card .go{font-size:13.5px;font-weight:800;color:var(--golddk);letter-spacing:.3px;}
+.card.soon{opacity:.72;background:#FCFAF4;}
+.soonbadge{position:absolute;top:18px;right:18px;background:#F2EEE2;color:var(--golddk);font-size:10.5px;font-weight:900;padding:3px 9px;border-radius:999px;text-transform:uppercase;letter-spacing:.5px;}
+.quizband{background:radial-gradient(circle at 50% 0,#27406e,#14223E 80%);border-radius:20px;padding:34px 24px;text-align:center;color:#fff;box-shadow:inset 0 0 0 1px rgba(194,161,77,.4);}
+.quizband h2{font-family:'Playfair Display',serif;font-size:25px;font-weight:800;margin-bottom:18px;color:#fff;}
+.trust{text-align:center;padding:30px 22px;color:var(--golddk);font-weight:700;font-size:14px;letter-spacing:.4px;border-top:1px solid var(--bord);border-bottom:1px solid var(--bord);background:#fff;}
+.foot{background:#0F1A30;color:#aeb7cc;text-align:center;padding:36px 22px;font-size:13px;font-weight:500;border-top:1px solid rgba(194,161,77,.3);}
+.foot .wm{font-size:20px;color:#fff;margin-bottom:8px;}
+.foot .disc{max-width:720px;margin:8px auto 0;line-height:1.6;}
+a.card{text-decoration:none;color:var(--ink);}
+html[dir="rtl"] .card{text-align:right;}
+</style>
+</head>
+<body>
+<div class="langbar"><div class="row" id="langbar">
+<span class="lang on" data-lang="sr">Srpski</span><span class="lang" data-lang="en">English</span><span class="lang" data-lang="de">Deutsch</span><span class="lang" data-lang="ru">Русский</span><span class="lang" data-lang="fr">Français</span><span class="lang" data-lang="es">Español</span><span class="lang" data-lang="it">Italiano</span><span class="lang" data-lang="tr">Türkçe</span><span class="lang" data-lang="zh">中文</span><span class="lang" data-lang="ar">العربية</span>
+</div></div>
+
+<section class="hero">
+  <div class="brand"><div class="seal">M</div><div class="wm">Math<span class="ia">IA</span></div></div>
+  <div class="stars">&#9733; &#9733; &#9733; &#9733; &#9733;</div>
+  <h1 class="serif" id="heroH1"></h1>
+  <p class="lead" data-i18n="lead"></p>
+  <div class="cta"><a class="btn btn-gold" href="#sta" data-i18n="cta1"></a><a class="btn btn-ghost" href="#zoi" data-i18n="cta2"></a><a class="btn btn-ghost" id="cenBtn" href="#cenovnik"></a></div>
+</section>
+<div class="offer" id="offerLine"></div>
+
+<section class="sec"><div class="wrap">
+  <h2 data-i18n="nudimoH2"></h2>
+  <div class="grid">
+    <div class="pillar"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#9C7E33" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M2 8l10-4 10 4-10 4z"/><path d="M6 10.5V15c0 1.2 2.7 3 6 3s6-1.8 6-3v-4.5"/><path d="M22 8v5"/></svg></span><h3 data-i18n="p1n"></h3><p data-i18n="p1d"></p></div>
+    <div class="pillar"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#9C7E33" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M6 3h11a2 2 0 0 1 2 2v14H8a2 2 0 0 0-2 2z"/><path d="M6 19a2 2 0 0 1 2-2h11"/><path d="M10 7h6M10 10h6"/></svg></span><h3 data-i18n="p2n"></h3><p data-i18n="p2d"></p></div>
+    <div class="pillar"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#9C7E33" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 12l9 5 9-5"/><path d="M3 16l9 5 9-5"/></svg></span><h3 data-i18n="p3n"></h3><p data-i18n="p3d"></p></div>
+    <div class="pillar"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#9C7E33" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2.2 4.8L8.5 15.5l2.2-4.8z"/></svg></span><h3 data-i18n="p4n"></h3><p data-i18n="p4d"></p></div>
+  </div>
+</div></section>
+
+<section class="sec" id="sta" style="background:#fff;border-top:1px solid var(--bord);border-bottom:1px solid var(--bord);"><div class="wrap">
+  <h2 data-i18n="chooserH2"></h2><div class="sub" data-i18n="chooserSub"></div>
+  <div class="grid">
+    <a class="card" href="mathia_ponuda.html"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#9C7E33" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M2 8l10-4 10 4-10 4z"/><path d="M6 10.5V15c0 1.2 2.7 3 6 3s6-1.8 6-3v-4.5"/></svg></span><h3 data-i18n="c1t"></h3><p data-i18n="c1p"></p><div class="go" data-i18n="go"></div></a>
+    <a class="card" href="mathia_ponuda.html"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#9C7E33" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M6 3h11a2 2 0 0 1 2 2v14H8a2 2 0 0 0-2 2z"/><path d="M10 7h6M10 10h6"/></svg></span><h3 data-i18n="c2t"></h3><p data-i18n="c2p"></p><div class="go" data-i18n="go"></div></a>
+    <a class="card" href="mathia_fakultet.html"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#9C7E33" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M3 9l9-5 9 5"/><path d="M5 9v9M9 9v9M15 9v9M19 9v9"/><path d="M3 20h18"/></svg></span><h3 data-i18n="c3t"></h3><p data-i18n="c3p"></p><div class="go" data-i18n="go"></div></a>
+    <a class="card soon"><span class="soonbadge" data-i18n="soon"></span><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#9C7E33" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M7 5h10l-6 7 6 7H7"/></svg></span><h3 data-i18n="c4t"></h3><p data-i18n="c4p"></p></a>
+    <a class="card soon"><span class="soonbadge" data-i18n="soon"></span><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#9C7E33" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><circle cx="12" cy="12" r="2"/><ellipse cx="12" cy="12" rx="10" ry="4.2"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(120 12 12)"/></svg></span><h3 data-i18n="c5t"></h3><p data-i18n="c5p"></p></a>
+    <a class="card soon"><span class="soonbadge" data-i18n="soon"></span><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#9C7E33" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M9 3h6v3H9z"/><path d="M9 11h6M9 15h4"/></svg></span><h3 data-i18n="c6t"></h3><p data-i18n="c6p"></p></a>
+  </div>
+</div></section>
+
+<section class="sec" id="cenovnik" style="background:#fff;border-top:1px solid var(--bord);border-bottom:1px solid var(--bord);"><div class="wrap">
+  <h2 id="cenH2"></h2>
+  <div id="cenSpecial" style="text-align:center;margin:18px auto 28px;max-width:700px;background:radial-gradient(circle at 50% 0,#27406e,#14223E 85%);color:#fff;border:1.5px solid var(--gold);border-radius:13px;padding:13px 18px;font-weight:700;font-size:14px;"></div>
+  <div class="grid">
+    <div class="card" style="width:23%;min-width:200px;text-align:center;"><h3 id="pcMM"></h3><div id="pcMMv" style="font-size:20px;font-weight:900;color:var(--navy);margin:8px 0;"></div><a class="go" data-i18n="go" href="mathia_ponuda.html" style="text-decoration:none;"></a></div>
+    <div class="card" style="width:23%;min-width:200px;text-align:center;"><h3 id="pcPR"></h3><div id="pcPRv" style="font-size:20px;font-weight:900;color:var(--navy);margin:8px 0;"></div><a class="go" data-i18n="go" href="mathia_ponuda.html" style="text-decoration:none;"></a></div>
+    <div class="card" style="width:23%;min-width:200px;text-align:center;"><h3 id="pcFA"></h3><div id="pcFAv" style="font-size:20px;font-weight:900;color:var(--navy);margin:8px 0;"></div><a class="go" data-i18n="go" href="mathia_fakultet.html" style="text-decoration:none;"></a></div>
+    <div class="card" style="width:23%;min-width:200px;text-align:center;"><h3 id="pcTU"></h3><div id="pcTUv" style="font-size:20px;font-weight:900;color:var(--navy);margin:8px 0;"></div><a class="go" data-i18n="go" href="mathia_ponuda.html" style="text-decoration:none;"></a></div>
+  </div>
+</div></section>
+<section class="sec" id="zoi"><div class="wrap">
+  <div class="quizband">
+    <h2 id="quizH2"></h2>
+    <div style="display:inline-flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+      <a class="btn btn-gold" id="quizFac" href="mathia_kviz_fakultet.html"></a>
+      <a class="btn btn-ghost" id="quizHs" href="mathia_kviz_srednja.html"></a>
+    </div>
+  </div>
+</div></section>
+
+<div class="trust" id="trust"></div>
+
+<footer class="foot">
+  <div class="wm serif">Math<span style="color:#C2A14D">IA</span></div>
+  mathia.rs
+  <div class="disc" data-i18n="footDisc"></div>
+</footer>
+
+<script>
+var T={
+sr:{heroA:"Spremi se uz ",heroB:", korak po korak",lead:"Tvoj AI tutor i vrhunski materijali — matematika i fizika, od male mature do fakulteta.",cta1:"Šta spremaš?",cta2:"Pričaj sa Zoi",offerA:"Specijalna ponuda: ",offerMid:" na sve, kodom ",offerB:" — uvodni popust",nudimoH2:"Šta nudimo",p1n:"Tutor Zoi",p1d:"Objašnjava svaki korak — kad god ti zatreba.",p2n:"Premium materijali",p2d:"Knjige, e-skripte i formule — jasno i precizno.",p3n:"Svi nivoi",p3d:"Mala matura, srednja, prijemni i fakultet.",p4n:"Kvizovi",p4d:"Otkrij koji fakultet i škola su baš za tebe.",chooserH2:"Šta spremaš?",chooserSub:"Izaberi i kreni — uz tutora Zoi i materijale.",c1t:"Prijemni iz matematike",c1p:"Za tehničke i matematičke fakultete",c2t:"Mala matura",c2p:"Završni ispit, 8. razred",c3t:"Fakultetski predmeti",c3p:"Verovatnoća, Analiza 1, Merenja…",c4t:"Srednja škola — matematika",c4p:"Sve 4 godine",c5t:"Srednja škola — fizika",c5p:"Sve 4 godine",c6t:"Testovi sklonosti",c6p:"Po školi i izboru",go:"Pogledaj →",soon:"Uskoro",quizH2:"Nisi siguran/na šta da upišeš?",quizFac:"Koji fakultet je za tebe?",quizHs:"Koja srednja škola je za tebe?",trust:"Dostupno na 10 jezika · Nezavisna obrazovna platforma",footDisc:"MathIA je nezavisna obrazovna platforma. Materijali su pripremljeni iz opšteg gradiva i javno dostupnih izvora i nisu povezani ni sa jednom obrazovnom ustanovom."},
+en:{heroA:"Get ready with ",heroB:", step by step",lead:"AI tutor and premium materials for math and physics — from the primary-school final exam, through high school, to university.",cta1:"What are you studying?",cta2:"Chat with Zoi",offerA:"Special offer: ",offerMid:" off everything, with code ",offerB:" — intro discount",nudimoH2:"What we offer",p1n:"Tutor Zoi",p1d:"An AI teacher who explains step by step, whenever you need.",p2n:"Premium materials",p2d:"Books, e-scripts, formulas and topics — clear and tidy.",p3n:"All levels",p3d:"Primary final exam, high school, entrance exams and university subjects.",p4n:"Quizzes",p4d:"Discover which faculty and which high school suit you best.",chooserH2:"What are you studying?",chooserSub:"Choose and start — with tutor Zoi and materials.",c1t:"Math entrance exam",c1p:"For technical and math faculties",c2t:"Primary final exam",c2p:"Final exam, 8th grade",c3t:"University subjects",c3p:"Probability, Calculus 1, Measurements…",c4t:"High school — math",c4p:"All 4 years",c5t:"High school — physics",c5p:"All 4 years",c6t:"Aptitude tests",c6p:"By school and choice",go:"View →",soon:"Soon",quizH2:"Not sure what to enroll in?",quizFac:"Which faculty is for you?",quizHs:"Which high school is for you?",trust:"Available in 10 languages · Independent educational platform",footDisc:"MathIA is an independent educational platform. Materials are prepared from general curriculum and publicly available sources and are not affiliated with any educational institution."},
+de:{heroA:"Mach dich bereit mit ",heroB:", Schritt für Schritt",lead:"KI-Tutor und Premium-Materialien für Mathe und Physik — von der Grundschul-Abschlussprüfung über die Oberschule bis zur Universität.",cta1:"Was lernst du?",cta2:"Mit Zoi chatten",offerA:"Sonderangebot: ",offerMid:" auf alles, mit Code ",offerB:" — Einführungsrabatt",nudimoH2:"Was wir bieten",p1n:"Tutorin Zoi",p1d:"Eine KI-Lehrerin, die Schritt für Schritt erklärt, wann immer du willst.",p2n:"Premium-Materialien",p2d:"Bücher, E-Skripte, Formeln und Themen — klar und übersichtlich.",p3n:"Alle Stufen",p3d:"Grundschulabschluss, Oberschule, Aufnahmeprüfungen und Universitätsfächer.",p4n:"Quizze",p4d:"Finde heraus, welche Fakultät und welche Oberschule am besten zu dir passen.",chooserH2:"Was lernst du?",chooserSub:"Wähle und leg los — mit Tutorin Zoi und Materialien.",c1t:"Mathe-Aufnahmeprüfung",c1p:"Für technische und mathematische Fakultäten",c2t:"Grundschulabschluss",c2p:"Abschlussprüfung, 8. Klasse",c3t:"Universitätsfächer",c3p:"Wahrscheinlichkeit, Analysis 1, Messungen…",c4t:"Oberschule — Mathe",c4p:"Alle 4 Jahre",c5t:"Oberschule — Physik",c5p:"Alle 4 Jahre",c6t:"Eignungstests",c6p:"Nach Schule und Wahl",go:"Ansehen →",soon:"Bald",quizH2:"Unsicher, was du wählen sollst?",quizFac:"Welche Fakultät passt zu dir?",quizHs:"Welche Oberschule passt zu dir?",trust:"In 10 Sprachen verfügbar · Unabhängige Bildungsplattform",footDisc:"MathIA ist eine unabhängige Bildungsplattform. Die Materialien stammen aus dem allgemeinen Lehrplan und öffentlich zugänglichen Quellen und stehen in keiner Verbindung zu einer Bildungseinrichtung."},
+ru:{heroA:"Готовься с ",heroB:", шаг за шагом",lead:"ИИ-репетитор и премиум-материалы по математике и физике — от выпускного экзамена начальной школы до университета.",cta1:"Что готовишь?",cta2:"Поговорить с Zoi",offerA:"Спецпредложение: ",offerMid:" на всё, по коду ",offerB:" — вводная скидка",nudimoH2:"Что мы предлагаем",p1n:"Репетитор Zoi",p1d:"ИИ-преподаватель, который объясняет шаг за шагом, когда нужно.",p2n:"Премиум-материалы",p2d:"Книги, э-конспекты, формулы и темы — ясно и аккуратно.",p3n:"Все уровни",p3d:"Выпускной (8 класс), школа, вступительные и университетские предметы.",p4n:"Тесты",p4d:"Узнай, какой факультет и какая школа тебе больше всего подходят.",chooserH2:"Что готовишь?",chooserSub:"Выбери и начни — с репетитором Zoi и материалами.",c1t:"Вступительный по математике",c1p:"Для технических и математических факультетов",c2t:"Выпускной (8 класс)",c2p:"Выпускной экзамен, 8 класс",c3t:"Университетские предметы",c3p:"Вероятность, Анализ 1, Измерения…",c4t:"Школа — математика",c4p:"Все 4 года",c5t:"Школа — физика",c5p:"Все 4 года",c6t:"Тесты способностей",c6p:"По школе и выбору",go:"Смотреть →",soon:"Скоро",quizH2:"Не знаешь, что выбрать?",quizFac:"Какой факультет тебе подходит?",quizHs:"Какая школа тебе подходит?",trust:"Доступно на 10 языках · Независимая образовательная платформа",footDisc:"MathIA — независимая образовательная платформа. Материалы подготовлены по общей программе и из общедоступных источников и не связаны ни с одним учебным заведением."},
+fr:{heroA:"Prépare-toi avec ",heroB:", étape par étape",lead:"Tuteur IA et supports premium en maths et physique — de l’examen de fin de primaire au lycée et à l’université.",cta1:"Que prépares-tu ?",cta2:"Discuter avec Zoi",offerA:"Offre spéciale : ",offerMid:" sur tout, avec le code ",offerB:" — remise de lancement",nudimoH2:"Ce que nous offrons",p1n:"Tutrice Zoi",p1d:"Une enseignante IA qui explique étape par étape, quand tu veux.",p2n:"Supports premium",p2d:"Livres, e-scripts, formules et thèmes — clairs et nets.",p3n:"Tous les niveaux",p3d:"Examen de fin de primaire, lycée, concours et matières universitaires.",p4n:"Quiz",p4d:"Découvre quelle faculté et quel lycée te conviennent le mieux.",chooserH2:"Que prépares-tu ?",chooserSub:"Choisis et commence — avec la tutrice Zoi et les supports.",c1t:"Concours de maths",c1p:"Pour facultés techniques et de maths",c2t:"Fin de primaire",c2p:"Examen final, 8e année",c3t:"Matières universitaires",c3p:"Probabilités, Analyse 1, Mesures…",c4t:"Lycée — maths",c4p:"Les 4 années",c5t:"Lycée — physique",c5p:"Les 4 années",c6t:"Tests d’aptitude",c6p:"Selon l’école et le choix",go:"Voir →",soon:"Bientôt",quizH2:"Tu hésites sur ton choix ?",quizFac:"Quelle faculté est faite pour toi ?",quizHs:"Quel lycée est fait pour toi ?",trust:"Disponible en 10 langues · Plateforme éducative indépendante",footDisc:"MathIA est une plateforme éducative indépendante. Les supports sont préparés à partir du programme général et de sources publiques et ne sont affiliés à aucun établissement."},
+es:{heroA:"Prepárate con ",heroB:", paso a paso",lead:"Tutor con IA y materiales premium de mates y física — desde el examen final de primaria hasta la universidad.",cta1:"¿Qué preparas?",cta2:"Habla con Zoi",offerA:"Oferta especial: ",offerMid:" en todo, con el código ",offerB:" — descuento de bienvenida",nudimoH2:"Qué ofrecemos",p1n:"Tutora Zoi",p1d:"Una profesora con IA que explica paso a paso, cuando lo necesites.",p2n:"Materiales premium",p2d:"Libros, apuntes digitales, fórmulas y temas — claros y ordenados.",p3n:"Todos los niveles",p3d:"Examen final de primaria, secundaria, exámenes de acceso y asignaturas universitarias.",p4n:"Cuestionarios",p4d:"Descubre qué facultad y qué instituto te convienen más.",chooserH2:"¿Qué preparas?",chooserSub:"Elige y empieza — con la tutora Zoi y los materiales.",c1t:"Examen de acceso de mates",c1p:"Para facultades técnicas y de matemáticas",c2t:"Fin de primaria",c2p:"Examen final, 8.º grado",c3t:"Asignaturas universitarias",c3p:"Probabilidad, Análisis 1, Mediciones…",c4t:"Secundaria — mates",c4p:"Los 4 años",c5t:"Secundaria — física",c5p:"Los 4 años",c6t:"Pruebas de aptitud",c6p:"Según escuela y elección",go:"Ver →",soon:"Pronto",quizH2:"¿No sabes qué elegir?",quizFac:"¿Qué facultad es para ti?",quizHs:"¿Qué instituto es para ti?",trust:"Disponible en 10 idiomas · Plataforma educativa independiente",footDisc:"MathIA es una plataforma educativa independiente. Los materiales se preparan a partir del currículo general y de fuentes públicas y no están afiliados a ninguna institución."},
+it:{heroA:"Preparati con ",heroB:", passo dopo passo",lead:"Tutor IA e materiali premium di matematica e fisica — dall’esame di fine primaria fino all’università.",cta1:"Cosa prepari?",cta2:"Parla con Zoi",offerA:"Offerta speciale: ",offerMid:" su tutto, con il codice ",offerB:" — sconto di lancio",nudimoH2:"Cosa offriamo",p1n:"Tutor Zoi",p1d:"Un’insegnante IA che spiega passo dopo passo, quando vuoi.",p2n:"Materiali premium",p2d:"Libri, e-dispense, formule e argomenti — chiari e ordinati.",p3n:"Tutti i livelli",p3d:"Esame di fine primaria, superiori, test d’ingresso e materie universitarie.",p4n:"Quiz",p4d:"Scopri quale facoltà e quale scuola superiore fanno per te.",chooserH2:"Cosa prepari?",chooserSub:"Scegli e inizia — con la tutor Zoi e i materiali.",c1t:"Test d’ingresso di matematica",c1p:"Per facoltà tecniche e di matematica",c2t:"Fine primaria",c2p:"Esame finale, 8ª classe",c3t:"Materie universitarie",c3p:"Probabilità, Analisi 1, Misure…",c4t:"Superiori — matematica",c4p:"Tutti e 4 gli anni",c5t:"Superiori — fisica",c5p:"Tutti e 4 gli anni",c6t:"Test attitudinali",c6p:"Per scuola e scelta",go:"Guarda →",soon:"Presto",quizH2:"Non sai cosa scegliere?",quizFac:"Quale facoltà fa per te?",quizHs:"Quale scuola superiore fa per te?",trust:"Disponibile in 10 lingue · Piattaforma educativa indipendente",footDisc:"MathIA è una piattaforma educativa indipendente. I materiali sono preparati dal programma generale e da fonti pubbliche e non sono affiliati ad alcuna istituzione."},
+tr:{heroA:"",heroB:" ile adım adım hazırlan",lead:"Matematik ve fizik için yapay zekâ öğretmen ve premium materyaller — ilkokul bitirme sınavından üniversiteye kadar.",cta1:"Neye hazırlanıyorsun?",cta2:"Zoi ile konuş",offerA:"Özel teklif: ",offerMid:" her şeyde, kodla ",offerB:" — tanıtım indirimi",nudimoH2:"Neler sunuyoruz",p1n:"Öğretmen Zoi",p1d:"Adım adım açıklayan, istediğin an yanında bir yapay zekâ öğretmeni.",p2n:"Premium materyaller",p2d:"Kitaplar, e-notlar, formüller ve konular — açık ve düzenli.",p3n:"Tüm seviyeler",p3d:"İlkokul bitirme, lise, giriş sınavları ve üniversite dersleri.",p4n:"Testler",p4d:"Hangi fakülte ve hangi lise sana en uygun, keşfet.",chooserH2:"Neye hazırlanıyorsun?",chooserSub:"Seç ve başla — öğretmen Zoi ve materyallerle.",c1t:"Matematik giriş sınavı",c1p:"Teknik ve matematik fakülteleri için",c2t:"İlkokul bitirme",c2p:"Bitirme sınavı, 8. sınıf",c3t:"Üniversite dersleri",c3p:"Olasılık, Analiz 1, Ölçümler…",c4t:"Lise — matematik",c4p:"4 yıl boyunca",c5t:"Lise — fizik",c5p:"4 yıl boyunca",c6t:"Yetenek testleri",c6p:"Okula ve seçime göre",go:"Gör →",soon:"Yakında",quizH2:"Ne seçeceğinden emin değil misin?",quizFac:"Hangi fakülte sana uygun?",quizHs:"Hangi lise sana uygun?",trust:"10 dilde mevcut · Bağımsız eğitim platformu",footDisc:"MathIA bağımsız bir eğitim platformudur. Materyaller genel müfredattan ve kamuya açık kaynaklardan hazırlanmıştır ve hiçbir kurumla bağlantılı değildir."},
+zh:{heroA:"",heroB:" 陪你一步步备考",lead:"数学和物理的 AI 导师与优质资料——从小学毕业考试到高中，再到大学。",cta1:"你在备考什么？",cta2:"和 Zoi 聊聊",offerA:"特别优惠：",offerMid:" 全场，使用代码 ",offerB:" —— 新用户折扣",nudimoH2:"我们提供什么",p1n:"导师 Zoi",p1d:"随时为你一步步讲解的 AI 老师。",p2n:"优质资料",p2d:"书籍、电子讲义、公式与专题——清晰整洁。",p3n:"所有阶段",p3d:"小学毕业、高中、入学考试与大学课程。",p4n:"测验",p4d:"发现最适合你的学院和高中。",chooserH2:"你在备考什么？",chooserSub:"选择并开始——有导师 Zoi 和资料。",c1t:"数学入学考试",c1p:"面向理工与数学院系",c2t:"小学毕业考试",c2p:"毕业考试，八年级",c3t:"大学课程",c3p:"概率、分析 1、测量……",c4t:"高中——数学",c4p:"全部四年",c5t:"高中——物理",c5p:"全部四年",c6t:"能力测试",c6p:"按学校与选择",go:"查看 →",soon:"即将",quizH2:"不确定该选什么？",quizFac:"哪个学院适合你？",quizHs:"哪所高中适合你？",trust:"支持 10 种语言 · 独立教育平台",footDisc:"MathIA 是一个独立的教育平台。资料依据通用课程与公开来源编写，与任何教育机构无关。"},
+ar:{heroA:"",heroB:" استعدّ خطوة بخطوة",lead:"معلّم بالذكاء الاصطناعي ومواد مميزة في الرياضيات والفيزياء — من امتحان نهاية الابتدائية حتى الجامعة.",cta1:"ماذا تُحضّر؟",cta2:"تحدّث مع Zoi",offerA:"عرض خاص: ",offerMid:" على كل شيء، بالكود ",offerB:" — خصم تعريفي",nudimoH2:"ماذا نقدّم",p1n:"المعلّمة Zoi",p1d:"معلّمة بالذكاء الاصطناعي تشرح خطوة بخطوة وقتما تشاء.",p2n:"مواد مميزة",p2d:"كتب، ملخصات إلكترونية، صيغ ومواضيع — واضحة ومرتبة.",p3n:"كل المستويات",p3d:"امتحان نهاية الابتدائية، الثانوية، امتحانات القبول والمواد الجامعية.",p4n:"اختبارات",p4d:"اكتشف أي كلية وأي مدرسة ثانوية تناسبك أكثر.",chooserH2:"ماذا تُحضّر؟",chooserSub:"اختر وابدأ — مع المعلّمة Zoi والمواد.",c1t:"امتحان القبول في الرياضيات",c1p:"للكليات التقنية والرياضية",c2t:"امتحان نهاية الابتدائية",c2p:"الامتحان النهائي، الصف الثامن",c3t:"مواد جامعية",c3p:"الاحتمالات، التحليل 1، القياسات…",c4t:"الثانوية — رياضيات",c4p:"السنوات الأربع",c5t:"الثانوية — فيزياء",c5p:"السنوات الأربع",c6t:"اختبارات الميول",c6p:"حسب المدرسة والاختيار",go:"عرض ←",soon:"قريبًا",quizH2:"غير متأكد ماذا تختار؟",quizFac:"أي كلية تناسبك؟",quizHs:"أي مدرسة ثانوية تناسبك؟",trust:"متوفر بعشر لغات · منصة تعليمية مستقلة",footDisc:"MathIA منصة تعليمية مستقلة. أُعدّت المواد من المنهج العام ومصادر متاحة للعموم وليست تابعة لأي مؤسسة تعليمية."}
+};
+var CN={
+ sr:{btn:"Cenovnik",h2:"Cenovnik",from:"od",special:"Specijalne ponude: −20% kodom START20 · paket 2+ predmeta −15%",tutor:"Tutor Zoi"},
+ en:{btn:"Price list",h2:"Price list",from:"from",special:"Special offers: −20% with code START20 · bundle of 2+ −15%",tutor:"Tutor Zoi"},
+ de:{btn:"Preisliste",h2:"Preisliste",from:"ab",special:"Sonderangebote: −20% mit Code START20 · Paket ab 2 −15%",tutor:"Tutorin Zoi"},
+ ru:{btn:"Цены",h2:"Цены",from:"от",special:"Спецпредложения: −20% по коду START20 · пакет 2+ −15%",tutor:"Репетитор Zoi"},
+ fr:{btn:"Tarifs",h2:"Tarifs",from:"dès",special:"Offres spéciales : −20% avec le code START20 · pack 2+ −15%",tutor:"Tutrice Zoi"},
+ es:{btn:"Precios",h2:"Precios",from:"desde",special:"Ofertas especiales: −20% con el código START20 · pack 2+ −15%",tutor:"Tutora Zoi"},
+ it:{btn:"Prezzi",h2:"Prezzi",from:"da",special:"Offerte speciali: −20% con il codice START20 · pacchetto 2+ −15%",tutor:"Tutor Zoi"},
+ tr:{btn:"Fiyatlar",h2:"Fiyatlar",from:"başlangıç",special:"Özel teklifler: −20% kod START20 · 2+ paket −15%",tutor:"Öğretmen Zoi"},
+ zh:{btn:"价格",h2:"价格",from:"起价",special:"特别优惠：−20% 代码 START20 · 2项以上套餐 −15%",tutor:"导师 Zoi"},
+ ar:{btn:"الأسعار",h2:"الأسعار",from:"ابتداءً من",special:"عروض خاصة: −20% بالكود START20 · باقة 2+ −15%",tutor:"المعلّمة Zoi"}
+};
+function setLang(code){
+ var t=T[code]||T.sr;
+ document.documentElement.lang=code; document.documentElement.dir=(code==='ar')?'rtl':'ltr';
+ document.getElementById('heroH1').innerHTML=t.heroA+'<span class="g">Zoi</span>'+t.heroB;
+ document.getElementById('offerLine').innerHTML='<span class="star">&#9733;</span> '+t.offerA+'<b>&#8722;20%</b>'+t.offerMid+'<b>START20</b>'+t.offerB;
+ var els=document.querySelectorAll('[data-i18n]');
+ for(var i=0;i<els.length;i++){var k=els[i].getAttribute('data-i18n');if(t[k]!==undefined)els[i].textContent=t[k];}
+ document.getElementById('quizH2').textContent=t.quizH2;
+ document.getElementById('quizFac').textContent=t.quizFac;
+ document.getElementById('quizHs').textContent=t.quizHs;
+ document.getElementById('trust').textContent=t.trust;
+  var cn=CN[code]||CN.sr;
+  document.getElementById('cenBtn').textContent=cn.btn;
+  document.getElementById('cenH2').textContent=cn.h2;
+  document.getElementById('cenSpecial').innerHTML=cn.special.replace('−20%','<b style="background:linear-gradient(135deg,#E6CE86,#C2A14D);color:#14223E;padding:2px 8px;border-radius:6px;">−20%</b>').replace('START20','<b style="background:linear-gradient(135deg,#E6CE86,#C2A14D);color:#14223E;padding:2px 8px;border-radius:6px;">START20</b>').replace('−15%','<b style="background:linear-gradient(135deg,#E6CE86,#C2A14D);color:#14223E;padding:2px 8px;border-radius:6px;">−15%</b>');
+  document.getElementById('pcMM').textContent=t.c2t;document.getElementById('pcMMv').textContent=cn.from+' 490 RSD';
+  document.getElementById('pcPR').textContent=t.c1t;document.getElementById('pcPRv').textContent=cn.from+' 990 RSD';
+  document.getElementById('pcFA').textContent=t.c3t;document.getElementById('pcFAv').textContent=cn.from+' 390 RSD';
+  document.getElementById('pcTU').textContent=cn.tutor;document.getElementById('pcTUv').textContent=cn.from+' 990 RSD';
+ var ls=document.querySelectorAll('.lang');
+ for(var j=0;j<ls.length;j++){ls[j].className=(ls[j].getAttribute('data-lang')===code)?'lang on':'lang';}
+}
+document.getElementById('langbar').addEventListener('click',function(e){var b=e.target.closest('.lang');if(b)setLang(b.getAttribute('data-lang'));});
+setLang('sr');
+</script>
+</body>
+</html>

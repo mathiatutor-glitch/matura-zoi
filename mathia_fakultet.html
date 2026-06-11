@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="sr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MathIA — fakultetski predmeti</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2314223E'/%3E%3Ctext x='50%25' y='56%25' font-family='Georgia,serif' font-size='40' font-weight='700' fill='%23C2A14D' text-anchor='middle' dominant-baseline='middle'%3EM%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Playfair+Display:wght@800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#14223E;--gold:#C2A14D;--golddk:#9C7E33;--goldlt:#E6CE86;--cream:#FAF7F0;--card:#FFFFFF;--ink:#1A1F2B;--muted:#7C8190;--bord:#E9E1CD;--soft:#F2EEE2;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Nunito',system-ui,sans-serif;color:var(--ink);background:var(--cream);}
+.wrap{max-width:1080px;margin:0 auto;padding:0 18px;}
+.langbar{background:#0F1A30;border-bottom:1px solid rgba(194,161,77,.3);} .langbar .row{max-width:1080px;margin:0 auto;display:flex;justify-content:center;gap:6px;flex-wrap:wrap;padding:9px 18px;font-size:12.5px;font-weight:700;}
+.lang{padding:3px 10px;border-radius:999px;cursor:pointer;color:#aeb7cc;} .lang.on{background:var(--gold);color:#14223E;font-weight:900;}
+.brand{display:flex;align-items:center;justify-content:center;gap:12px;padding:28px 0 8px;}
+.seal{width:48px;height:48px;border-radius:50%;background:radial-gradient(circle at 34% 30%,#F4E2A8,#C2A14D 56%,#8E7230);display:flex;align-items:center;justify-content:center;color:#14223E;font-weight:800;font-size:25px;font-family:'Playfair Display',serif;box-shadow:0 8px 20px rgba(142,114,48,.4),0 0 0 3px rgba(230,206,134,.22);}
+.wm{font-weight:900;font-size:26px;} .wm .ia{color:var(--golddk);}
+.head{text-align:center;margin:8px 0 16px;} .head h2{font-family:'Playfair Display',serif;font-size:32px;font-weight:800;color:var(--navy);position:relative;padding-bottom:12px;} .head h2:after{content:"";position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:60px;height:2px;background:linear-gradient(90deg,transparent,#C2A14D,transparent);} .head p{color:var(--muted);font-weight:500;font-style:italic;margin:14px auto 0;max-width:680px;}
+.special{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;background:radial-gradient(circle at 50% 0,#27406e,#14223E 85%);border:1.5px solid var(--gold);border-radius:13px;padding:13px 18px;margin:16px 0 8px;}
+.special .tx{color:#fff;font-weight:700;font-size:14px;text-align:center;} .special b{background:linear-gradient(135deg,#E6CE86,#C2A14D);color:#14223E;padding:2px 8px;border-radius:6px;font-weight:800;}
+.lbl{font-family:'Playfair Display',serif;font-size:20px;font-weight:800;color:var(--navy);margin:28px 0 14px;position:relative;padding-bottom:10px;} .lbl:after{content:"";position:absolute;left:0;bottom:0;width:48px;height:2px;background:linear-gradient(90deg,#C2A14D,transparent);}
+.grid{text-align:center;font-size:0;}
+.card{display:inline-block;width:31.5%;min-width:240px;margin:0 .7% 16px;vertical-align:top;text-align:left;font-size:14px;background:var(--card);border:1px solid var(--bord);border-radius:18px;padding:22px;position:relative;box-shadow:0 4px 16px rgba(20,34,62,.05);transition:transform .16s,box-shadow .16s,border-color .16s;}
+@media(max-width:820px){.card{width:46%;}} @media(max-width:520px){.card{width:96%;}}
+.card:not(.soon):hover{transform:translateY(-5px);box-shadow:0 18px 38px rgba(20,34,62,.13);border-color:var(--gold);}
+.card h4{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--navy);margin-bottom:6px;padding-right:80px;}
+html[dir="rtl"] .card h4{padding-right:0;padding-left:80px;}
+.card .sum{font-size:13px;color:#3a352e;font-weight:500;min-height:54px;line-height:1.5;}
+.eskr{font-size:12.5px;font-weight:800;color:var(--golddk);margin-top:10px;} .eskr2{font-size:12px;font-weight:700;color:var(--muted);}
+.buy{display:block;text-align:center;margin-top:12px;background:#14223E;color:#fff;text-decoration:none;border-radius:10px;padding:11px;font-weight:800;font-size:14px;transition:transform .15s;} .buy:hover{transform:translateY(-2px);}
+.tag{position:absolute;top:16px;right:16px;background:linear-gradient(135deg,#E6CE86,#C2A14D);color:#14223E;font-size:10px;font-weight:900;padding:3px 9px;border-radius:999px;text-transform:uppercase;}
+.card.soon{opacity:.72;background:#FCFAF4;} .card.soon .sum{min-height:0;} .sb{position:absolute;top:16px;right:16px;background:var(--soft);color:var(--golddk);font-size:10px;font-weight:900;padding:3px 9px;border-radius:999px;text-transform:uppercase;}
+.note{text-align:center;color:var(--muted);font-size:13px;font-weight:500;font-style:italic;margin:18px 0 36px;}
+html[dir="rtl"] .card{text-align:right;}
+</style>
+</head>
+<body>
+<div class="langbar"><div class="row" id="langbar">
+<span class="lang on" data-lang="sr">Srpski</span><span class="lang" data-lang="en">English</span><span class="lang" data-lang="de">Deutsch</span><span class="lang" data-lang="ru">Русский</span><span class="lang" data-lang="fr">Français</span><span class="lang" data-lang="es">Español</span><span class="lang" data-lang="it">Italiano</span><span class="lang" data-lang="tr">Türkçe</span><span class="lang" data-lang="zh">中文</span><span class="lang" data-lang="ar">العربية</span>
+</div></div>
+
+<div class="brand"><div class="seal">M</div><div class="wm">Math<span class="ia">IA</span></div></div>
+<div class="wrap">
+  <div class="head"><h2 data-i18n="fhH2"></h2><p data-i18n="fhSub"></p></div>
+  <div class="special"><span class="tx" id="facSp"></span></div>
+
+  <div class="lbl" data-i18n="secAvail"></div>
+  <div class="grid">
+    <div class="card"><span class="tag" data-i18n="tagAvail"></span><h4 data-i18n="s1n"></h4><div class="sum" data-i18n="s1sum"></div><div class="eskr" data-i18n="eskrA"></div><div class="eskr2" data-i18n="eskrB"></div><a class="buy" href="#kontakt" data-i18n="buy"></a></div>
+    <div class="card"><span class="tag" data-i18n="tagAvail"></span><h4 data-i18n="s2n"></h4><div class="sum" data-i18n="s2sum"></div><div class="eskr" data-i18n="eskrA"></div><div class="eskr2" data-i18n="eskrB"></div><a class="buy" href="#kontakt" data-i18n="buy"></a></div>
+    <div class="card"><span class="tag" data-i18n="tagAvail"></span><h4 data-i18n="s3n"></h4><div class="sum" data-i18n="s3sum"></div><div class="eskr" data-i18n="eskrA"></div><div class="eskr2" data-i18n="eskrB"></div><a class="buy" href="#kontakt" data-i18n="buy"></a></div>
+  </div>
+
+  <div class="lbl" data-i18n="secSoon"></div>
+  <div class="grid">
+    <div class="card soon"><span class="sb" data-i18n="soon"></span><h4 data-i18n="u1n"></h4><div class="sum" data-i18n="u1d"></div></div>
+    <div class="card soon"><span class="sb" data-i18n="soon"></span><h4 data-i18n="u2n"></h4><div class="sum" data-i18n="u2d"></div></div>
+    <div class="card soon"><span class="sb" data-i18n="soon"></span><h4 data-i18n="u3n"></h4><div class="sum" data-i18n="u3d"></div></div>
+    <div class="card soon"><span class="sb" data-i18n="soon"></span><h4 data-i18n="u4n"></h4><div class="sum" data-i18n="u4d"></div></div>
+  </div>
+  <p class="note" data-i18n="note"></p>
+</div>
+
+<script>
+const T={
+sr:{fhH2:"Fakultetski predmeti",fhSub:"Tutor Zoi za zahtevne predmete — objašnjava korak po korak. Donesi svoj zadatak, Zoi te vodi do rešenja.",facSpecial:"Tutor po predmetu: mesečno 1.990 / semestar 5.900 RSD · uvodni popust −20% kodom START20",secAvail:"Dostupno",secSoon:"Uskoro",s1n:"Verovatnoća i statistika",s1sum:"Totalna verovatnoća, Bajes, slučajne promenljive, raspodele, korelacija, statistika.",s2n:"Matematička analiza 1",s2sum:"Nizovi, limesi, izvodi, integrali, ispitivanje funkcije.",s3n:"Električna merenja",s3sum:"Greške merenja, instrumenti, mostovi, osciloskop, merni pretvarači.",eskrA:"E-skripta 1.900 RSD · komplet sa tutorom 6.900",eskrB:"ili po poglavlju 390 RSD",buy:"Spremi se",tagAvail:"Dostupno",u1n:"Matematička analiza 2",u1d:"Redovi, funkcije više promenljivih, višestruki integrali.",u2n:"Linearna algebra",u2d:"Matrice, determinante, sistemi, vektorski prostori.",u3n:"Osnove elektrotehnike",u3d:"Kola, Kirhofovi zakoni, naizmenične struje.",u4n:"Mehanika",u4d:"Statika, kinematika, dinamika.",soon:"Uskoro",note:"Tutor je dostupan odmah. E-skripte za sva tri predmeta su gotove. Cene su predlog — lako menjamo."},
+en:{fhH2:"University subjects",fhSub:"Tutor Zoi for demanding subjects — explains step by step. Bring your problem, Zoi guides you to the solution.",facSpecial:"Tutor per subject: monthly 1.990 / semester 5.900 RSD · intro discount −20% with code START20",secAvail:"Available",secSoon:"Soon",s1n:"Probability and Statistics",s1sum:"Total probability, Bayes, random variables, distributions, correlation, statistics.",s2n:"Calculus 1",s2sum:"Sequences, limits, derivatives, integrals, function analysis.",s3n:"Electrical Measurements",s3sum:"Measurement errors, instruments, bridges, oscilloscope, transducers.",eskrA:"E-script 1.900 RSD · bundle with tutor 6.900",eskrB:"or per chapter 390 RSD",buy:"Get ready",tagAvail:"Available",u1n:"Calculus 2",u1d:"Series, multivariable functions, multiple integrals.",u2n:"Linear Algebra",u2d:"Matrices, determinants, systems, vector spaces.",u3n:"Fundamentals of Electrical Eng.",u3d:"Circuits, Kirchhoff’s laws, AC currents.",u4n:"Mechanics",u4d:"Statics, kinematics, dynamics.",soon:"Soon",note:"Tutor is available now. E-scripts for all three subjects are ready. Prices are a proposal — easily changed."},
+de:{fhH2:"Universitätsfächer",fhSub:"Tutorin Zoi für anspruchsvolle Fächer — erklärt Schritt für Schritt. Bring deine Aufgabe, Zoi führt dich zur Lösung.",facSpecial:"Tutor pro Fach: monatlich 1.990 / Semester 5.900 RSD · Einführungsrabatt −20% mit Code START20",secAvail:"Verfügbar",secSoon:"Bald",s1n:"Wahrscheinlichkeit und Statistik",s1sum:"Totale Wahrscheinlichkeit, Bayes, Zufallsvariablen, Verteilungen, Korrelation, Statistik.",s2n:"Analysis 1",s2sum:"Folgen, Grenzwerte, Ableitungen, Integrale, Kurvendiskussion.",s3n:"Elektrische Messungen",s3sum:"Messfehler, Instrumente, Brücken, Oszilloskop, Messwandler.",eskrA:"E-Skript 1.900 RSD · Bundle mit Tutor 6.900",eskrB:"oder pro Kapitel 390 RSD",buy:"Loslegen",tagAvail:"Verfügbar",u1n:"Analysis 2",u1d:"Reihen, Funktionen mehrerer Variablen, Mehrfachintegrale.",u2n:"Lineare Algebra",u2d:"Matrizen, Determinanten, Systeme, Vektorräume.",u3n:"Grundlagen der Elektrotechnik",u3d:"Schaltungen, Kirchhoff-Gesetze, Wechselströme.",u4n:"Mechanik",u4d:"Statik, Kinematik, Dynamik.",soon:"Bald",note:"Tutor sofort verfügbar. E-Skripte für alle drei Fächer sind fertig. Preise sind ein Vorschlag — leicht änderbar."},
+ru:{fhH2:"Университетские предметы",fhSub:"Репетитор Zoi для сложных предметов — объясняет шаг за шагом. Принеси свою задачу, Zoi доведёт тебя до решения.",facSpecial:"Репетитор по предмету: в месяц 1.990 / семестр 5.900 RSD · вводная скидка −20% по коду START20",secAvail:"Доступно",secSoon:"Скоро",s1n:"Вероятность и статистика",s1sum:"Полная вероятность, Байес, случайные величины, распределения, корреляция, статистика.",s2n:"Математический анализ 1",s2sum:"Последовательности, пределы, производные, интегралы, исследование функции.",s3n:"Электрические измерения",s3sum:"Погрешности, приборы, мосты, осциллограф, измерительные преобразователи.",eskrA:"Э-конспект 1.900 RSD · комплект с репетитором 6.900",eskrB:"или по главе 390 RSD",buy:"Начать",tagAvail:"Доступно",u1n:"Математический анализ 2",u1d:"Ряды, функции нескольких переменных, кратные интегралы.",u2n:"Линейная алгебра",u2d:"Матрицы, определители, системы, векторные пространства.",u3n:"Основы электротехники",u3d:"Цепи, законы Кирхгофа, переменные токи.",u4n:"Механика",u4d:"Статика, кинематика, динамика.",soon:"Скоро",note:"Репетитор доступен сразу. Э-конспекты по всем трём предметам готовы. Цены — предложение, легко изменить."},
+fr:{fhH2:"Matières universitaires",fhSub:"Tutrice Zoi pour les matières exigeantes — explique étape par étape. Apporte ton exercice, Zoi te guide vers la solution.",facSpecial:"Tuteur par matière : mensuel 1.990 / semestre 5.900 RSD · remise de lancement −20% avec le code START20",secAvail:"Disponible",secSoon:"Bientôt",s1n:"Probabilités et statistiques",s1sum:"Probabilité totale, Bayes, variables aléatoires, lois, corrélation, statistique.",s2n:"Analyse 1",s2sum:"Suites, limites, dérivées, intégrales, étude de fonction.",s3n:"Mesures électriques",s3sum:"Erreurs de mesure, instruments, ponts, oscilloscope, capteurs.",eskrA:"E-script 1.900 RSD · pack avec tutrice 6.900",eskrB:"ou par chapitre 390 RSD",buy:"C’est parti",tagAvail:"Disponible",u1n:"Analyse 2",u1d:"Séries, fonctions de plusieurs variables, intégrales multiples.",u2n:"Algèbre linéaire",u2d:"Matrices, déterminants, systèmes, espaces vectoriels.",u3n:"Bases de l’électrotechnique",u3d:"Circuits, lois de Kirchhoff, courants alternatifs.",u4n:"Mécanique",u4d:"Statique, cinématique, dynamique.",soon:"Bientôt",note:"La tutrice est disponible tout de suite. Les e-scripts des trois matières sont prêts. Les prix sont indicatifs — modifiables."},
+es:{fhH2:"Asignaturas universitarias",fhSub:"Tutora Zoi para asignaturas exigentes — explica paso a paso. Trae tu ejercicio, Zoi te guía a la solución.",facSpecial:"Tutora por asignatura: mensual 1.990 / semestre 5.900 RSD · descuento de bienvenida −20% con el código START20",secAvail:"Disponible",secSoon:"Pronto",s1n:"Probabilidad y estadística",s1sum:"Probabilidad total, Bayes, variables aleatorias, distribuciones, correlación, estadística.",s2n:"Análisis 1",s2sum:"Sucesiones, límites, derivadas, integrales, estudio de funciones.",s3n:"Mediciones eléctricas",s3sum:"Errores de medición, instrumentos, puentes, osciloscopio, transductores.",eskrA:"E-apuntes 1.900 RSD · pack con tutora 6.900",eskrB:"o por capítulo 390 RSD",buy:"Empezar",tagAvail:"Disponible",u1n:"Análisis 2",u1d:"Series, funciones de varias variables, integrales múltiples.",u2n:"Álgebra lineal",u2d:"Matrices, determinantes, sistemas, espacios vectoriales.",u3n:"Fundamentos de electrotecnia",u3d:"Circuitos, leyes de Kirchhoff, corrientes alternas.",u4n:"Mecánica",u4d:"Estática, cinemática, dinámica.",soon:"Pronto",note:"La tutora está disponible ya. Los e-apuntes de las tres asignaturas están listos. Los precios son una propuesta — fáciles de cambiar."},
+it:{fhH2:"Materie universitarie",fhSub:"Tutor Zoi per materie impegnative — spiega passo dopo passo. Porta il tuo esercizio, Zoi ti guida alla soluzione.",facSpecial:"Tutor per materia: mensile 1.990 / semestre 5.900 RSD · sconto di lancio −20% con il codice START20",secAvail:"Disponibile",secSoon:"Presto",s1n:"Probabilità e statistica",s1sum:"Probabilità totale, Bayes, variabili aleatorie, distribuzioni, correlazione, statistica.",s2n:"Analisi 1",s2sum:"Successioni, limiti, derivate, integrali, studio di funzione.",s3n:"Misure elettriche",s3sum:"Errori di misura, strumenti, ponti, oscilloscopio, trasduttori.",eskrA:"E-dispensa 1.900 RSD · pacchetto con tutor 6.900",eskrB:"o per capitolo 390 RSD",buy:"Inizia",tagAvail:"Disponibile",u1n:"Analisi 2",u1d:"Serie, funzioni di più variabili, integrali multipli.",u2n:"Algebra lineare",u2d:"Matrici, determinanti, sistemi, spazi vettoriali.",u3n:"Fondamenti di elettrotecnica",u3d:"Circuiti, leggi di Kirchhoff, correnti alternate.",u4n:"Meccanica",u4d:"Statica, cinematica, dinamica.",soon:"Presto",note:"Il tutor è disponibile subito. Le e-dispense delle tre materie sono pronte. I prezzi sono indicativi — facili da cambiare."},
+tr:{fhH2:"Üniversite dersleri",fhSub:"Zorlu dersler için öğretmen Zoi — adım adım açıklar. Sorununu getir, Zoi seni çözüme götürür.",facSpecial:"Ders başına öğretmen: aylık 1.990 / dönem 5.900 RSD · tanıtım indirimi −20% kod START20",secAvail:"Mevcut",secSoon:"Yakında",s1n:"Olasılık ve istatistik",s1sum:"Toplam olasılık, Bayes, rastgele değişkenler, dağılımlar, korelasyon, istatistik.",s2n:"Analiz 1",s2sum:"Diziler, limitler, türevler, integraller, fonksiyon incelemesi.",s3n:"Elektriksel ölçümler",s3sum:"Ölçüm hataları, cihazlar, köprüler, osiloskop, dönüştürücüler.",eskrA:"E-not 1.900 RSD · öğretmenli paket 6.900",eskrB:"veya bölüm başına 390 RSD",buy:"Başla",tagAvail:"Mevcut",u1n:"Analiz 2",u1d:"Seriler, çok değişkenli fonksiyonlar, çoklu integraller.",u2n:"Lineer cebir",u2d:"Matrisler, determinantlar, sistemler, vektör uzayları.",u3n:"Elektrotekniğin temelleri",u3d:"Devreler, Kirchhoff yasaları, alternatif akımlar.",u4n:"Mekanik",u4d:"Statik, kinematik, dinamik.",soon:"Yakında",note:"Öğretmen hemen mevcut. Üç dersin de e-notları hazır. Fiyatlar öneridir — kolayca değişir."},
+zh:{fhH2:"大学课程",fhSub:"导师 Zoi 助你攻克难课——一步步讲解。带上你的题目，Zoi 引导你得出解答。",facSpecial:"按科目导师：每月 1.990 / 学期 5.900 RSD · 新用户折扣 −20% 代码 START20",secAvail:"可用",secSoon:"即将",s1n:"概率与统计",s1sum:"全概率、贝叶斯、随机变量、分布、相关、统计。",s2n:"数学分析 1",s2sum:"数列、极限、导数、积分、函数研究。",s3n:"电气测量",s3sum:"测量误差、仪器、电桥、示波器、传感器。",eskrA:"电子讲义 1.900 RSD · 含导师套装 6.900",eskrB:"或按章节 390 RSD",buy:"开始",tagAvail:"可用",u1n:"数学分析 2",u1d:"级数、多元函数、多重积分。",u2n:"线性代数",u2d:"矩阵、行列式、方程组、向量空间。",u3n:"电工基础",u3d:"电路、基尔霍夫定律、交流电。",u4n:"力学",u4d:"静力学、运动学、动力学。",soon:"即将",note:"导师立即可用。三门课程的电子讲义均已就绪。价格为建议价——可随时调整。"},
+ar:{fhH2:"مواد جامعية",fhSub:"المعلّمة Zoi للمواد الصعبة — تشرح خطوة بخطوة. أحضر مسألتك، وZoi ترشدك إلى الحل.",facSpecial:"معلّمة لكل مادة: شهريًا 1.990 / فصل 5.900 RSD · خصم تعريفي −20% بالكود START20",secAvail:"متاح",secSoon:"قريبًا",s1n:"الاحتمالات والإحصاء",s1sum:"الاحتمال الكلي، بايز، المتغيرات العشوائية، التوزيعات، الارتباط، الإحصاء.",s2n:"التحليل الرياضي 1",s2sum:"المتتاليات، النهايات، المشتقات، التكاملات، دراسة الدالة.",s3n:"القياسات الكهربائية",s3sum:"أخطاء القياس، الأجهزة، الجسور، راسم الذبذبات، المحوّلات.",eskrA:"ملخص إلكتروني 1.900 RSD · باقة مع معلّمة 6.900",eskrB:"أو لكل فصل 390 RSD",buy:"ابدأ",tagAvail:"متاح",u1n:"التحليل الرياضي 2",u1d:"المتسلسلات، دوال عدة متغيرات، التكاملات المتعددة.",u2n:"الجبر الخطي",u2d:"المصفوفات، المحددات، الأنظمة، الفضاءات المتجهية.",u3n:"أساسيات الكهرباء",u3d:"الدوائر، قوانين كيرشهوف، التيارات المتناوبة.",u4n:"الميكانيكا",u4d:"الإستاتيكا، الحركة، الديناميكا.",soon:"قريبًا",note:"المعلّمة متاحة فورًا. الملخصات الإلكترونية للمواد الثلاث جاهزة. الأسعار مقترحة — قابلة للتغيير بسهولة."}
+};
+function setLang(code){
+ var t=T[code]||T.sr;
+ document.documentElement.lang=code; document.documentElement.dir=(code==='ar')?'rtl':'ltr';
+ var els=document.querySelectorAll('[data-i18n]');
+ for(var i=0;i<els.length;i++){var k=els[i].getAttribute('data-i18n');if(t[k]!==undefined)els[i].textContent=t[k];}
+ var s=t.facSpecial.replace('−20%','<b>−20%</b>').replace('START20','<b>START20</b>');
+ document.getElementById('facSp').innerHTML='<span style="color:#C2A14D">★</span> '+s;
+ var ls=document.querySelectorAll('.lang');
+ for(var j=0;j<ls.length;j++){ls[j].className=(ls[j].getAttribute('data-lang')===code)?'lang on':'lang';}
+}
+document.getElementById('langbar').addEventListener('click',function(e){var b=e.target.closest('.lang');if(b)setLang(b.getAttribute('data-lang'));});
+setLang('sr');
+</script>
+<!-- ZOI WIDGET -->
+<script src="https://project-y23je.vercel.app/widget.js"
+        data-mode="site"
+        data-avatar="https://i.postimg.cc/N0hWwn53/Chat-GPT-Image-6-jun-2026-19-43-06.png"
+        data-api="https://project-y23je.vercel.app/api/chat"></script>
+</body>
+</html>

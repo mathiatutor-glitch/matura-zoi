@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="sr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MathIA — Koji fakultet je za tebe?</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2314223E'/%3E%3Ctext x='50%25' y='56%25' font-family='Georgia,serif' font-size='40' font-weight='700' fill='%23C2A14D' text-anchor='middle' dominant-baseline='middle'%3EM%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Playfair+Display:wght@800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#14223E;--navy2:#1E3157;--gold:#C2A14D;--golddk:#9C7E33;--goldlt:#E6CE86;--cream:#FAF7F0;--card:#FFFFFF;--ink:#1A1F2B;--muted:#7C8190;--bord:#E6DECB;--soft:#F2EEE2;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Nunito',system-ui,sans-serif;color:var(--ink);background:var(--cream);}
+.wrap{max-width:720px;margin:0 auto;padding:14px 18px 44px;}
+.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.brand{display:flex;align-items:center;gap:10px;}
+.seal{width:42px;height:42px;border-radius:50%;background:radial-gradient(circle at 34% 30%,#F4E2A8,#C2A14D 56%,#8E7230);display:flex;align-items:center;justify-content:center;color:#14223E;font-weight:800;font-size:22px;font-family:'Playfair Display',serif;box-shadow:0 8px 20px rgba(142,114,48,.4),0 0 0 3px rgba(230,206,134,.22);}
+.wm{font-weight:900;font-size:22px;} .wm .ia{color:var(--golddk);}
+.lt{font-size:12.5px;font-weight:800;} .lt span{padding:3px 9px;border-radius:999px;cursor:pointer;color:var(--muted);} .lt span.on{background:var(--gold);color:#14223E;}
+.hero{background:radial-gradient(circle at 50% -30%,#27406e,#1E3157 45%,#14223E 88%);color:#fff;border-radius:20px;padding:34px 24px;text-align:center;box-shadow:inset 0 -3px 0 var(--gold);}
+.hero .st{color:var(--gold);letter-spacing:5px;font-size:13px;}
+.hero h1{font-family:'Playfair Display',serif;font-size:30px;margin:8px 0 10px;}
+.hero p{color:#d7deec;font-weight:600;font-size:15px;max-width:520px;margin:0 auto 18px;}
+.btn{display:inline-block;border:none;cursor:pointer;border-radius:12px;padding:14px 28px;font-weight:800;font-size:16px;font-family:inherit;background:linear-gradient(135deg,#E6CE86,#C2A14D 60%,#9C7E33);color:#14223E;box-shadow:0 8px 20px rgba(156,126,51,.4);}
+.bar{height:8px;background:var(--soft);border-radius:999px;overflow:hidden;margin:6px 0 4px;}
+.bar > i{display:block;height:100%;background:linear-gradient(90deg,#E6CE86,#C2A14D);width:0;transition:width .25s;}
+.qmeta{font-size:13px;font-weight:800;color:var(--golddk);letter-spacing:.5px;}
+.q{font-size:21px;font-weight:900;margin:10px 0 16px;line-height:1.3;}
+.opt{display:block;width:100%;text-align:left;font-family:inherit;font-size:15px;font-weight:700;color:var(--ink);background:var(--card);border:1.5px solid var(--bord);border-radius:13px;padding:14px 16px;margin-bottom:10px;cursor:pointer;}
+.opt:hover{border-color:var(--gold);background:#FFFBF1;box-shadow:0 4px 14px rgba(20,34,62,.06);}
+.back{margin-top:6px;background:none;border:none;color:var(--muted);font-weight:800;cursor:pointer;font-family:inherit;font-size:14px;}
+.card{background:var(--card);border:1px solid var(--bord);border-radius:18px;padding:24px;}
+.ricon{font-size:42px;text-align:center;}
+.rname:after{content:'';display:block;width:54px;height:2px;margin:8px auto 0;background:linear-gradient(90deg,transparent,#C2A14D,transparent);}
+.rname{font-family:'Playfair Display',serif;font-size:26px;font-weight:800;text-align:center;color:var(--navy);margin:4px 0 4px;}
+.rdesc{text-align:center;color:#3a352e;font-weight:600;margin-bottom:16px;}
+.rblock{background:var(--soft);border-left:4px solid var(--gold);border-radius:8px;padding:12px 14px;margin-bottom:12px;}
+.rblock h4{font-size:14px;font-weight:900;color:var(--golddk);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;}
+.rblock p{font-size:14px;font-weight:600;color:var(--ink);line-height:1.5;}
+.second{font-size:13.5px;color:var(--muted);font-weight:700;text-align:center;margin:4px 0 14px;}
+.note{font-size:12.5px;color:var(--muted);font-weight:600;text-align:center;margin-top:14px;line-height:1.5;}
+.hide{display:none;} .cta-row{text-align:center;margin-top:16px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="brand"><div class="seal">M</div><div class="wm">Math<span class="ia">IA</span></div></div>
+    <div class="lt" id="lt"><span data-l="sr" class="on">Srpski</span><span data-l="en">English</span></div>
+  </div>
+
+  <section id="start">
+    <div class="hero">
+      <div class="st">★ ★ ★ ★ ★</div>
+      <h1 id="sTitle"></h1>
+      <p id="sIntro"></p>
+      <button class="btn" id="sBtn" onclick="start()"></button>
+    </div>
+  </section>
+
+  <section id="quiz" class="hide">
+    <div class="qmeta" id="qmeta"></div>
+    <div class="bar"><i id="prog"></i></div>
+    <div class="q" id="qtext"></div>
+    <div id="opts"></div>
+    <button class="back" id="backBtn" onclick="back()"></button>
+  </section>
+
+  <section id="result" class="hide">
+    <div class="card">
+      <div class="ricon" id="ricon"></div>
+      <div class="rname" id="rname"></div>
+      <div class="rdesc" id="rdesc"></div>
+      <div class="second" id="rsecond"></div>
+      <div class="rblock"><h4 id="nsLabel"></h4><p id="rns"></p></div>
+      <div class="rblock"><h4 id="bgLabel"></h4><p id="rbg"></p></div>
+      <p class="note" id="rnote"></p>
+      <div class="cta-row"><button class="btn" id="rBtn" onclick="restart()"></button></div>
+    </div>
+  </section>
+</div>
+
+<script>
+var U={
+ sr:{title:"Koji fakultet je za tebe?",intro:"Kratak orijentacioni kviz — 10 pitanja. Na kraju ti predlažemo oblast i konkretne fakultete u Novom Sadu i Beogradu.",btn:"Počni kviz",qword:"Pitanje",of:"/",back:"← Nazad",second:"Bliska oblast: ",ns:"U Novom Sadu",bg:"U Beogradu",note:"Ovo je orijentacioni test — pomaže da otkriješ oblast koja ti odgovara. Konačnu odluku donesi u dogovoru s porodicom i školskim savetnikom. MathIA je nezavisna obrazovna platforma.",restart:"Uradi ponovo"},
+ en:{title:"Which faculty is for you?",intro:"A short orientation quiz — 10 questions. At the end we suggest a field and specific faculties in Novi Sad and Belgrade.",btn:"Start quiz",qword:"Question",of:"/",back:"← Back",second:"Closely related: ",ns:"In Novi Sad",bg:"In Belgrade",note:"This is an orientation test — it helps you discover a field that suits you. Make the final decision together with your family and a school counselor. MathIA is an independent educational platform.",restart:"Try again"}
+};
+var FN={
+ sr:{A:"Tehnika, inženjerstvo i IT",B:"Prirodne i egzaktne nauke",C:"Medicina, zdravlje i sport",D:"Ekonomija, pravo i organizacija",E:"Društvo, jezici i humanistika",F:"Umetnost i dizajn",G:"Priroda, hrana i životna sredina"},
+ en:{A:"Engineering, Tech and IT",B:"Natural and exact sciences",C:"Medicine, health and sport",D:"Economics, law and organization",E:"Society, languages and humanities",F:"Art and design",G:"Nature, food and environment"}
+};
+var FD={
+ sr:{A:"Voliš da praviš, konstruišeš i programiraš — rešenja koja rade.",B:"Privlače te zakoni prirode, brojevi i eksperimenti.",C:"Želiš da pomažeš ljudima i brineš o zdravlju.",D:"Voliš da planiraš, vodiš i razumeš novac i pravila.",E:"Zanimaju te ljudi, jezici, tekst i ideje.",F:"Stvaraš — vizuelno, muzički ili scenski.",G:"Vuče te ka prirodi, hrani, biljkama i ekologiji."},
+ en:{A:"You like to build, design and program — solutions that work.",B:"You’re drawn to the laws of nature, numbers and experiments.",C:"You want to help people and care for health.",D:"You like to plan, lead and understand money and rules.",E:"You’re interested in people, languages, text and ideas.",F:"You create — visually, musically or on stage.",G:"Nature, food, plants and ecology pull you in."}
+};
+var ICON={A:"🛠️",B:"🔬",C:"🩺",D:"📊",E:"📚",F:"🎨",G:"🌱"};
+var INST={
+ A:{ns:"Fakultet tehničkih nauka (FTN) — svi smerovi: mašinstvo, elektrotehnika i računarstvo, softversko inženjerstvo, saobraćaj, građevina, arhitektura, mehatronika, industrijsko inženjerstvo i menadžment, grafičko inženjerstvo, energetika, geodezija, animacija i drugi; Prirodno-matematički fakultet (informatika).",bg:"Elektrotehnički (ETF), Mašinski, Građevinski, Arhitektonski, Saobraćajni, Fakultet organizacionih nauka (FON), Matematički (informatika), Rudarsko-geološki, Tehnološko-metalurški."},
+ B:{ns:"Prirodno-matematički fakultet (PMF) — matematika, fizika, hemija, biologija, geografija, informatika.",bg:"Matematički, Fizički, Hemijski, Biološki, Geografski, Fakultet za fizičku hemiju."},
+ C:{ns:"Medicinski fakultet (medicina, stomatologija, farmacija, zdravstvena nega); Fakultet sporta i fizičkog vaspitanja.",bg:"Medicinski, Stomatološki, Farmaceutski, Fakultet veterinarske medicine, Fakultet za specijalnu edukaciju i rehabilitaciju, Fakultet sporta i fizičkog vaspitanja."},
+ D:{ns:"Pravni fakultet; Ekonomski fakultet (Subotica); Fakultet tehničkih nauka (inženjerski menadžment).",bg:"Ekonomski, Pravni, Fakultet organizacionih nauka (FON), Fakultet političkih nauka, Fakultet bezbednosti."},
+ E:{ns:"Filozofski fakultet (jezici, psihologija, istorija, pedagogija i dr.); Pedagoški fakultet (Sombor); Učiteljski fakultet (Subotica).",bg:"Filozofski, Filološki, Fakultet političkih nauka, Učiteljski, Geografski."},
+ F:{ns:"Akademija umetnosti (likovne, muzičke i dramske umetnosti, dizajn, arhitektura).",bg:"Univerzitet umetnosti: Fakultet dramskih umetnosti, Fakultet likovnih umetnosti, Fakultet muzičke umetnosti, Fakultet primenjenih umetnosti; Arhitektonski (dizajn)."},
+ G:{ns:"Poljoprivredni fakultet; Tehnološki fakultet (prehrambena tehnologija); Fakultet tehničkih nauka (inženjerstvo zaštite životne sredine).",bg:"Poljoprivredni, Šumarski, Tehnološko-metalurški."}
+};
+var QS={
+ sr:[
+ {q:"Šta te najviše privlači?",o:[["Kako stvari rade — mašine, uređaji, programi","A"],["Razumevanje prirode — brojevi, čestice, materija","B"],["Pomaganje ljudima i zdravlje","C"],["Novac, pravila i organizacija","D"],["Ljudi, jezici i društvo","E"]]},
+ {q:"Omiljena oblast u školi?",o:[["Informatika i tehnika","A"],["Matematika, fizika ili hemija","B"],["Biologija (telo, zdravlje)","C"],["Likovno ili muzičko","F"],["Priroda, ekologija, biljke","G"]]},
+ {q:"Kako rešavaš problem?",o:[["Tražim zakon ili formulu koja ga objašnjava","B"],["Pravim plan, raspored i budžet","D"],["Smišljam originalnu, kreativnu ideju","F"],["Gledam kako utiče na prirodu i okolinu","G"],["Razgovaram s ljudima i tražim dogovor","E"]]},
+ {q:"Idealan posao?",o:[["Inženjer ili programer","A"],["Lekar, farmaceut ili terapeut","C"],["Menadžer, pravnik ili ekonomista","D"],["Profesor, prevodilac ili psiholog","E"],["Umetnik, dizajner ili glumac","F"]]},
+ {q:"Šta ti je najzabavnije?",o:[["Da napravim aplikaciju ili uređaj","A"],["Da rešim težak zadatak iz matematike","B"],["Da vodim tim i pregovaram","D"],["Da crtam, sviram ili glumim","F"],["Da budem u prirodi i uzgajam nešto","G"]]},
+ {q:"Najviše voliš da radiš sa…",o:[["tehnologijom i alatima","A"],["ljudima kojima treba pomoć","C"],["tekstom, jezicima i idejama","E"],["biljkama, hranom i okolinom","G"],["novcem, propisima i planovima","D"]]},
+ {q:"Tema koja ti je najzanimljivija?",o:[["Veštačka inteligencija i roboti","A"],["Svemir, atomi i molekuli","B"],["Telo, bolesti i lekovi","C"],["Film, muzika i dizajn","F"],["Politika, mediji i društvo","E"]]},
+ {q:"Kako vidiš sebe za 10 godina?",o:[["Otkrivam nešto novo u nauci","B"],["Vodim firmu ili instituciju","D"],["Radim na hrani, šumama ili zaštiti prirode","G"],["Stvaram — umetnost ili mediji","F"],["Pravim proizvode i sisteme koje ljudi koriste","A"]]},
+ {q:"Šta ti najbolje ide?",o:[["Empatija i briga o drugima","C"],["Organizacija i ubeđivanje","D"],["Pisanje i komunikacija","E"],["Kreativnost i estetika","F"],["Rad napolju i sa živim svetom","G"]]},
+ {q:"Biraš izborni kurs:",o:[["Programiranje ili elektronika","A"],["Napredna matematika ili fizika","B"],["Prva pomoć i anatomija","C"],["Psihologija ili strani jezik","E"],["Ekologija ili agronomija","G"]]}
+ ],
+ en:[
+ {q:"What attracts you most?",o:[["How things work — machines, devices, programs","A"],["Understanding nature — numbers, particles, matter","B"],["Helping people and health","C"],["Money, rules and organization","D"],["People, languages and society","E"]]},
+ {q:"Favourite area in school?",o:[["IT and technology","A"],["Maths, physics or chemistry","B"],["Biology (body, health)","C"],["Art or music","F"],["Nature, ecology, plants","G"]]},
+ {q:"How do you solve a problem?",o:[["I look for a law or formula that explains it","B"],["I make a plan, schedule and budget","D"],["I come up with an original, creative idea","F"],["I consider how it affects nature and surroundings","G"],["I talk to people and seek agreement","E"]]},
+ {q:"Dream job?",o:[["Engineer or programmer","A"],["Doctor, pharmacist or therapist","C"],["Manager, lawyer or economist","D"],["Teacher, translator or psychologist","E"],["Artist, designer or actor","F"]]},
+ {q:"What’s most fun for you?",o:[["Building an app or a device","A"],["Solving a hard maths problem","B"],["Leading a team and negotiating","D"],["Drawing, playing music or acting","F"],["Being in nature and growing something","G"]]},
+ {q:"You most like working with…",o:[["technology and tools","A"],["people who need help","C"],["text, languages and ideas","E"],["plants, food and the environment","G"],["money, rules and plans","D"]]},
+ {q:"Most interesting topic?",o:[["Artificial intelligence and robots","A"],["Space, atoms and molecules","B"],["The body, diseases and medicines","C"],["Film, music and design","F"],["Politics, media and society","E"]]},
+ {q:"Where do you see yourself in 10 years?",o:[["Discovering something new in science","B"],["Leading a company or institution","D"],["Working with food, forests or nature protection","G"],["Creating — art or media","F"],["Building products and systems people use","A"]]},
+ {q:"What are you best at?",o:[["Empathy and care for others","C"],["Organization and persuasion","D"],["Writing and communication","E"],["Creativity and aesthetics","F"],["Working outdoors and with living things","G"]]},
+ {q:"You choose an elective:",o:[["Programming or electronics","A"],["Advanced maths or physics","B"],["First aid and anatomy","C"],["Psychology or a foreign language","E"],["Ecology or agronomy","G"]]}
+ ]
+};
+var lang='sr', idx=0, scores={}, picks=[], screen='start', lastBest='', lastSecond='';
+function setLang(l){lang=l;var t=document.getElementById('lt').children;for(var i=0;i<t.length;i++){t[i].className=(t[i].getAttribute('data-l')===l)?'on':'';}document.documentElement.lang=l;paint();}
+function paint(){
+ var u=U[lang];
+ document.getElementById('sTitle').textContent=u.title;
+ document.getElementById('sIntro').textContent=u.intro;
+ document.getElementById('sBtn').textContent=u.btn;
+ document.getElementById('backBtn').textContent=u.back;
+ document.getElementById('nsLabel').textContent=u.ns;
+ document.getElementById('bgLabel').textContent=u.bg;
+ document.getElementById('rnote').textContent=u.note;
+ document.getElementById('rBtn').textContent=u.restart;
+ if(screen==='quiz')render();
+ if(screen==='result')paintResult();
+}
+function show(id){screen=id;['start','quiz','result'].forEach(function(s){document.getElementById(s).className=(s===id)?'':'hide';});}
+function start(){idx=0;scores={A:0,B:0,C:0,D:0,E:0,F:0,G:0};picks=[];show('quiz');render();}
+function render(){
+ var u=U[lang],it=QS[lang][idx];
+ document.getElementById('qmeta').textContent=u.qword+' '+(idx+1)+' '+u.of+' '+QS[lang].length;
+ document.getElementById('prog').style.width=Math.round(idx/QS[lang].length*100)+'%';
+ document.getElementById('qtext').textContent=it.q;
+ var box=document.getElementById('opts');box.innerHTML='';
+ for(var i=0;i<it.o.length;i++){(function(opt){var b=document.createElement('button');b.className='opt';b.textContent=opt[0];b.onclick=function(){choose(opt[1]);};box.appendChild(b);})(it.o[i]);}
+ document.getElementById('backBtn').style.visibility=(idx===0)?'hidden':'visible';
+}
+function choose(f){scores[f]++;picks[idx]=f;idx++;if(idx<QS[lang].length){render();}else{result();}}
+function back(){if(idx>0){idx--;if(picks[idx]){scores[picks[idx]]--;}render();}}
+function result(){
+ var best='A',bv=-1;for(var k in scores){if(scores[k]>bv){bv=scores[k];best=k;}}
+ var second='',sv=-1;for(var k2 in scores){if(k2!==best&&scores[k2]>sv){sv=scores[k2];second=k2;}}
+ lastBest=best;lastSecond=(sv>0)?second:'';
+ show('result');paintResult();
+}
+function paintResult(){
+ var u=U[lang],b=lastBest;
+ document.getElementById('ricon').textContent=ICON[b];
+ document.getElementById('rname').textContent=FN[lang][b];
+ document.getElementById('rdesc').textContent=FD[lang][b];
+ document.getElementById('rns').textContent=INST[b].ns;
+ document.getElementById('rbg').textContent=INST[b].bg;
+ document.getElementById('rsecond').textContent=lastSecond?(u.second+FN[lang][lastSecond]):'';
+ document.getElementById('prog').style.width='100%';
+}
+function restart(){show('start');}
+setLang('sr');
+</script>
+<!-- ZOI WIDGET -->
+<script src="https://project-y23je.vercel.app/widget.js"
+        data-mode="site"
+        data-avatar="https://i.postimg.cc/N0hWwn53/Chat-GPT-Image-6-jun-2026-19-43-06.png"
+        data-api="https://project-y23je.vercel.app/api/chat"></script>
+</body>
+</html>
