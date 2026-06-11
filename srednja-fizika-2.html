@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="sr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fizika — 2. razred — MathIA</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#141a30;--navy2:#1e3157;--ink2:#0f1424;
+  --gold:#b48a3e;--golddk:#9c7e33;--goldlt:#e7d4a4;--goldln:#cda44e;
+  --mint:#2fa98d;--mintdk:#1f7d68;--mintbg:#e7f5ef;--mintbg2:#f1faf6;
+  --cream:#faf8f3;--card:#ffffff;--ink:#1c2030;--muted:#5a6273;--bord:#ece6d8;--lined:rgba(255,255,255,.14);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:var(--ink);background:var(--cream);line-height:1.55;-webkit-font-smoothing:antialiased;}
+.serif{font-family:'Playfair Display',Georgia,serif;}
+.wrap{max-width:1040px;margin:0 auto;padding:0 22px;}
+.topbar{background:var(--navy);position:sticky;top:0;z-index:50;border-bottom:1px solid var(--lined);}
+.topbar .row{max-width:1040px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:11px 22px;}
+.topbar .bz{display:inline-flex;align-items:center;gap:10px;text-decoration:none;}
+.topbar .seal{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--navy);font-weight:800;font-size:17px;font-family:'Playfair Display',serif;background:linear-gradient(155deg,#d3b86e,#b48a3e 72%);}
+.topbar .wm{color:#fff;font-weight:800;font-size:18px;font-family:'Playfair Display',serif;}
+.topbar .wm .ia{color:var(--goldlt);}
+.back{color:#cfd6e6;text-decoration:none;font-size:13.5px;font-weight:600;padding:6px 13px;border:1px solid rgba(255,255,255,.2);border-radius:999px;transition:color .15s,border-color .15s;}
+.back:hover{color:#fff;border-color:var(--goldlt);}
+.hero{position:relative;overflow:hidden;text-align:center;color:#fff;padding:54px 22px 66px;
+  background:radial-gradient(70% 55% at 50% -8%,rgba(47,169,141,.2),transparent 60%),radial-gradient(60% 50% at 50% 0,rgba(205,164,78,.14),transparent 62%),linear-gradient(160deg,#101730,#141a30 55%,#1b2748);}
+.hero:before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.45;
+  background-image:radial-gradient(circle,rgba(255,255,255,.06) 1px,transparent 1px);background-size:24px 24px;
+  -webkit-mask:radial-gradient(circle at 50% 28%,#000,transparent 78%);mask:radial-gradient(circle at 50% 28%,#000,transparent 78%);}
+.hero:after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,var(--goldln),transparent);opacity:.6;}
+.badge{display:inline-block;background:var(--mintbg);color:var(--mintdk);font-weight:700;font-size:12.5px;letter-spacing:.6px;text-transform:uppercase;padding:6px 14px;border-radius:999px;margin-bottom:18px;}
+.shine{width:120px;height:1.5px;margin:0 auto 18px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--gold) 28%,var(--goldlt) 50%,var(--gold) 72%,transparent);}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(30px,4.8vw,46px);line-height:1.1;font-weight:700;margin-bottom:15px;letter-spacing:-.01em;}
+.hero h1 .g{color:var(--goldlt);}
+.hero p.lead{font-size:clamp(15.5px,2vw,18px);color:#c8d0e1;max-width:600px;margin:0 auto 26px;font-weight:300;}
+.cta{display:inline-flex;gap:13px;flex-wrap:wrap;justify-content:center;}
+.btn{display:inline-block;text-decoration:none;border-radius:14px;padding:14px 28px;font-weight:600;font-size:15.5px;transition:transform .15s,box-shadow .15s,background .15s,border-color .15s;cursor:pointer;}
+.btn:hover{transform:translateY(-2px);}
+.btn-gold{background:linear-gradient(150deg,#c9a657,#b48a3e);color:#211904;box-shadow:0 6px 16px -10px rgba(120,92,40,.5);}
+.btn-mint{background:linear-gradient(150deg,#43bda0,#2fa98d);color:#06231d;box-shadow:0 6px 16px -10px rgba(31,125,104,.6);}
+.btn-ghost{background:transparent;color:#f3f1ea;border:1.5px solid rgba(255,255,255,.26);}
+.btn-ghost:hover{background:rgba(255,255,255,.05);border-color:var(--goldlt);}
+.grades{display:inline-flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:24px;}
+.grades a{text-decoration:none;font-size:13px;font-weight:700;color:#cfd6e6;padding:8px 15px;border-radius:999px;border:1px solid rgba(255,255,255,.2);transition:color .15s,border-color .15s,background .15s;}
+.grades a:hover{border-color:var(--goldlt);color:#fff;}
+.grades a.cur{background:var(--mintbg);color:var(--mintdk);border-color:transparent;}
+.preview{max-width:430px;margin:30px auto 0;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:20px;padding:16px 16px 18px;text-align:left;backdrop-filter:blur(4px);}
+.preview .top{display:flex;align-items:center;gap:11px;margin-bottom:12px;}
+.preview .ava{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;background:linear-gradient(155deg,#d3b86e,#b48a3e 72%);position:relative;}
+.preview .ava:after{content:"";position:absolute;right:-1px;bottom:-1px;width:11px;height:11px;border-radius:50%;background:#34d399;border:2px solid #1b2440;}
+.preview .nm{font-weight:700;color:#fff;font-size:14.5px;}
+.preview .nm small{display:block;font-weight:400;color:#9fb0cf;font-size:11.5px;}
+.preview .bub{background:#fff;color:#1c2030;border-radius:6px 16px 16px 16px;padding:12px 14px;font-size:14px;line-height:1.5;box-shadow:0 6px 18px -10px rgba(0,0,0,.5);}
+.sec{padding:56px 0;}
+.sec.alt{background:#fff;border-top:1px solid var(--bord);border-bottom:1px solid var(--bord);}
+.sec h2{font-family:'Playfair Display',serif;font-size:clamp(24px,3.2vw,32px);font-weight:600;text-align:center;position:relative;padding-bottom:14px;color:var(--navy);}
+.sec h2:after{content:"";position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:64px;height:2px;background:linear-gradient(90deg,transparent,var(--goldln),transparent);}
+.sub{text-align:center;color:var(--muted);font-weight:400;font-size:15.5px;margin:14px auto 36px;max-width:620px;}
+.grid{text-align:center;font-size:0;}
+.card{display:inline-block;width:23%;min-width:215px;margin:0 .8% 18px;vertical-align:top;text-align:left;
+  background:var(--card);border:1px solid var(--bord);border-radius:18px;padding:22px;position:relative;overflow:hidden;
+  box-shadow:0 4px 16px rgba(20,34,62,.05);transition:transform .16s,box-shadow .16s,border-color .16s;}
+.card:before{content:"";position:absolute;top:0;left:22px;right:22px;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--mint),#7fd6c2);opacity:.85;}
+.card:hover{transform:translateY(-4px);box-shadow:0 18px 40px -24px rgba(20,34,62,.4);border-color:#bfe4d9;}
+.card .em{font-size:26px;line-height:1;margin-bottom:11px;display:block;}
+.card h3{font-family:'Playfair Display',serif;font-size:17px;font-weight:600;margin:0 0 5px;color:var(--navy);}
+.card p{font-size:13px;color:var(--muted);font-weight:500;line-height:1.5;}
+@media(max-width:900px){.card{width:46%;}}
+@media(max-width:520px){.card{width:96%;}}
+.steps{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;margin-top:8px;}
+.step{flex:1;min-width:230px;max-width:300px;background:var(--mintbg2);border:1px solid #d7ece4;border-radius:18px;padding:24px 22px;text-align:center;}
+.stepnum{width:42px;height:42px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;margin:0 auto 13px;
+  background:linear-gradient(150deg,#43bda0,#2fa98d);color:#fff;font-weight:800;font-size:19px;font-family:'Playfair Display',serif;}
+.step h3{font-family:'Playfair Display',serif;font-size:18px;font-weight:600;color:var(--navy);margin-bottom:6px;}
+.step p{font-size:13.5px;color:var(--muted);line-height:1.5;}
+.plan{max-width:430px;margin:0 auto;background:#fff;border:1px solid var(--bord);border-radius:22px;padding:30px 28px;text-align:center;position:relative;overflow:hidden;box-shadow:0 14px 40px -26px rgba(20,34,62,.4);}
+.plan:before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--goldln),var(--goldlt),var(--mint));}
+.plan .pill{display:inline-block;background:var(--mintbg);color:var(--mintdk);font-weight:700;font-size:12px;padding:5px 13px;border-radius:999px;margin-bottom:14px;}
+.plan h3{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;color:var(--navy);}
+.plan .price{font-size:30px;font-weight:800;color:var(--navy);margin:8px 0 2px;}
+.plan .price small{font-size:14px;font-weight:500;color:var(--muted);}
+.plan ul{list-style:none;text-align:left;margin:18px auto 22px;max-width:300px;display:inline-block;}
+.plan li{font-size:14px;color:var(--ink);padding:7px 0;border-bottom:1px dashed #eee3cf;display:flex;gap:9px;align-items:flex-start;}
+.plan li:last-child{border-bottom:0;} .plan li span{color:var(--mint);font-weight:800;}
+.band{background:linear-gradient(160deg,#1b2748,#141a30);border-radius:22px;padding:38px 26px;text-align:center;color:#fff;border:1px solid rgba(205,164,78,.3);}
+.band h2{font-family:'Playfair Display',serif;font-size:24px;font-weight:600;color:#fff;margin-bottom:10px;}
+.band p{color:#c8d0e1;font-weight:300;max-width:520px;margin:0 auto 20px;font-size:15.5px;}
+.trust{text-align:center;padding:26px 22px;color:var(--golddk);font-weight:600;font-size:13.5px;letter-spacing:.3px;border-top:1px solid var(--bord);border-bottom:1px solid var(--bord);background:#fff;}
+.foot{background:var(--ink2);color:#aab2c6;text-align:center;padding:34px 22px;font-size:13px;font-weight:400;border-top:1px solid var(--lined);}
+.foot .wm{font-size:20px;color:#fff;margin-bottom:6px;font-family:'Playfair Display',serif;}
+.foot .wm .ia{color:var(--goldlt);}
+.foot .disc{max-width:720px;margin:8px auto 0;line-height:1.6;}
+.plans{display:flex;gap:22px;justify-content:center;flex-wrap:wrap;align-items:flex-start;}
+.plans .plan{margin:0;max-width:360px;flex:1 1 300px;}
+.plan.feat{border-color:#bfe4d9;box-shadow:0 16px 44px -22px rgba(31,125,104,.5);}
+.pill.alt2{background:#eef0f4;color:#5a6273;}
+.btn-line{background:#fff;color:var(--mintdk);border:1.5px solid #bfe4d9;}
+.btn-line:hover{border-color:var(--mint);background:var(--mintbg2);}
+.chat-hint{position:fixed;right:22px;bottom:92px;z-index:40;display:flex;flex-direction:column;align-items:flex-end;gap:1px;pointer-events:none;}
+.chat-hint .ct-text{background:#141a30;color:#fff;font-size:12.5px;font-weight:700;padding:7px 13px;border-radius:999px;box-shadow:0 8px 18px -6px rgba(0,0,0,.55);white-space:nowrap;border:1px solid rgba(205,164,78,.55);}
+.chat-hint .ct-arrow{font-size:22px;line-height:1;margin-right:14px;animation:cth 1.4s ease-in-out infinite;}
+@keyframes cth{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+@media(max-width:520px){.chat-hint{bottom:86px;right:16px;} .chat-hint .ct-text{font-size:11.5px;}}
+</style>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2314223E'/%3E%3Ctext x='50%25' y='56%25' font-family='Georgia,serif' font-size='40' font-weight='700' fill='%23C2A14D' text-anchor='middle' dominant-baseline='middle'%3EM%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+
+<div class="topbar"><div class="row">
+  <a class="bz" href="index.html"><span class="seal">M</span><span class="wm">Math<span class="ia">IA</span></span></a>
+  <a class="back" href="index.html">← Početna</a>
+</div></div>
+
+<section class="hero">
+  <span class="badge">Srednja škola · fizika · 2. razred</span>
+  <div class="shine"></div>
+  <h1 class="serif">Fizika za 2. razred <span class="g">bez stresa</span> ⚡</h1>
+  <p class="lead">Cela 2. godina gradiva — uz tutorku <b>Ivu</b> koja ti objasni svaki zadatak i pojavu, koliko god puta treba. Svojim tempom, bez pritiska. 💛</p>
+  <div class="cta">
+    <a class="btn btn-gold" href="#cena">Kreni u učenje</a>
+    <a class="btn btn-ghost" href="#kako">Kako funkcioniše?</a>
+  </div>
+  <div class="grades"><a href="srednja-fizika-1.html" class="grd">1. razred</a><a href="srednja-fizika-2.html" class="grd cur">2. razred</a><a href="srednja-fizika-3.html" class="grd">3. razred</a><a href="srednja-fizika-4.html" class="grd">4. razred</a></div>
+  <div class="preview">
+    <div class="top">
+      <div class="ava">⚡</div>
+      <div class="nm">Iva <small>tvoja tutorka · onlajn</small></div>
+    </div>
+    <div class="bub">Zdravo! 👋 Pošalji mi zadatak iz fizike (2. razred) koji ti zadaje muke — rešavamo ga zajedno, korak po korak, dok ti ne postane lako. 😊</div>
+  </div>
+</section>
+
+<section class="sec"><div class="wrap">
+  <h2>Šta te čeka u 2. razredu</h2>
+  <div class="sub">Sve oblasti iz fizike za 2. razred — objašnjene jednostavno, sa puno primera.</div>
+  <div class="grid">
+    <div class="card"><span class="em">🌡️</span><h3>Molekularno-kinetička teorija</h3><p>Idealni gas, pritisak i temperatura.</p></div>
+    <div class="card"><span class="em">🔥</span><h3>Termodinamika</h3><p>Toplota, unutrašnja energija i zakoni.</p></div>
+    <div class="card"><span class="em">🌀</span><h3>Oscilacije</h3><p>Harmonijsko oscilovanje i klatno.</p></div>
+    <div class="card"><span class="em">🌊</span><h3>Mehanički talasi</h3><p>Talasna dužina, brzina i interferencija.</p></div>
+    <div class="card"><span class="em">🔊</span><h3>Akustika</h3><p>Zvuk: visina, jačina i rezonancija.</p></div>
+    <div class="card"><span class="em">❄️</span><h3>Toplotne pojave</h3><p>Širenje tela, topljenje i isparavanje.</p></div>
+  </div>
+</div></section>
+
+<section class="sec alt"><div class="wrap">
+  <h2>Šta dobijaš uz MathIA</h2>
+  <div class="sub">Sve na jednom mestu — i neko ko je uvek tu da pomogne.</div>
+  <div class="grid">
+    <div class="card"><span class="em">💬</span><h3>Tutorka Iva</h3><p>Objašnjava korak po korak, 24/7. Pitaš koliko god puta treba — nikad se ne ljuti. 💛</p></div>
+    <div class="card"><span class="em">📘</span><h3>E-priručnik za svaku oblast</h3><p>Celo gradivo fizike 2. razreda, jasno objašnjeno — na jednom mestu.</p></div>
+    <div class="card"><span class="em">📑</span><h3>E-knjižica sa formulama</h3><p>Najbitniji zakoni i sve formule — uvek pri ruci.</p></div>
+    <div class="card"><span class="em">🧮</span><h3>Zbirka zadataka</h3><p>Mnogo rešenih primera i zadataka za vežbu, od lakših ka težim.</p></div>
+    <div class="card"><span class="em">📝</span><h3>Probni testovi</h3><p>Vežbaš za kontrolne i pismene i pratiš svoj napredak.</p></div>
+  </div>
+</div></section>
+
+<section class="sec" id="kako"><div class="wrap">
+  <h2>Kako funkcioniše</h2>
+  <div class="sub">Jednostavno je kao tri koraka. ✨</div>
+  <div class="steps">
+    <div class="step"><div class="stepnum">1</div><h3>Pitaš</h3><p>Napišeš ili slikaš zadatak ili pojavu koju ne razumeš.</p></div>
+    <div class="step"><div class="stepnum">2</div><h3>Iva objasni</h3><p>Vodi te korak po korak — dok ti ne „klikne“. 💡</p></div>
+    <div class="step"><div class="stepnum">3</div><h3>Vežbaš</h3><p>Rešavaš slične zadatke i postaješ sve sigurniji.</p></div>
+  </div>
+</div></section>
+
+<section class="sec alt" id="cena"><div class="wrap">
+  <h2>Cene i paketi</h2>
+  <div class="sub">Izaberi šta ti najviše odgovara — uvek možeš da nadogradiš kasnije.</div>
+  <div class="plans">
+    <div class="plan">
+      <span class="pill alt2">Osnovni</span>
+      <h3>Samo Iva</h3>
+      <div class="price">4.999 RSD <small>/ mesečno</small></div>
+      <ul>
+        <li><span>✓</span> Tutorka Iva — neograničena pitanja, 24/7</li>
+        <li><span>✓</span> Objašnjenja korak po korak</li>
+        <li><span>✓</span> Pomoć kad god ti zatreba</li>
+      </ul>
+      <div><a class="btn btn-line" href="mathia_ponuda.html">Izaberi</a></div>
+    </div>
+    <div class="plan feat">
+      <span class="pill">Najpopularnije</span>
+      <h3>Kompletan paket</h3>
+      <div class="price">5.999 RSD <small>/ mesečno</small></div>
+      <ul>
+        <li><span>✓</span> Sve iz paketa „Samo Iva“</li>
+        <li><span>✓</span> E-priručnik za svaku oblast</li>
+        <li><span>✓</span> E-knjižica sa najbitnijim zakonima i formulama</li>
+        <li><span>✓</span> Zbirka rešenih zadataka</li>
+        <li><span>✓</span> Probni testovi i praćenje napretka</li>
+      </ul>
+      <div><a class="btn btn-mint" href="mathia_ponuda.html">Kreni odmah</a></div>
+    </div>
+  </div>
+</div></section>
+
+<section class="sec"><div class="wrap">
+  <div class="band">
+    <h2>Korak po korak — do petice. 🌟</h2>
+    <p>Ne moraš da znaš sve odmah. Iva je tu na svakom zadatku, strpljiva i nasmejana — a ti ideš svojim tempom.</p>
+    <a class="btn btn-gold" href="#cena">Spremi fiziku</a>
+  </div>
+</div></section>
+
+<div class="trust">Nezavisna obrazovna platforma · Materijali iz opšteg gradiva i javno dostupnih izvora</div>
+
+<footer class="foot">
+  <div class="wm">Math<span class="ia">IA</span></div>
+  mathia.rs
+  <div class="disc">MathIA je nezavisna obrazovna platforma. Materijali su pripremljeni iz opšteg gradiva i javno dostupnih izvora i nisu povezani ni sa jednom obrazovnom ustanovom.</div>
+</footer>
+
+<div class="chat-hint" id="siteHint">
+  <span class="ct-text">Tu je Iva — pitaj je! 💬</span>
+  <span class="ct-arrow">👇</span>
+</div>
+
+<!-- IVA / MATHIA WIDGET -->
+<script src="https://project-y23je.vercel.app/widget.js"
+        data-mode="site"
+        data-avatar="https://i.postimg.cc/N0hWwn53/Chat-GPT-Image-6-jun-2026-19-43-06.png"
+        data-api="https://project-y23je.vercel.app/api/chat"></script>
+</body>
+</html>
