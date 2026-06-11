@@ -124,6 +124,7 @@ function vratiKvacice(s) {
 function srMath(s) {
   let t = String(s).normalize("NFC");                                        // spoji rastavljene kvačice (Ć, Č, Š…)
   t = vratiKvacice(t);                                                       // vrati kvačice čestim rečima (cao->ćao, sta->šta…)
+  t = t.replace(/([Ss])h/g, "$1-h");                                         // „sh" -> „s-h" da se ne čita kao „š" (ishod, ishrana, shvatiti)
   t = t.replace(/\s*[·×∙•*]\s*/g, " puta ");                                  // • · × * -> puta
   t = t.replace(/(\d+)\s*\/\s*(\d+)/g, (_, a, b) => " " + razlomakReci(a, b) + " "); // razlomci
   // ostala kosa crta: razlomak/deljenje -> "kroz" (ima cifru ili je promenljiva); samo reč/reč -> "ili"
@@ -131,6 +132,20 @@ function srMath(s) {
     const mat = /\d/.test(a) || /\d/.test(b) || a.length <= 1 || b.length <= 1;
     return mat ? (a + " kroz " + b) : (a + " ili " + b);
   });
+  // crtice: „minus" SAMO kao pravi matematički znak; razmaknuta/duga crta = pauza; složenice ostaju
+  t = t.replace(/(^|\n)[ \t]*[-–—][ \t]+/g, "$1 ");                          // crtice nabrajanja (liste)
+  t = t.replace(/−/g, " minus ");                                           // pravi znak minus (U+2212)
+  t = t.replace(/\s*[—–]\s*/g, ", ");                                        // duga crta (em/en) = pauza
+  t = t.replace(/([0-9A-Za-zπčćžšđČĆŽŠĐ]+)(\s*)-(\s*)(?=([0-9A-Za-zπčćžšđČĆŽŠĐ]+))/g, function (m, a, sp1, sp2, b) {
+    var aMath = /\d/.test(a) || a.length <= 1;
+    var bMath = /\d/.test(b) || b.length <= 1;
+    if (aMath && bMath) return a + " minus ";                               // oduzimanje: 5-3, x-1, n-1
+    if (!sp2 && /^\d/.test(b) && sp1) return a + " minus ";                  // „reč -5" = negativan broj
+    if (sp1 || sp2) return a + ", ";                                        // razmaknuta crta posle reči = pauza
+    return a + "-";                                                        // spojena složenica ostaje (crno-belo, is-hod)
+  });
+  t = t.replace(/(^|[\s(=+*/,])-(?=\d)/g, "$1minus ");                       // predznak zalepljen za broj
+  t = t.replace(/\s-\s/g, ", ");                                            // preostala razmaknuta crtica = pauza
   t = t.replace(/\bQ\b/g, " ku ");                                            // Q -> "ku" (ne "kju")
   t = t.replace(/\bv\b/g, " ve ");                                            // usamljeno „v" -> „ve" (ne „volt")
   t = t.replace(/ℕ/g, " skup prirodnih brojeva ").replace(/ℤ/g, " skup celih brojeva ")
@@ -203,9 +218,9 @@ export default async function handler(req, res) {
           text: spoken,
           model_id: "eleven_multilingual_v2",
           voice_settings: {
-            stability: 0.40,
-            similarity_boost: 0.80,
-            style: 0.28,
+            stability: 0.50,
+            similarity_boost: 0.85,
+            style: 0.0,
             use_speaker_boost: true,
             speed: 0.95, // normalno, ne brzo — isti tempo kao Zoi (api/tts.js)
           },

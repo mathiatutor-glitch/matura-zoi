@@ -43,7 +43,7 @@ function xmlEscape(s) {
 
 // ElevenLabs -> MP3 buffer
 async function synthEleven(text, voiceId, key, speed) {
-  const vs = { stability: 0.40, similarity_boost: 0.80, style: 0.28, use_speaker_boost: true };
+  const vs = { stability: 0.50, similarity_boost: 0.85, style: 0.0, use_speaker_boost: true };
   const sp = Number(speed);
   vs.speed = (sp >= 0.7 && sp <= 1.2) ? sp : 0.95; // podrazumevano 0.95 (normalno, ne brzo); data-rate/?speed= menja
   const r = await fetch(
@@ -105,7 +105,7 @@ async function speak(text, lang, voice, speed) {
   const azRegion = process.env.AZURE_SPEECH_REGION;
 
   if (lang === "sr" && elKey) {
-    return await synthEleven(text, voice || EL_VOICE_SR, elKey, speed);   // srpski -> zadati glas ili Ida
+    return await synthEleven(text, voice || EL_VOICE_SR, elKey, speed);   // srpski -> tvoj klon (sK1CZ…)
   }
   if (azKey && azRegion) {
     return await synthAzure(text, lang, azKey, azRegion); // ostalo -> Azure
