@@ -16,15 +16,15 @@ body{font-family:'Nunito',system-ui,sans-serif;color:var(--ink);background:var(-
 .langbar .row{max-width:1080px;margin:0 auto;display:flex;justify-content:center;gap:6px;flex-wrap:wrap;padding:9px 22px;font-size:12.5px;font-weight:700;}
 .lang{padding:3px 10px;border-radius:999px;cursor:pointer;color:#aeb7cc;transition:color .15s;}
 .lang:hover{color:#fff;} .lang.on{background:var(--gold);color:#14223E;font-weight:900;}
-.hero{background:radial-gradient(70% 60% at 50% -12%,rgba(194,161,77,.20),transparent 70%),linear-gradient(135deg,#0C1730 0%,#14223E 52%,#1C2E54 100%);color:#fff;text-align:center;
+.hero{background:radial-gradient(60% 55% at 50% -10%,rgba(212,178,92,.36),transparent 66%),radial-gradient(28% 26% at 50% 2%,rgba(247,236,195,.20),transparent 72%),linear-gradient(135deg,#0B1530 0%,#14223E 52%,#1D3057 100%);color:#fff;text-align:center;
   padding:70px 22px 84px;position:relative;overflow:hidden;}
-.hero:before{content:"";position:absolute;top:0;left:0;right:0;bottom:0;background-image:linear-gradient(rgba(194,161,77,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(194,161,77,.06) 1px,transparent 1px);background-size:46px 46px;-webkit-mask:radial-gradient(circle at 50% 34%,#000,transparent 72%);mask:radial-gradient(circle at 50% 34%,#000,transparent 72%);pointer-events:none;}.hero:after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:linear-gradient(90deg,transparent,#9C7E33 16%,#F7ECC3 50%,#9C7E33 84%,transparent);background-size:200% 100%;animation:shine 4.5s linear infinite;}@keyframes shine{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.hero:before{content:"";position:absolute;top:0;left:0;right:0;bottom:0;background-image:radial-gradient(rgba(247,236,195,.22) 1.4px,transparent 2px),linear-gradient(rgba(194,161,77,.10) 1px,transparent 1px),linear-gradient(90deg,rgba(194,161,77,.10) 1px,transparent 1px);background-size:46px 46px,46px 46px,46px 46px;-webkit-mask:radial-gradient(circle at 50% 32%,#000,transparent 74%);mask:radial-gradient(circle at 50% 32%,#000,transparent 74%);pointer-events:none;}.hero:after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:linear-gradient(90deg,transparent,#9C7E33 16%,#F7ECC3 50%,#9C7E33 84%,transparent);background-size:200% 100%;animation:shine 4.5s linear infinite;}@keyframes shine{0%{background-position:200% 0}100%{background-position:-200% 0}}.sheen{position:absolute;top:-60%;width:42%;height:220%;transform:rotate(18deg);background:linear-gradient(90deg,transparent,rgba(247,236,195,.10),rgba(230,206,134,.20),rgba(247,236,195,.10),transparent);filter:blur(8px);pointer-events:none;animation:sweep 7.5s ease-in-out infinite;}@keyframes sweep{0%{left:-45%}50%{left:95%}100%{left:-45%}}
 .brand{display:inline-flex;align-items:center;gap:14px;margin-bottom:26px;position:relative;}
 .seal{width:58px;height:58px;border-radius:50%;background:radial-gradient(circle at 34% 30%,#F4E2A8,#C2A14D 56%,#8E7230);
   display:flex;align-items:center;justify-content:center;color:#14223E;font-weight:800;font-size:30px;
   font-family:'Playfair Display',serif;box-shadow:0 8px 24px rgba(0,0,0,.42),0 0 0 4px rgba(230,206,134,.22);}
 .wm{font-weight:900;font-size:30px;letter-spacing:.4px;} .wm .ia{color:var(--gold);}
-.shine{width:210px;height:2px;margin:0 auto 22px;border-radius:2px;background:linear-gradient(90deg,transparent,#9C7E33,#F7ECC3,#9C7E33,transparent);background-size:200% 100%;animation:shine 3.5s linear infinite;box-shadow:0 0 14px rgba(230,206,134,.55);position:relative;}
+.shine{width:210px;height:2px;margin:0 auto 22px;border-radius:2px;background:linear-gradient(90deg,transparent,#9C7E33,#F7ECC3,#9C7E33,transparent);background-size:200% 100%;animation:shine 3.5s linear infinite;box-shadow:0 0 18px rgba(247,236,195,.75);position:relative;}
 .hero h1{font-size:52px;line-height:1.06;font-weight:800;margin-bottom:18px;position:relative;letter-spacing:-.5px;text-shadow:0 2px 20px rgba(0,0,0,.28);}
 .hero h1 .g{color:var(--goldlt);}
 .hero p.lead{font-size:18.5px;color:#dbe2ef;max-width:660px;margin:0 auto 32px;font-weight:500;position:relative;line-height:1.55;}
@@ -75,7 +75,7 @@ html[dir="rtl"] .card{text-align:right;}
 <span class="lang on" data-lang="sr">Srpski</span><span class="lang" data-lang="en">English</span><span class="lang" data-lang="de">Deutsch</span><span class="lang" data-lang="ru">Русский</span><span class="lang" data-lang="fr">Français</span><span class="lang" data-lang="es">Español</span><span class="lang" data-lang="it">Italiano</span><span class="lang" data-lang="tr">Türkçe</span><span class="lang" data-lang="zh">中文</span><span class="lang" data-lang="ar">العربية</span>
 </div></div>
 
-<section class="hero">
+<section class="hero"><div class="sheen"></div>
   <div class="brand"><div class="seal">M</div><div class="wm">Math<span class="ia">IA</span></div></div>
   <div class="shine"></div>
   <h1 class="serif" id="heroH1"></h1>
