@@ -220,16 +220,16 @@ function setLang(code){
   document.getElementById('cenBtn').textContent=cn.btn;
   document.getElementById('cenH2').textContent=cn.h2;
   
-  document.getElementById('pcMM').textContent=t.c2t;document.getElementById('pcMMv').textContent='';
-  document.getElementById('pcPR').textContent=t.c1t;document.getElementById('pcPRv').textContent=cn.from+' 990 RSD';
-  document.getElementById('pcFA').textContent=t.c3t;document.getElementById('pcFAv').textContent=cn.from+' 390 RSD';
-  document.getElementById('pcTU').textContent=cn.tutor;document.getElementById('pcTUv').textContent=cn.from+' 990 RSD';
+  document.getElementById('pcMM').textContent=t.c2t;document.getElementById('pcMMv').textContent=cn.from+' 3.990 RSD';
+  document.getElementById('pcPR').textContent=t.c1t;document.getElementById('pcPRv').textContent=cn.from+' 4.999 RSD';
+  document.getElementById('pcFA').textContent=t.c3t;document.getElementById('pcFAv').textContent=cn.from+' 4.999 RSD';
+  document.getElementById('pcTU').textContent=cn.tutor;document.getElementById('pcTUv').textContent=cn.from+' 4.999 RSD';
   var dispTxt={sr:'Dostupno',en:'Available',de:'Verfügbar',ru:'Доступно',fr:'Disponible',es:'Disponible',it:'Disponibile',tr:'Mevcut',zh:'可用',ar:'متاح'}[code]||'Dostupno';
   var avs=document.querySelectorAll('.tag.avail');for(var a=0;a<avs.length;a++)avs[a].textContent=dispTxt;
-  var pc1=document.getElementById('prC1');if(pc1)pc1.textContent=cn.from+' 990 RSD';
+  var pc1=document.getElementById('prC1');if(pc1)pc1.textContent=cn.from+' 4.999 RSD';
   var milaTxt={sr:'Ovde je Mila',en:'Meet Mila',de:'Das ist Mila',ru:'Это Mila',fr:'Voici Mila',es:'Conoce a Mila',it:'Ecco Mila',tr:'İşte Mila',zh:'这是 Mila',ar:'هذه ميلا'}[code]||'Ovde je Mila';
   var mc2=document.getElementById('milaC2');if(mc2)mc2.textContent=milaTxt;
-  var pc3=document.getElementById('prC3');if(pc3)pc3.textContent=cn.from+' 390 RSD';
+  var pc3=document.getElementById('prC3');if(pc3)pc3.textContent=cn.from+' 4.999 RSD';
  var ls=document.querySelectorAll('.lang');
  for(var j=0;j<ls.length;j++){ls[j].className=(ls[j].getAttribute('data-lang')===code)?'lang on':'lang';}
 }
