@@ -1,136 +1,56 @@
-# MathIA — Zoi · Mila · Iskra (AI profesorice)
+# MathIA — sajt (mathia-sajt)
 
-Komplet fajlova spreman za GitHub + Vercel + tvoj domen.
-Sve tri profesorice koriste isti Anthropic ključ; za govor: ElevenLabs (srpski) i Azure (ostali jezici).
+Tople, pametne **mentorke** i raskošni materijali za fakultet, srednju školu, prijemni i malu maturu.
+Brend: *slatko + skupo* (krem/zlatna, Playfair Display + Plus Jakarta Sans).
 
----
-
-## 1. Šta je u paketu
-```
-widget.js              # GLAVNI ugradni čet-widget (Zoi/Mila) — koristi /api/tts (klon glas, tempo)
-widget-bilingual.js    # stariji SR/EN widget (glas uređaja u pregledaču); sad i on čita matematiku
-api/chat.js            # GLAVNI "mozak" za Zoi (site + FTN prijemni, dvojezično SR/EN)
-api/chat-matura.js     # alternativni "mozak" (mala matura + FTN) — koristi ako ti je sajt na njemu
-api/mila.js            # "mozak" + govor za Mila (prijemni/matura/Analiza 1), vraća tekst i audio
-api/iskra.js           # "mozak" za Iskra (Električna merenja)
-api/tts.js             # govor (text -> MP3): srpski -> ElevenLabs (klon), ostalo -> Azure
-README.md
-```
-> Koje da koristiš: za sve nove stranice koristi **widget.js + api/chat.js** (imaju klon glas,
-> tempo i najbolje čitanje matematike). `widget-bilingual.js` i `api/chat-matura.js` su ovde
-> radi kompletnosti (starije/alternativne verzije) — u njih su prenete iste popravke gradiva i
-> čitanja, ali `widget-bilingual.js` koristi glas pregledača (ne klon).
->
-> HTML stranice sajta (`prijemni-ftn.html`, `mala-matura.html`, `mila.html`, …) i
-> `package.json`/`vercel.json` nisu u paketu — dodaj svoje postojeće. Primer
-> `package.json` je u odeljku 7 (samo ako ga nemaš).
+> **Napomena:** MathIA je nezavisna obrazovna platforma opšteg karaktera. Sadržaj je informativan i nije
+> povezan ni sa jednom konkretnom obrazovnom ustanovom, niti je predstavlja.
 
 ---
 
-## 2. Šta je NOVO u ovoj verziji
-- **Isti glas za Zoi i Milu (potvrđeno):** u `api/tts.js` je podrazumevani srpski glas
-  sada tvoj klon `sK1CZxinAv6CB3NL3fNq` (isti koji Mila koristi u `api/mila.js`).
-  Tako obe zvuče identično čak i ako stranica ne navede `data-voice`.
-- **Sporiji tempo (Zoi i Mila):** `api/tts.js` čita podrazumevano brzinom 0.9.
-  Po stranici menjaš sa `data-rate` (Mila npr. 0.85).
-- **Izvodi / limesi / integrali** ugrađeni kao metode (tablica izvoda, pravila, lančano,
-  neodređeni oblici, L'Hopital, ispitivanje funkcije) u `api/chat.js` (FTN, SR+EN) i `api/mila.js`.
-- **Proporcije i procenti** obogaćeni (direktna/obrnuta, razmera 1:200, uzastopni procenti,
-  koncentracija/smeša, sušenje).
-- **Bolje čitanje matematike (oba):** razlomci („tri četvrtine"), `Q` -> „ku",
-  `f(x)`/`f'(x)`/`f''(x)`, `|x|`, `n!`, `integral`, `Σ` -> „suma", `∂` -> „parcijalno",
-  `x->0` -> „iks teži ka nuli", `=>` -> „sledi", skupovi `∈ ∪ ∩` i `ℕ ℤ ℚ ℝ ℂ`, `lim`, `arcsin/arctg`.
-- **Najnovije ispravke:** kosa crta razlomka -> „kroz" (a rod/alternative -> „ili", npr. „došao/la");
-  usamljeno „v" -> „ve" (ne „volt"); vraćanje kvačica kad se kuca golo (cao->ćao, sta->šta…) + NFC;
-  faktorijel i binomni koeficijent `n!/(k!(n-k)!)` ispravno; Zoi/Mila uvek pišu sa kvačicama i bez
-  rodnih kosih crta. Sa sajta uklonjeni „Zakaži čas"/Visibook, „online/uživo" i „Novi Sad".
+## ✅ Čisti set naziva (dogovoreno)
+
+Prelazimo na kratke, jasne nazive. Stari `mathia_*` i duple strane spajamo u ove (čišćenje radimo **na kraju**, kad sve bude gore — da se sajt ne lomi usput).
+
+### Root strane
+| Nova (čista) | Zamenjuje / spaja | Status |
+|---|---|---|
+| `index.html` | `mathia_naslovna.html`, stari `index.html` | ✅ Batch 1 |
+| `kviz.html` | `mathia_kviz_fakultet.html`, `mathia_kviz_srednja.html`, `test-sklonosti.html`, stari `kviz.html` | ✅ Batch 1 (fakultet + srednja, 1 + 4) |
+| `predmet-analiza1.html` | primer/šablon strane predmeta | ✅ Batch 1 |
+| `predmet-*.html` (fakultetski) | `fakultet.html`, `mathia_fakultet.html`, `vodic-fakultet*.html` | ⏳ Batch 2 |
+| `srednja-matematika-1..4.html`, `srednja-fizika-1..4.html` | iste | ⏳ Batch 2 |
+| `prijemni.html` | `prijemni-ftn.html`, `tutor-ftn*.html` | ⏳ Batch 2 |
+| `mala-matura.html` | ista | ⏳ Batch 2 |
+| `mathia_ponuda.html` | ista (dve ponude: klon / klon + materijali) | ⏳ Batch 2 |
+
+### Folderi
+| Folder | Sadržaj | Status |
+|---|---|---|
+| `api/` | `chat.js`, `widget.js`, `api_chat_KLONOVI.js`, persona po klonu (`iskra.js`, `mila.js`…), `tts.js` (isključen) | ⏳ Batch 3 |
+| `sr/`, `en/` | baze znanja `.md` + `MathIA_klonovi_SVI_promptovi.md` | ⏳ Batch 3 |
+| (root) PDF | `Oblast_*`, `MathIA_E-skripta_*`, `MathIA_Formule_*`, `MathIA_Izdanje_*`, `MathIA_Mala_matura_*`, `MathIA_Prijemni_*` | ⏳ Batch 4 |
+
+### Jezici (10, bez bugarskog)
+Srpski, engleski, nemački, grčki, mađarski, španski, ruski, italijanski, slovenački, francuski.
+Mehanizam: **jedan set fajlova** + prevod preko `?lang=` (JS rečnik, padajući meni menja jezik) — ⏳ Batch 5.
+Ne pravimo 10× kopija stranica.
 
 ---
 
-## 3. Priprema ključeva (pre deploya)
-- Anthropic (obavezno): API ključ na console.anthropic.com.
-- ElevenLabs (srpski glas): API ključ; tvoj klon glasa je već u kodu.
-- Azure Speech (opciono, za ostale jezike): ključ + region (npr. westeurope).
+## Klonovi (mentorke)
+- **Bez glasa** — samo **pišu i crtaju** (canvas), korak po korak, tačno.
+- MathIA (naslovna) = vodič/concierge; predmetne mentorke (Nina, Iskra, Lana, Vera, Lara, Iva, Zoi, Mila) = predaju.
+- Tačni odgovori + crtanje dolaze od živog modela preko **tvog Anthropic ključa** u widget aplikaciji; ovde su
+  front-end klona + **persona + sistem-promptovi + baze znanja** (Batch 3) koji ih čine tačnim i u stilu.
 
----
+## Pristup / ponude
+- Samo **dve ponude** (po predmetu): **klon** ili **klon + e-knjige/skripte/formule**.
+- Test izbora fakulteta/srednje = **besplatan**; **prvo pitanje klonu besplatno**, dalje uz pretplatu.
 
-## 4. Postavljanje na GitHub
-```bash
-cd matura-zoi
-git init
-git add .
-git commit -m "Zoi/Mila: izvodi/limesi/proporcije + bolje citanje + isti glas + sporije"
-git branch -M main
-git remote add origin https://github.com/KORISNIK/REPO.git
-git push -u origin main
-```
-Ako repo već postoji: samo zameni ovih 5 fajlova, pa `git add . && git commit -m "update" && git push`.
-
----
-
-## 5. Deploy na Vercel + domen
-1. vercel.com -> Add New -> Project -> izaberi GitHub repo -> Import.
-2. Settings -> Environment Variables (za Production, Preview i Development):
-   - `ANTHROPIC_API_KEY`  — obavezno
-   - `ELEVENLABS_API_KEY` — za srpski glas
-   - `AZURE_SPEECH_KEY` i `AZURE_SPEECH_REGION` — opciono (ostali jezici)
-3. Deploy. Posle SVAKE izmene env varijabli -> Redeploy.
-4. Domen: Vercel -> projekat -> Settings -> Domains -> dodaj `mathia.rs` (i `www.mathia.rs`),
-   pa kod registrara podesi DNS kako Vercel kaže (A zapis na 76.76.21.21 ili CNAME na cname.vercel-dns.com).
-   Sačekaj da se aktivira HTTPS.
-
-Endpoints: `/api/chat` (Zoi), `/api/mila` (Mila), `/api/iskra` (Iskra), `/api/tts` (glas).
-
----
-
-## 6. Ubacivanje widgeta na stranice
-Na svaku stranicu, pred `</body>`, stavi JEDNU liniju. Posle svake izmene `widget.js`
-povećaj broj u `?v=` da pregledači povuku novo (sad je v=16).
-
-Zoi — prijemni FTN:
-```html
-<script src="https://mathia.rs/widget.js?v=18"
-        data-api="https://mathia.rs/api/chat"
-        data-mode="ftn" data-lang="sr"></script>
-```
-Zoi — mala matura: isto, samo `data-mode="matura"`.
-
-Mila (isti widget, ime + isti glas + sporije):
-```html
-<script src="https://mathia.rs/widget.js?v=18"
-        data-api="https://mathia.rs/api/chat"
-        data-mode="ftn" data-name="Mila"
-        data-voice="sK1CZxinAv6CB3NL3fNq"
-        data-rate="0.85" data-lang="sr"></script>
-```
-`data-voice` = ElevenLabs Voice ID (nije obavezno jer je klon već podrazumevan, ali ga ostavi radi jasnoće).
-`data-rate` = brzina (0.7 sporije … 1.2 brže).
-
----
-
-## 7. Provera posle deploya
-- Glas i tempo: otvori `https://mathia.rs/api/tts?lang=sr&speed=0.9` (treba tvoj klon, mirnim tempom). Probaj i `?speed=0.85`.
-- Isti glas Zoi/Mila: klikni 🔊 na obe stranice — treba da zvuče identično.
-- Čitanje matematike: u čavtu otkucaj i poslušaj:
-  `3/4 • 5/6` -> „tri četvrtine puta pet šestina";
-  `f'(x)` -> „ef prim od iks"; `x ∈ ℝ` -> „iks pripada skup realnih brojeva";
-  `lim x->0` -> „limes iks teži ka nuli"; `∫ x^2 dx` -> „integral iks na kvadrat de iks".
-
-Primer `package.json` (samo ako ga nemaš):
-```json
-{ "name": "mathia", "version": "1.0.0", "private": true, "type": "module" }
-```
-`"type": "module"` je bitno jer `api/*.js` koriste `export default`.
-
----
-
-## 8. Napomene
-- Autorska prava: kombinatorika/proporcije/izvodi su ugrađeni kao TIPOVI zadataka i METODE
-  (ne prepisani iz zbirke od reči do reči).
-- Izvodi/limesi transkript: tvoj snimak za izvode/limese nije stigao (otpremio se isti
-  fajl o proporcijama). Za sada su ugrađene standardne metode; pošalji pravi snimak (kao `.txt`)
-  pa ću dodati tvoj konkretan pristup i trikove.
-- Model u `api/mila.js`: `claude-opus-4-5-20251001` — ako Mila vrati grešku, prvo proveri
-  da je taj naziv važeći na nalogu (ostali fajlovi koriste `claude-sonnet-4-6`).
-- Uključene su i starije/alternativne verzije (`widget-bilingual.js`, `api/chat-matura.js`) radi
-  kompletnosti; za nove stranice preporučujem `widget.js` + `api/chat.js`.
+## Batch plan
+1. **Jezgro** — `index.html`, `kviz.html`, `predmet-analiza1.html`, `README.md`, `UPUTSTVO.md` ✅
+2. **Predmeti** — svi fakultetski + srednja (mat 1–4, fiz 1–4), prijemni, mala matura, `mathia_ponuda.html`
+3. **Klonovi** — `api/`, `chat.js`, `widget.js`, persona, baze znanja (`sr/`, `en/`)
+4. **E-knjige / PDF** — sve oblasti, skripte, formule, izdanja
+5. **Jezici** — i18n mehanizam + prevodi (10 jezika)

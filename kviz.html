@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="sr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MathIA — Otkrij šta je za tebe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#1f3357;--ink:#3c4458;--muted:#7b8198;--gold:#c59a3a;--gold2:#ecd9a4;
+  --cream:#fff8ef;--paper:#fffdf9;--line:#f0e6d6;--blush:#f3d1cf;--mint:#bce5d6;--mintL:#ecf8f3;--lav:#ddd4f4;--peachL:#fdeee2}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:var(--ink);background:var(--cream);line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,.serif{font-family:'Playfair Display',Georgia,serif;color:var(--navy);font-weight:700;line-height:1.14}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:680px;margin:0 auto;padding:0 22px}
+.eyebrow{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:800}
+.nav{position:sticky;top:0;z-index:20;background:rgba(255,248,239,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav .wrap{max-width:1040px;display:flex;align-items:center;justify-content:space-between;height:60px}
+.brand{font-family:'Playfair Display',serif;color:var(--gold);letter-spacing:.24em;font-size:1rem;font-weight:700}
+.back{font-size:.82rem;color:var(--muted);font-weight:600}.back:hover{color:var(--navy)}
+.stage{padding:46px 0 70px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:30px 26px}
+.btn{display:inline-block;font-weight:700;border-radius:999px;padding:13px 30px;color:#fff;cursor:pointer;border:none;font-family:inherit;font-size:.95rem;
+  background:linear-gradient(135deg,#e7c97f,#c59a3a);box-shadow:0 8px 20px rgba(197,154,58,.3)}
+.btn:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
+.btn.ghost{background:var(--paper);border:1px solid var(--line);color:var(--navy);box-shadow:none}
+/* intro */
+.intro{text-align:center}
+.seal{width:74px;height:74px;border-radius:50%;margin:0 auto 18px;background:radial-gradient(circle at 35% 30%,#f7e8c2,#e7c97f);border:1px solid #d9b86a;box-shadow:0 10px 24px rgba(197,154,58,.3);display:grid;place-items:center}
+.seal span{font-family:'Playfair Display',serif;font-weight:700;font-size:32px;color:#fffaf0}
+.intro h1{font-size:clamp(1.7rem,4.5vw,2.4rem);margin:6px 0 12px}
+.intro p.lead{color:var(--ink);max-width:460px;margin:0 auto 22px}
+.facts{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}
+.fact{font-size:.78rem;background:var(--cream);border:1px solid var(--line);border-radius:999px;padding:6px 13px;color:var(--navy)}
+.seg{display:inline-flex;background:var(--cream);border:1px solid var(--line);border-radius:999px;padding:4px;gap:4px;margin:6px 0 4px}
+.seg button{border:none;background:none;font-family:inherit;font-size:.84rem;font-weight:700;color:var(--muted);padding:8px 16px;border-radius:999px;cursor:pointer}
+.seg button.on{background:linear-gradient(135deg,#e7c97f,#c59a3a);color:#fff}
+.lbl{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:800;margin:16px 0 4px}
+/* quiz */
+.qhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:.8rem;color:var(--muted)}
+.qhead .e{color:var(--gold);font-weight:800;letter-spacing:.14em;text-transform:uppercase;font-size:.72rem}
+.bar{height:5px;background:#f0e6d6;border-radius:3px;overflow:hidden;margin-bottom:26px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold2),var(--gold));border-radius:3px;transition:width .35s ease}
+.q{font-size:clamp(1.15rem,3vw,1.45rem);margin-bottom:20px}
+.opts{display:flex;flex-direction:column;gap:11px;margin-bottom:26px}
+.opt{display:flex;align-items:center;gap:13px;text-align:left;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:15px 17px;cursor:pointer;font-family:inherit;font-size:.95rem;color:var(--ink);transition:border-color .12s,background .12s}
+.opt:hover{border-color:var(--gold2)}
+.opt.sel{border-color:var(--gold);background:#fffaf0}
+.opt .dot{width:20px;height:20px;border-radius:50%;border:1.5px solid #d8cdb6;flex-shrink:0;display:grid;place-items:center}
+.opt.sel .dot{border-color:var(--gold)}
+.opt.sel .dot::after{content:'';width:10px;height:10px;border-radius:50%;background:var(--gold)}
+.qfoot{text-align:right}
+/* result */
+.res-eyebrow{text-align:center}
+.res h1{text-align:center;font-size:clamp(1.6rem,4vw,2.2rem);margin:8px 0 6px}
+.res .sub{text-align:center;color:var(--muted);margin-bottom:26px}
+.top1{background:linear-gradient(160deg,#fffdf8,var(--peachL));border:1.5px solid var(--gold);border-radius:20px;padding:26px 24px;margin-bottom:18px;box-shadow:0 14px 34px rgba(197,154,58,.16)}
+.top1 .row{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.top1 .tag{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:800;display:block;margin-bottom:4px}
+.top1 h2{font-size:clamp(1.3rem,3.5vw,1.7rem)}
+.match{background:rgba(197,154,58,.14);border:1px solid var(--gold);border-radius:999px;padding:4px 13px;color:#a9791f;font-weight:800;font-size:.85rem;white-space:nowrap}
+.top1 p{color:var(--ink);margin:8px 0}
+.why{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:13px 15px;margin-top:12px;font-size:.9rem}
+.why b{color:var(--navy)}
+.posao{font-size:.84rem;color:var(--muted);margin-top:10px}
+.posao b{color:var(--gold);font-weight:800;letter-spacing:.04em}
+.fakline{font-size:.88rem;color:var(--ink);margin-top:6px}
+.fakline b{color:var(--navy)}
+.info{margin-top:14px;display:flex;flex-direction:column;gap:10px}
+.info-row{display:flex;gap:11px;align-items:flex-start;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:.88rem;line-height:1.5}
+.info-row .ik{font-size:1.1rem;flex-shrink:0}
+.info-row b{color:var(--navy)}
+.nudge{background:linear-gradient(160deg,#fffdf8,var(--mintL));border:1px solid #cdeee0;border-radius:14px;padding:16px 18px;margin:18px 0 4px;font-size:.9rem;line-height:1.6}
+.nudge .free{color:#36997f;font-weight:800}
+.foot{background:var(--navy);color:#aeb6cb;padding:30px 0;text-align:center;font-size:.78rem;margin-top:10px}
+.foot a{color:var(--gold2);font-weight:700}
+.foot p{margin-top:10px;color:#8b94ad;line-height:1.6;max-width:600px;margin-left:auto;margin-right:auto}
+.altlbl{text-align:center;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:800;margin:24px 0 12px}
+.alt{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:10px}
+.alt .r{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px}
+.alt h3{font-size:1.02rem}
+.alt .m{font-size:.8rem;color:var(--muted);white-space:nowrap}
+.alt p{font-size:.84rem;color:var(--muted)}
+.alt .mini{height:4px;background:#f0e6d6;border-radius:2px;margin-top:8px;overflow:hidden}
+.alt .mini i{display:block;height:100%;background:var(--gold2)}
+.res-cta{text-align:center;margin-top:26px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:6px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="wrap">
+  <a class="back" href="index.html">← Početna</a>
+  <span class="brand">◆ MATHIA ◆</span>
+  <span style="width:60px"></span>
+</div></nav>
+
+<div class="stage"><div class="wrap" id="app"></div></div>
+
+<footer class="foot">
+  <a href="index.html">← Nazad na početnu</a>
+  <p>MathIA je nezavisna obrazovna platforma opšteg karaktera. Sadržaj je informativan i nije povezan ni sa jednom konkretnom obrazovnom ustanovom, niti je predstavlja.</p>
+</footer>
+
+<script>
+/* ===== interesi: 8 pitanja, 5 dimenzija (m,p,n,t,d) ===== */
+const pitanja = [
+ {tekst:"Koji predmet ti je najdraži u školi?",opcije:[
+   {t:"Matematika i fizika",s:{m:5,p:2,n:1,t:3,d:0}},
+   {t:"Informatika i programiranje",s:{m:2,p:5,n:0,t:2,d:1}},
+   {t:"Biologija i hemija",s:{m:2,p:0,n:5,t:1,d:0}},
+   {t:"Likovno i dizajn",s:{m:0,p:1,n:0,t:1,d:5}}]},
+ {tekst:"Šta najradije radiš u slobodno vreme?",opcije:[
+   {t:"Rešavam zagonetke i logičke probleme",s:{m:4,p:4,n:0,t:2,d:0}},
+   {t:"Pravim nešto rukama, sklapam",s:{m:1,p:1,n:1,t:5,d:2}},
+   {t:"Crtam, fotkam, dizajniram",s:{m:0,p:1,n:1,t:0,d:5}},
+   {t:"Istražujem prirodu i eksperimente",s:{m:1,p:0,n:5,t:1,d:0}}]},
+ {tekst:"Kako zamišljaš posao iz snova?",opcije:[
+   {t:"Za računarom, rešavam tehničke probleme",s:{m:3,p:5,n:0,t:2,d:1}},
+   {t:"Na terenu, gradim ili projektujem",s:{m:3,p:0,n:2,t:5,d:2}},
+   {t:"Kreiram vizuelne sadržaje",s:{m:0,p:1,n:0,t:1,d:5}},
+   {t:"Pomažem ljudima, zdravlju ili prirodi",s:{m:2,p:1,n:5,t:1,d:0}}]},
+ {tekst:"Koji problem ti je najzanimljiviji?",opcije:[
+   {t:"Matematički i analitički",s:{m:5,p:3,n:1,t:3,d:0}},
+   {t:"Kako nešto lepo da izgleda",s:{m:0,p:1,n:0,t:0,d:5}},
+   {t:"Kako nešto da se konstruiše i drži",s:{m:3,p:0,n:2,t:5,d:2}},
+   {t:"Kako sistem da bude efikasniji",s:{m:3,p:3,n:1,t:3,d:1}}]},
+ {tekst:"Kako najviše voliš da radiš?",opcije:[
+   {t:"Sam/a — fokus i duboka analiza",s:{m:4,p:4,n:2,t:2,d:1}},
+   {t:"U timu — zajedno do rešenja",s:{m:1,p:2,n:2,t:3,d:2}},
+   {t:"Kreativno, bez strogih pravila",s:{m:0,p:1,n:1,t:0,d:5}},
+   {t:"Precizno i sistematično",s:{m:4,p:3,n:3,t:4,d:1}}]},
+ {tekst:"Šta te najviše privlači kod tehnologije?",opcije:[
+   {t:"Softver i aplikacije",s:{m:2,p:5,n:0,t:2,d:1}},
+   {t:"Hardver i elektronika",s:{m:3,p:2,n:1,t:5,d:0}},
+   {t:"Kako pomaže zdravlju i prirodi",s:{m:2,p:1,n:5,t:2,d:0}},
+   {t:"Dizajn i korisničko iskustvo",s:{m:0,p:2,n:0,t:1,d:5}}]},
+ {tekst:"Kako ti ide matematika?",opcije:[
+   {t:"Obožavam je — što teže to bolje",s:{m:5,p:3,n:2,t:4,d:0}},
+   {t:"Solidno, mogu da je savladam",s:{m:3,p:3,n:2,t:3,d:1}},
+   {t:"Nije favorit, ali ok",s:{m:1,p:2,n:1,t:2,d:2}},
+   {t:"Više volim kreativne predmete",s:{m:0,p:1,n:0,t:0,d:5}}]},
+ {tekst:"Šta ti je najvažnije u budućoj karijeri?",opcije:[
+   {t:"Tražen posao i dobra plata",s:{m:3,p:5,n:1,t:4,d:2}},
+   {t:"Kreativna sloboda i izražavanje",s:{m:0,p:1,n:1,t:0,d:5}},
+   {t:"Da pomažem prirodi i ljudima",s:{m:1,p:1,n:5,t:2,d:1}},
+   {t:"Da pravim i gradim konkretne stvari",s:{m:2,p:1,n:2,t:5,d:2}}]}
+];
+
+/* ===== rezultati ===== */
+const fakulteti = [
+ {naziv:"Softversko inženjerstvo i IT",opis:"razvoj softvera, web i mobilnih aplikacija i baza podataka",posao:"Software developer, web/mobilni developer, DevOps inženjer",gde:"IT kompanije, startapovi, banke i telekomi — uz mogućnost rada od kuće za inostranstvo",fakBG:"ETF, RAF, FON, Matematički fakultet",fakNS:"FTN, PMF",s:{m:3,p:5,n:1,t:3,d:2}},
+ {naziv:"Računarstvo i automatika",opis:"hardver, mreže, robotika i automatizovani sistemi",posao:"Sistemski i mrežni inženjer, inženjer automatike, robotičar",gde:"IT sektor, industrija i automatizacija, energetika, robotika",fakBG:"ETF",fakNS:"FTN",s:{m:4,p:4,n:2,t:5,d:1}},
+ {naziv:"Elektrotehnika i energetika",opis:"struja, elektronika i telekomunikacioni sistemi",posao:"Elektroinženjer, projektant, telekomunikacioni stručnjak",gde:"Energetika, telekomi, elektronska industrija, projektni biroi",fakBG:"ETF",fakNS:"FTN",s:{m:5,p:2,n:3,t:5,d:1}},
+ {naziv:"Mašinstvo i mehatronika",opis:"mašine, robotika i spoj mehanike i elektronike",posao:"Mašinski i mehatronički inženjer, konstruktor, robotičar",gde:"Automobilska i prerađivačka industrija, proizvodnja, robotika",fakBG:"Mašinski fakultet",fakNS:"FTN",s:{m:5,p:3,n:2,t:5,d:2}},
+ {naziv:"Građevinarstvo",opis:"projektovanje i izgradnja objekata, mostova i puteva",posao:"Građevinski inženjer, projektant, nadzorni inženjer",gde:"Građevinske firme, projektni biroi, infrastruktura, državne institucije",fakBG:"Građevinski fakultet",fakNS:"FTN",s:{m:4,p:1,n:4,t:4,d:3}},
+ {naziv:"Arhitektura",opis:"projektovanje prostora — estetika i funkcionalnost",posao:"Arhitekta, urbanista, dizajner enterijera",gde:"Arhitektonski biroi, urbanizam, enterijer — ili sopstveni studio",fakBG:"Arhitektonski fakultet",fakNS:"FTN",s:{m:3,p:1,n:2,t:3,d:5}},
+ {naziv:"Zaštita životne sredine",opis:"ekologija, zaštita prirode i prečišćavanje voda i vazduha",posao:"Inženjer zaštite životne sredine, inspektor, konsultant",gde:"Inspekcije i zavodi, industrija, konsalting, nevladin sektor",fakBG:"Šumarski i Tehnološko-metalurški fakultet",fakNS:"FTN, PMF",s:{m:3,p:1,n:5,t:3,d:1}},
+ {naziv:"Grafički dizajn i vizuelne komunikacije",opis:"vizuelne komunikacije, digitalni mediji i UI/UX",posao:"Grafički i UX/UI dizajner, art direktor",gde:"Marketing agencije, dizajn studiji, izdavaštvo, IT — ili freelance",fakBG:"FPU, FLU",fakNS:"Akademija umetnosti, FTN (grafičko inženjerstvo)",s:{m:1,p:2,n:1,t:2,d:5}},
+ {naziv:"Inženjerski menadžment",opis:"upravljanje projektima, organizacija i poslovanje",posao:"Menadžer projekta, konsultant, rukovodilac",gde:"Kompanije i projektne kancelarije, konsalting, sopstveni biznis",fakBG:"FON",fakNS:"FTN",s:{m:3,p:2,n:1,t:2,d:2}},
+ {naziv:"Biomedicinsko inženjerstvo",opis:"medicinska oprema, biotehnologija i zdravstveni sistemi",posao:"Biomedicinski inženjer, istraživač, stručnjak za medicinsku opremu",gde:"Bolnice i klinike, proizvođači medicinske opreme, istraživanje",fakBG:"ETF, Mašinski fakultet",fakNS:"FTN",s:{m:4,p:3,n:5,t:4,d:1}}
+];
+const srednje = [
+ {naziv:"Matematička gimnazija / prirodno-matematički smer",opis:"težište na matematici, fizici i informatici — odlična osnova za tehničke fakultete",posao:"Najbolja priprema za: tehnika, IT, prirodne nauke",gde:"Otvara vrata svih tehničkih i prirodno-matematičkih fakulteta",s:{m:5,p:4,n:3,t:3,d:1}},
+ {naziv:"Računarska gimnazija / IT smer",opis:"programiranje, informatika i logika od prvog dana",posao:"Vodi ka: softver, računarstvo, IT",gde:"IT već tokom škole — praksa, projekti i rani posao u struci",s:{m:3,p:5,n:1,t:3,d:2}},
+ {naziv:"Elektrotehnička škola",opis:"elektronika, struja i računari — praktično i tehnički",posao:"Vodi ka: elektrotehnika, IT, mehatronika",gde:"Posao odmah po školi ili upis tehničkih fakulteta",s:{m:4,p:3,n:2,t:5,d:1}},
+ {naziv:"Mašinska / tehnička škola",opis:"mašine, konstrukcije i rad rukama",posao:"Vodi ka: mašinstvo, građevina, tehnika",gde:"Tražena zanimanja u industriji i proizvodnji",s:{m:4,p:1,n:2,t:5,d:2}},
+ {naziv:"Medicinska škola",opis:"biologija, hemija, zdravstvo i briga o ljudima",posao:"Vodi ka: medicina, farmacija, biomedicina",gde:"Rad u zdravstvu ili upis medicinskih fakulteta",s:{m:2,p:1,n:5,t:2,d:1}},
+ {naziv:"Ekonomska škola",opis:"ekonomija, poslovanje, računovodstvo i organizacija",posao:"Vodi ka: ekonomija, menadžment, finansije",gde:"Banke, firme i računovodstvo — ili ekonomski fakulteti",s:{m:3,p:2,n:1,t:1,d:2}},
+ {naziv:"Umetnička škola / dizajn",opis:"likovno, dizajn i kreativno izražavanje",posao:"Vodi ka: dizajn, arhitektura, umetnost",gde:"Kreativna industrija i studiji, ili umetnički i arhitektonski fakulteti",s:{m:0,p:1,n:1,t:1,d:5}},
+ {naziv:"Društveno-jezički smer (gimnazija)",opis:"jezici, društvene nauke i široko opšte obrazovanje",posao:"Vodi ka: prava, jezici, ekonomija, mediji",gde:"Najširi izbor fakulteta društveno-humanističkog smera",s:{m:1,p:1,n:1,t:1,d:3}}
+];
+const dimLabel={m:"matematika i analiza",p:"programiranje i logika",n:"prirodne nauke",t:"tehnika i konstrukcija",d:"dizajn i kreativnost"};
+
+/* ===== state ===== */
+let tip="fakultet", grad="Beograd", trenutno=0, izbor=null;
+let scores={m:0,p:0,n:0,t:0,d:0};
+const app=document.getElementById('app');
+(function initFromHash(){
+  const h=decodeURIComponent(location.hash.replace('#','')); // npr. fakultet:novisad
+  if(h){const [a,b]=h.split(':'); if(a==='fakultet'||a==='srednja')tip=a; if(b)grad=(b.toLowerCase().replace(' ','')==='novisad')?'Novi Sad':'Beograd';}
+})();
+function lista(){return tip==='fakultet'?fakulteti:srednje;}
+function naslov(){return tip==='fakultet'?"Otkrij koji je fakultet za tebe":"Otkrij koja je srednja škola za tebe";}
+
+function renderIntro(){
+  app.innerHTML=`
+  <div class="card intro">
+    <div class="seal"><span>M</span></div>
+    <span class="eyebrow">test izbora</span>
+    <h1>${naslov()}</h1>
+    <p class="lead">Odgovori na 8 kratkih pitanja i saznaj šta najviše odgovara tvojim interesovanjima i talentima — uz tačno jedan predlog i 4 alternative.</p>
+    <div class="facts"><span class="fact">✓ besplatno</span><span class="fact">⏱ 2 minuta</span><span class="fact">📨 1 + 4 predloga</span></div>
+    <div class="lbl">Šta te zanima</div>
+    <div class="seg" id="segTip">
+      <button data-v="fakultet" class="${tip==='fakultet'?'on':''}">Fakultet</button>
+      <button data-v="srednja" class="${tip==='srednja'?'on':''}">Srednja škola</button>
+    </div>
+    <div class="lbl">Grad</div>
+    <div class="seg" id="segGrad">
+      <button data-v="Beograd" class="${grad==='Beograd'?'on':''}">Beograd</button>
+      <button data-v="Novi Sad" class="${grad==='Novi Sad'?'on':''}">Novi Sad</button>
+    </div>
+    <div style="margin-top:24px"><button class="btn" id="start">Počni test →</button></div>
+  </div>`;
+  document.querySelectorAll('#segTip button').forEach(b=>b.onclick=()=>{tip=b.dataset.v;renderIntro();});
+  document.querySelectorAll('#segGrad button').forEach(b=>b.onclick=()=>{grad=b.dataset.v;renderIntro();});
+  document.getElementById('start').onclick=()=>{trenutno=0;izbor=null;scores={m:0,p:0,n:0,t:0,d:0};renderQuiz();};
+}
+
+function renderQuiz(){
+  const q=pitanja[trenutno];
+  const pct=Math.round((trenutno/pitanja.length)*100);
+  app.innerHTML=`
+  <div class="card">
+    <div class="qhead"><span class="e">${tip==='fakultet'?'Fakultet':'Srednja'} · ${grad}</span><span>${trenutno+1} / ${pitanja.length}</span></div>
+    <div class="bar"><i style="width:${pct}%"></i></div>
+    <div class="q">${q.tekst}</div>
+    <div class="opts" id="opts">
+      ${q.opcije.map((o,i)=>`<button class="opt${izbor===i?' sel':''}" data-i="${i}"><span class="dot"></span>${o.t}</button>`).join('')}
+    </div>
+    <div class="qfoot"><button class="btn" id="next" ${izbor===null?'disabled':''}>${trenutno+1===pitanja.length?'Vidi rezultat →':'Sledeće →'}</button></div>
+  </div>`;
+  document.querySelectorAll('#opts .opt').forEach(b=>b.onclick=()=>{izbor=+b.dataset.i;renderQuiz();});
+  document.getElementById('next').onclick=()=>{
+    if(izbor===null)return;
+    const s=pitanja[trenutno].opcije[izbor].s;
+    Object.keys(s).forEach(k=>scores[k]+=s[k]);
+    izbor=null;
+    if(trenutno+1>=pitanja.length){renderResult();}else{trenutno++;renderQuiz();}
+  };
+}
+
+function rangiraj(){
+  const keys=['m','p','n','t','d'];
+  const un=Math.sqrt(keys.reduce((a,k)=>a+scores[k]*scores[k],0))||1;
+  return lista().map(o=>{
+    const fn=Math.sqrt(keys.reduce((a,k)=>a+o.s[k]*o.s[k],0))||1;
+    const dot=keys.reduce((a,k)=>a+scores[k]*o.s[k],0);
+    return {...o,procenat:Math.round(dot/(un*fn)*100)};
+  }).sort((a,b)=>b.procenat-a.procenat);
+}
+function dominantna(){let best='m',v=-1;Object.keys(scores).forEach(k=>{if(scores[k]>v){v=scores[k];best=k;}});return dimLabel[best];}
+
+function cap(s){return s.charAt(0).toUpperCase()+s.slice(1);}
+function renderResult(){
+  const r=rangiraj(); const top=r[0]; const alt=r.slice(1,5);
+  const jeFak = tip==='fakultet';
+  const fakGrad = jeFak ? (grad==='Beograd'? top.fakBG : top.fakNS) : '';
+  app.innerHTML=`
+  <div class="res">
+    <div class="res-eyebrow"><span class="eyebrow">tvoj rezultat · besplatno</span></div>
+    <h1>${jeFak?'Ovo je smer za tebe':'Ovo je škola za tebe'} ✦</h1>
+    <p class="sub">${grad} · prema tvojim odgovorima</p>
+
+    <div class="top1">
+      <div class="row">
+        <div><span class="tag">🏆 najbolji izbor za tebe</span><h2>${top.naziv}</h2>
+          ${jeFak?`<div class="fakline">📍 u gradu ${grad}: <b>${fakGrad}</b></div>`:''}
+        </div>
+        <span class="match">${top.procenat}% poklapanja</span>
+      </div>
+      <p>${cap(top.opis)}.</p>
+      <div class="why">Zašto baš ovo: prema tvojim odgovorima najviše ti leži <b>${dominantna()}</b>, a ${top.naziv} je upravo to — ${top.opis}.</div>
+      <div class="info">
+        <div class="info-row"><span class="ik">💼</span><div><b>Čime ćeš se baviti</b><br>${top.posao}.</div></div>
+        <div class="info-row"><span class="ik">🏢</span><div><b>Gde se zapošljava</b><br>${top.gde}.</div></div>
+      </div>
+    </div>
+
+    <div class="nudge"><b>Sledeći korak:</b> MathIA te sprema za ${jeFak?'prijemni i studije':'upis i školu'} — neograničeno pitanja uz mentorku za svaki predmet, korak po korak. <span class="free">Prvo pitanje je besplatno.</span></div>
+
+    <div class="altlbl">Još 4 smera koja bi ti odgovarala</div>
+    ${alt.map(a=>`
+      <div class="alt">
+        <div class="r"><h3>${a.naziv}</h3><span class="m">${a.procenat}%</span></div>
+        <p>${cap(a.opis)}.</p>
+        <div class="mini"><i style="width:${a.procenat}%"></i></div>
+      </div>`).join('')}
+
+    <div class="res-cta">
+      <a class="btn" href="index.html#predmeti">Probaj mentorku — prvo pitanje besplatno →</a>
+      <button class="btn ghost" id="again">Ponovi test</button>
+      <a class="btn ghost" href="index.html">← Početna</a>
+    </div>
+  </div>`;
+  document.getElementById('again').onclick=()=>{trenutno=0;izbor=null;scores={m:0,p:0,n:0,t:0,d:0};renderIntro();};
+}
+
+renderIntro();
+</script>
+</body>
+</html>

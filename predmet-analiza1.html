@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="sr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MathIA — Analiza 1 · Nina</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#1f3357;--ink:#3c4458;--muted:#7b8198;--gold:#c59a3a;--gold2:#ecd9a4;
+  --cream:#fff8ef;--paper:#fffdf9;--line:#f0e6d6;--blush:#f3d1cf;--blushL:#fdeeed;
+  --mint:#bce5d6;--mintL:#ecf8f3;--lav:#ddd4f4;--lavL:#f2eefb;--peachL:#fdeee2}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:var(--ink);background:var(--cream);line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,.serif{font-family:'Playfair Display',Georgia,serif;color:var(--navy);font-weight:700;line-height:1.14}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+.eyebrow{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:800}
+
+.nav{position:sticky;top:0;z-index:20;background:rgba(255,248,239,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
+.brand{font-family:'Playfair Display',serif;color:var(--gold);letter-spacing:.24em;font-size:1rem;font-weight:700}
+.lang{font-size:.78rem;color:var(--navy);border:1px solid var(--line);border-radius:999px;padding:6px 12px;background:var(--paper);cursor:pointer;font-family:inherit}
+.back{font-size:.82rem;color:var(--muted);font-weight:600}
+.back:hover{color:var(--navy)}
+
+.crumb{padding:22px 0 0;font-size:.8rem;color:var(--muted)}
+.crumb b{color:var(--gold)}
+
+/* hero with mentorka */
+.top{display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:center;padding:24px 0 44px}
+.top h1{font-size:clamp(1.9rem,4vw,2.6rem);margin:6px 0 12px}
+.top p.lead{color:var(--ink);font-size:1rem;max-width:420px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chip{font-size:.78rem;background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:6px 12px;color:var(--navy)}
+
+.mentor{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;
+  background:linear-gradient(160deg,#fffdf8,var(--peachL));border:1px solid var(--line);border-radius:24px;padding:26px 22px}
+.medal{width:120px;height:120px;border-radius:50%;display:grid;place-items:center;font-size:3.4rem;
+  background:radial-gradient(circle at 35% 30%,#fff,#fbe9cf);border:2px solid var(--gold2);
+  box-shadow:0 12px 30px rgba(197,154,58,.28);overflow:hidden}
+.ava-svg{width:100%;height:100%;display:block;border-radius:50%}
+.ava-img{width:100%;height:100%;object-fit:cover;object-position:center 32%;display:block;border-radius:50%}
+.ava-mini{width:26px;height:26px;border-radius:50%;object-fit:cover;object-position:center 30%;vertical-align:middle}
+.mentor h3{margin:14px 0 2px;font-size:1.25rem}
+.mentor .role{font-size:.8rem;color:var(--gold);font-weight:700;letter-spacing:.04em}
+.bubble{position:relative;margin-top:16px;background:#fff;border:1px solid var(--line);border-radius:16px;
+  padding:14px 16px;font-size:.9rem;color:#4b4566;box-shadow:0 4px 14px rgba(124,90,40,.06)}
+.bubble::after{content:'';position:absolute;top:-9px;left:50%;transform:translateX(-50%);
+  border:9px solid transparent;border-bottom-color:#fff;filter:drop-shadow(0 -1px 0 var(--line))}
+.badge{display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-size:.74rem;font-weight:700;
+  color:#36997f;background:var(--mintL);border:1px solid #cdeee0;border-radius:999px;padding:6px 12px}
+
+/* chat demo */
+.chat{background:var(--paper);border:1px solid var(--line);border-radius:22px;overflow:hidden;margin:6px 0 10px}
+.chat .head{display:flex;align-items:center;justify-content:space-between;padding:13px 18px;border-bottom:1px solid var(--line);background:#fffdf9}
+.chat .head .who{display:flex;align-items:center;gap:9px;font-weight:700;color:var(--navy);font-size:.92rem}
+.chat .head .ava{font-size:1.2rem}
+.chat .head .sel{font-size:.74rem;color:var(--navy);border:1px solid var(--line);border-radius:999px;padding:5px 10px;background:var(--paper);font-family:inherit;cursor:pointer}
+.chat .body{padding:20px 18px;display:flex;flex-direction:column;gap:14px}
+.msg{max-width:82%;padding:11px 14px;border-radius:14px;font-size:.9rem}
+.msg.you{align-self:flex-end;background:var(--lavL);border:1px solid #e7defb;color:#4b4566}
+.msg.her{align-self:flex-start;background:#fff;border:1px solid var(--line)}
+.msg.her b{color:var(--navy)}
+.eq{font-family:'Playfair Display',serif;color:var(--navy);text-align:center;font-size:1.05rem;
+  background:#fdf6e6;border:1px solid var(--gold2);border-left:3px solid var(--gold);border-radius:10px;padding:9px 12px;margin:9px 0}
+.sketch{display:block;margin:8px auto 4px;border:1px solid var(--line);border-radius:12px;background:#fff}
+.q{color:var(--gold);font-style:italic;margin-top:6px}
+.composer{display:flex;gap:10px;padding:14px 18px;border-top:1px solid var(--line);background:#fffdf9}
+.composer input{flex:1;border:1px solid var(--line);border-radius:999px;padding:10px 14px;font-family:inherit;font-size:.9rem;background:#fff}
+.composer button{border:none;border-radius:999px;padding:10px 18px;font-weight:700;color:#fff;cursor:pointer;
+  background:linear-gradient(135deg,#e7c97f,#c59a3a)}
+.no-voice{font-size:.74rem;color:var(--muted);text-align:center;margin-top:8px}
+
+section{padding:40px 0}
+.sec-head h2{font-size:1.6rem;margin:6px 0 8px}
+.sec-head p{color:var(--muted)}
+.areas{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:22px}
+.area{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:16px 18px}
+.area h3{font-size:1rem;margin-bottom:4px}
+.area p{font-size:.84rem;color:var(--muted)}
+.mat{display:flex;gap:16px;flex-wrap:wrap;margin-top:22px}
+.mat a{flex:1;min-width:220px;border:1px solid var(--line);border-radius:16px;padding:18px 20px;background:linear-gradient(160deg,#fffdf8,var(--peachL))}
+.mat a.h{background:linear-gradient(160deg,#fffdf8,var(--mintL))}
+.mat .t{font-size:.72rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.mat a.h .t{color:#36997f}
+.mat h3{font-size:1.1rem;margin:6px 0 4px}
+.mat p{font-size:.84rem;color:var(--ink)}
+.cta-row{text-align:center;margin-top:30px}
+.btn{display:inline-block;font-weight:700;border-radius:999px;padding:13px 28px;color:#fff;cursor:pointer;
+  background:linear-gradient(135deg,#e7c97f,#c59a3a);box-shadow:0 8px 20px rgba(197,154,58,.3)}
+.pkgs{display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:720px;margin:8px auto 0;align-items:stretch}
+.pkg{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:22px 20px;display:flex;flex-direction:column}
+.pkg.featured{border-color:var(--gold);box-shadow:0 14px 34px rgba(197,154,58,.16);position:relative}
+.pkg.featured::before{content:'specijalna ponuda';position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#e7c97f,#c59a3a);color:#fff;font-size:.62rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:5px 13px;border-radius:999px}
+.pkg .tier{font-size:.64rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:5px}
+.pkg h3{font-size:1.12rem;margin-bottom:4px}
+.pkg .amt{font-family:'Playfair Display',serif;font-size:1.7rem;color:var(--navy);margin:8px 0 2px}
+.pkg .amt small{font-size:.8rem;color:var(--muted);font-family:'Plus Jakarta Sans'}
+.pkg ul{list-style:none;margin:12px 0 18px;display:flex;flex-direction:column;gap:7px}
+.pkg li{font-size:.84rem;padding-left:20px;position:relative}
+.pkg li::before{content:'✦';position:absolute;left:0;color:var(--gold)}
+.pkg .btn{margin-top:auto;text-align:center;font-size:.9rem;padding:11px 18px}
+.pkg .btn.ghost{background:var(--paper);border:1px solid var(--line);color:var(--navy);box-shadow:none}
+.access-note{text-align:center;font-size:.82rem;color:var(--muted);margin-top:14px}
+@media(max-width:680px){.pkgs{grid-template-columns:1fr}}
+
+footer{background:var(--navy);color:#aeb6cb;padding:40px 0;text-align:center;margin-top:30px}
+footer .brand{color:var(--gold2)}
+footer .langs{margin-top:12px;font-size:.74rem;color:#8b94ad;letter-spacing:.08em}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
+.fab{position:fixed;right:22px;bottom:22px;z-index:50;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.fab-tip{background:#fff;border:1px solid var(--line);border-radius:16px;padding:10px 14px;font-size:.84rem;color:#4b4566;
+  box-shadow:0 10px 26px rgba(124,90,40,.14);max-width:230px}
+.fab-btn{display:flex;align-items:center;gap:10px;border:none;cursor:pointer;border-radius:999px;padding:9px 16px 9px 9px;
+  background:linear-gradient(135deg,#e7c97f,#c59a3a);color:#fff;font-weight:700;font-size:.9rem;box-shadow:0 12px 28px rgba(197,154,58,.42)}
+.fab-ava{width:36px;height:36px;border-radius:50%;background:#fffdf9;display:grid;place-items:center;font-size:1.25rem;border:1px solid #f0e6d6}
+@media(max-width:560px){.fab-tip{display:none}}
+@media(max-width:820px){.top{grid-template-columns:1fr}.areas{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<linearGradient id="avbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fffaf2"/><stop offset="1" stop-color="#fbe6d3"/></linearGradient>
+<linearGradient id="avcl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3d1cf"/><stop offset="1" stop-color="#e8b6b3"/></linearGradient>
+<symbol id="ninaAva" viewBox="0 0 120 120">
+ <circle cx="60" cy="60" r="60" fill="url(#avbg)"/>
+ <path d="M18 120 C24 96 40 88 60 88 C80 88 96 96 102 120 Z" fill="url(#avcl)"/>
+ <path d="M52 78 h16 v8 q-8 6 -16 0 Z" fill="#eebf9c"/>
+ <path d="M30 56 C30 30 44 18 60 18 C76 18 90 30 90 56 C90 74 84 86 84 86 C84 70 80 64 80 64 L40 64 C40 64 36 70 36 86 C36 86 30 74 30 56 Z" fill="#774a2c"/>
+ <ellipse cx="60" cy="52" rx="19" ry="22" fill="#f6d2b6"/>
+ <circle cx="41" cy="54" r="3.4" fill="#f0c29f"/><circle cx="79" cy="54" r="3.4" fill="#f0c29f"/>
+ <path d="M41 46 C41 28 50 22 60 22 C70 22 79 28 79 46 C72 38 66 37 60 37 C54 37 47 38 41 46 Z" fill="#7d4f30"/>
+ <path d="M41 46 C41 56 39 66 40 70 C34 60 35 50 41 46 Z" fill="#774a2c"/>
+ <path d="M48 47 q5 -3 10 -1" stroke="#5e3c22" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+ <path d="M62 46 q5 -2 10 1" stroke="#5e3c22" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+ <ellipse cx="52" cy="53" rx="2.6" ry="3" fill="#3c4458"/><ellipse cx="68" cy="53" rx="2.6" ry="3" fill="#3c4458"/>
+ <path d="M60 55 v5 q-2 1 -3 0" stroke="#dca884" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+ <path d="M54 66 q6 5 12 0" stroke="#c87b6c" stroke-width="2" fill="none" stroke-linecap="round"/>
+ <circle cx="48" cy="61" r="3.2" fill="#f3b0a8" opacity=".55"/><circle cx="72" cy="61" r="3.2" fill="#f3b0a8" opacity=".55"/>
+ <g transform="translate(76,34)"><circle r="2" fill="#c59a3a"/><circle cx="0" cy="-4" r="2" fill="#f3d1cf"/><circle cx="0" cy="4" r="2" fill="#f3d1cf"/><circle cx="-4" cy="0" r="2" fill="#f3d1cf"/><circle cx="4" cy="0" r="2" fill="#f3d1cf"/></g>
+</symbol>
+</defs></svg>
+
+<nav class="nav"><div class="wrap">
+  <a class="back" href="index.html">← Predmeti</a>
+  <span class="brand">◆ MATHIA ◆</span>
+  <select class="lang" aria-label="Izbor jezika">
+    <option>🌐 Srpski</option><option>English</option><option>Deutsch</option><option>Ελληνικά</option><option>Magyar</option><option>Español</option><option>Русский</option><option>Italiano</option><option>Slovenščina</option><option>Français</option>
+  </select>
+</div></nav>
+
+<div class="wrap">
+  <div class="crumb">Matematika › <b>Analiza</b> › Analiza 1</div>
+
+  <div class="top">
+    <div>
+      <span class="eyebrow">predmet · fakultet</span>
+      <h1>Analiza 1</h1>
+      <p class="lead">Granične vrednosti, izvod, ispitivanje funkcije i integral — uz mentorku koja te vodi za ruku, na tvom jeziku.</p>
+      <div class="chips"><span class="chip">📘 e-knjiga</span><span class="chip">📑 priručnik</span><span class="chip">✦ rešeni zadaci</span><span class="chip">🌐 10 jezika</span></div>
+    </div>
+    <div class="mentor">
+      <div class="medal"><svg class="ava-svg" viewBox="0 0 120 120"><use href="#ninaAva"/></svg></div>
+      <h3>Nina</h3>
+      <span class="role">tvoja mentorka za Analizu</span>
+      <div class="bubble">Drago mi je, ja sam Nina! 🌸 Spremna sam za celu Analizu — granice, izvod, integral. Pitaj me bilo šta, prvo skiciramo, pa rešavamo zajedno.</div>
+      <span class="badge">✦ puna znanja iz ove oblasti</span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="chat">
+    <div class="head">
+      <span class="who"><span class="ava">📐</span> Nina · Analiza 1</span>
+      <select class="sel" aria-label="Jezik razgovora"><option>🌐 Srpski</option><option>English</option><option>Deutsch</option><option>Français</option><option>Italiano</option><option>Español</option><option>Русский</option><option>Ελληνικά</option><option>Magyar</option><option>Slovenščina</option></select>
+    </div>
+    <div class="body">
+      <div class="msg you">Koliko je izvod od x² i šta to znači?</div>
+      <div class="msg her">
+        Hajde korak po korak 🌸. Za stepenu funkciju važi <b>(xⁿ)′ = n·xⁿ⁻¹</b>. Kod x² je n = 2, pa:
+        <div class="eq">f(x) = x² &nbsp;⇒&nbsp; f′(x) = 2x</div>
+        Izvod je <b>nagib tangente</b>. Evo skice — vidi kako tangenta dodiruje parabolu, a njen nagib je baš 2x:
+        <svg class="sketch" width="280" height="180" viewBox="0 0 280 180" role="img" aria-label="Skica parabole sa tangentom">
+          <line x1="20" y1="160" x2="265" y2="160" stroke="#c9c2b3" stroke-width="1.2"/>
+          <line x1="40" y1="20" x2="40" y2="170" stroke="#c9c2b3" stroke-width="1.2"/>
+          <text x="258" y="174" font-size="11" fill="#7b8198">x</text>
+          <text x="26" y="26" font-size="11" fill="#7b8198">y</text>
+          <path d="M40 158 Q150 -40 250 60" fill="none" stroke="#1f3357" stroke-width="2.4"/>
+          <line x1="120" y1="150" x2="235" y2="44" stroke="#c59a3a" stroke-width="2" stroke-dasharray="5 4"/>
+          <circle cx="178" cy="98" r="4.5" fill="#c59a3a"/>
+          <text x="150" y="120" font-size="11" fill="#c59a3a" font-style="italic">tangenta</text>
+          <text x="196" y="40" font-size="11" fill="#1f3357">y = x²</text>
+        </svg>
+        <div class="q">Koliki je onda nagib tangente u tački x = 1? ✦</div>
+      </div>
+    </div>
+    <div class="composer">
+      <input placeholder="Pitaj Ninu nešto iz Analize…" aria-label="Poruka">
+      <button>Pošalji</button>
+    </div>
+  </div>
+  <p class="no-voice"><b style="color:#36997f">Prvo pitanje je besplatno.</b> Bez glasa — samo pisanje i crtanje; jezik biraš iz liste gore. ✍️</p>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">oblasti</span><h2>Šta sve pokriva Analiza 1</h2>
+      <p>Nina zna svaku od ovih oblasti — pitaj i reši zadatke korak po korak.</p></div>
+    <div class="areas">
+      <div class="area"><h3>Granične vrednosti i neprekidnost</h3><p>0/0, skraćivanje, L'Hôpital.</p></div>
+      <div class="area"><h3>Izvod funkcije</h3><p>Pravila, složena funkcija, tangenta.</p></div>
+      <div class="area"><h3>Ispitivanje funkcije</h3><p>Rast, ekstremi, konveksnost, skica.</p></div>
+      <div class="area"><h3>Integral</h3><p>Neodređeni i određeni, Njutn–Lajbnic.</p></div>
+    </div>
+
+    <div class="mat">
+      <a href="#"><span class="t">e-knjiga 📘</span><h3>Analiza 1 — skripta</h3><p>Cela oblast, toplo i postupno. SR + EN.</p></a>
+      <a class="h" href="#"><span class="t">e-priručnik 📑</span><h3>Analiza 1 — formule</h3><p>Najbitnije formule za brzo ponavljanje.</p></a>
+    </div>
+
+    <div class="sec-head" style="margin-top:8px"><span class="eyebrow">ponuda</span><h2>Uči uz Ninu</h2>
+      <p>Izaberi paket — pristup se otključava prema pretplati.</p></div>
+    <div class="pkgs">
+      <div class="pkg">
+        <span class="tier">Osnovni paket</span>
+        <h3>Uči uz Ninu</h3>
+        <div class="amt">5.999 <small>RSD / mesečno</small></div>
+        <ul><li>Neograničeno pitanja</li><li>Zadaci rešeni korak po korak</li><li>Cela oblast Analize 1</li></ul>
+        <a class="btn ghost" href="index.html#cene">Izaberi Ninu</a>
+      </div>
+      <div class="pkg featured">
+        <span class="tier">Specijalna ponuda</span>
+        <h3>Nina + skripte</h3>
+        <div class="amt">6.999 <small>RSD / mesečno</small></div>
+        <ul><li>Sve iz osnovnog paketa</li><li>Skripta 📘 + priručnik 📑 (Analiza 1)</li><li>Dodatni materijal i primeri</li><li><strong>+ skripte za samo 1.000 din više</strong></li></ul>
+        <a class="btn" href="index.html#cene">Uzmi specijalnu ponudu</a>
+      </div>
+    </div>
+    <p class="access-note">Posle pretplate otključavaš tačno onaj paket koji si izabrao/la.</p>
+  </div>
+</section>
+
+<footer>
+  <span class="brand">◆ MATHIA ◆</span>
+  <p>Uči s ljubavlju · mathia.rs</p>
+  <p style="max-width:640px;margin:16px auto 0;font-size:.74rem;color:#8b94ad;line-height:1.65">MathIA je nezavisna obrazovna platforma opšteg karaktera. Sadržaj i materijali su informativni i nisu povezani ni sa jednom konkretnom obrazovnom ustanovom, niti je predstavljaju.</p>
+</footer>
+
+<div class="fab">
+  <div class="fab-tip">Tu sam za Analizu! Pitaj me bilo šta. 🌸</div>
+  <button class="fab-btn"><span class="fab-ava"><svg class="ava-svg" viewBox="0 0 120 120"><use href="#ninaAva"/></svg></span><span>Pitaj Ninu</span></button>
+</div>
+
+</body>
+</html>

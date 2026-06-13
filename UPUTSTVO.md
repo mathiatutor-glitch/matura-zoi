@@ -1,82 +1,32 @@
-# Zoi · mala matura — kompletno uputstvo (korak po korak)
+# UPUTSTVO — kako da uploaduješ (Batch 1)
 
-Samostalni AI tutor za pripremu **male mature iz matematike**. Ubacuje se na bilo koju
-stranu **jednom linijom**. Radi zadatak iz teksta ili sa **slike**, korak po korak,
-na **8 jezika**, sa **glasom**, **prepoznavanjem nivoa** i **zadatkom za vežbu**.
+Ovaj batch ide u repo **`mathia-sajt`** (ono što se objavljuje na `project-y23je.vercel.app`).
 
-## Šta je uključeno
-- 5 zvaničnih oblasti završnog ispita (Brojevi i operacije, Algebra i funkcije, Geometrija, Merenje, Obrada podataka).
-- 3 nivoa težine — Zoi prepozna i kaže je li zadatak **osnovni / srednji / napredni**.
-- Tvoj **metod i glas** (prepiši uredno, skraćuj, „kao slikovnicu", smiruj tremu, ne juriti grešku).
-- Na kraju **uvek** daje **nov zadatak za vežbu** istog nivoa.
-- Jezici: **SR, EN, HU, BS, SQ, HR, RO, SK** (prekidač u prozoru).
-- Slika zadatka 📷 + glas 🔊.
+## Fajlovi u ovom batch-u
+- `index.html` — naslovna (zameni postojeći `index.html`)
+- `kviz.html` — test izbora fakulteta/srednje (zameni postojeći `kviz.html`)
+- `predmet-analiza1.html` — primer strane predmeta (nov fajl)
+- `README.md` — mapa naziva i plan (zameni postojeći)
+- `UPUTSTVO.md` — ovo uputstvo (zameni postojeći)
 
-## Fajlovi u paketu
-- `widget.js` — sam tutor (ide na sajt).
-- `index.html` — gotova demo strana sa već ubačenom Zoi.
-- `api/chat.js` — backend koji čuva tajni ključ i Zoin „mozak" (radi na Vercel-u).
-- `package.json`, `.gitignore` — prateći fajlovi.
+## ⚠️ Važno — NE briši ništa još
+Da se sajt ne bi lomio dok ne uđu svi batchevi, **ništa ne brišemo sada**.
+Samo dodajemo/menjamo gornje fajlove. Kompletno čišćenje duplikata
+(`mathia_naslovna.html`, `mathia_kviz_*.html`, `test-sklonosti.html`…) radimo
+**na samom kraju**, jednim potezom, kad sve nove strane budu gore.
 
-> ⚠️ Tajni ključ NIKAD ne ide u `widget.js` ni na GitHub — samo kao Vercel env varijabla (vidi KORAK 3).
+## Koraci (GitHub, preko pregledača)
+1. Otvori repo **`mathia-sajt`** → dugme **`Add file`** → **`Upload files`**.
+2. Prevuci svih 5 fajlova iz ovog batch-a u prozor.
+3. GitHub će za `index.html`, `kviz.html`, `README.md`, `UPUTSTVO.md` reći da
+   **zamenjuje** postojeće — to je u redu.
+4. Dole upiši poruku commita, npr. `Batch 1 - cisto jezgro` → **`Commit changes`**.
+5. **Vercel** sam pokreće deploy; za minut proveri `project-y23je.vercel.app`.
 
----
+## Šta da proveriš posle uploada
+- Naslovna: meni ima **Test**; sekcija „Pronađi fakultet i smer…" → dugmad **Beograd / Novi Sad**.
+- Klik na **Beograd** (fakultet) → otvara `kviz.html`, prođe 8 pitanja → rezultat **1 + 4**, sa „zašto", „čime ćeš se baviti", „gde se zapošljava".
+- U futeru svuda stoji napomena o opštem karakteru platforme.
+- „Analiza 1" na naslovnoj → otvara `predmet-analiza1.html` (dve ponude: Nina / Nina + skripte).
 
-# UPUTSTVO ZA UPLOAD
-
-## KORAK 1 — Napravi repo na GitHub-u
-1. Uđi na **github.com** → New repository → ime npr. `matura-zoi` → Create.
-2. Otvori repo → **Add file → Upload files**.
-3. Prevuci **sve fajlove iz paketa** (i folder `api`) → **Commit changes**.
-
-## KORAK 2 — Poveži sa Vercel-om
-1. Uđi na **vercel.com** → prijavi se GitHub nalogom.
-2. **Add New… → Project** → izaberi repo `matura-zoi` → **Import** → **Deploy**.
-3. Sačekaj da piše **Ready**. (Vercel sam prepozna `api/chat.js`.)
-
-## KORAK 3 — Dodaj tajni API ključ
-1. Na **console.anthropic.com** → Settings → **API Keys** → napravi ključ (kopiraj ga).
-2. Tu na **Billing** dodaj malo sredstava (AI se plaća po upotrebi).
-3. Nazad na Vercel: **Project → Settings → Environment Variables** dodaj:
-   - **Name:** `ANTHROPIC_API_KEY`
-   - **Value:** tvoj ključ → **Save**.
-4. **Deployments → (tri tačkice na poslednjem) → Redeploy.**
-   (Bez ovog koraka ključ se ne primeni!)
-
-## KORAK 4 — Testiraj
-1. Klikni **Visit** (ili otvori svoj `…vercel.app` link).
-2. Klikni Zoi dugme **dole desno** → napiši **„Zdravo"** → pošalji.
-3. Ako odgovori — uspelo je! 🎉
-   Ako zucne grešku, oblačić tačno kaže šta fali (najčešće: ključ nije dodat ili
-   nema sredstava → dodaj pa ponovo **Redeploy**). Posle promena uvek **Cmd/Ctrl+Shift+R**.
-
-## KORAK 5 — Stavi Zoi na svoju stranu
-Na svaku `.html` stranu, **iznad `</body>`**, nalepi ovu liniju:
-
-```html
-<script src="widget.js"
-        data-api="/api/chat"
-        data-avatar="URL_DO_ZOI_SLIKE"
-        data-lang="sr"></script>
-```
-
-- Ako je backend na drugom domenu, stavi pun link:
-  `data-api="https://matura-zoi.vercel.app/api/chat"`.
-- `data-lang` = početni jezik (`sr`, `en`, `hu`, `bs`, `sq`, `hr`, `ro`, `sk`) — korisnik ga menja u prozoru.
-
----
-
-## Šta lako menjaš
-- **Slika (avatar):** `data-avatar` u liniji za ubacivanje.
-- **Početni jezik:** `data-lang`.
-- **Zoin „mozak" / metod / gradivo:** `api/chat.js` → `MATURA_SYSTEM`.
-- **Model / cena:** `api/chat.js`, polje `model`:
-  - `claude-sonnet-4-6` — **kvalitetnije (podrazumevano)**,
-  - `claude-haiku-4-5-20251001` — jeftinije i brže.
-  Posle svake izmene fajlova → **Redeploy** na Vercel-u.
-
-## Napomene
-- Postavi **limit potrošnje** na Anthropic nalogu dok testiraš.
-- Glas/mikrofon zavise od uređaja i jezika (najbolje Chrome); za vrhunski glas kasnije premium TTS (ElevenLabs).
-- Zvanična zbirka je korišćena kao orijentir za oblasti, nivoe i tipove — bez prepisivanja zadataka od reči do reči.
-- Sledeće (po želji): praćenje napretka učenika, više jezika, zasebna baza zadataka kad naraste.
+Kad potvrdiš da Batch 1 radi, šaljem **Batch 2 (sve strane predmeta)**.
