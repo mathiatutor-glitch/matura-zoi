@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MathIA · Algebra · Formule</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<style>
+  :root{
+    --paper:#fbf7ef; --paper2:#f5ecdb; --gold:#c59a3a; --gold-deep:#a67e27;
+    --ink:#2a2620; --soft:#6f6757; --line:#e8ddc6; --card:#fdfbf6;
+    --serif:'Playfair Display',Georgia,serif; --sans:'Plus Jakarta Sans',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--paper); color:var(--ink); font-family:var(--sans);
+    -webkit-font-smoothing:antialiased; line-height:1.5; overflow-x:hidden;
+    background-image:radial-gradient(120% 60% at 50% -10%, #fffdf8 0%, var(--paper) 46%);
+  }
+  /* scroll progress */
+  #progress{position:fixed;top:0;left:0;height:2px;width:0;background:linear-gradient(90deg,var(--gold-deep),var(--gold));z-index:50}
+  /* top bar (appears after cover) */
+  #bar{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;align-items:center;justify-content:space-between;
+    padding:11px 22px;background:rgba(251,247,239,.86);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);
+    transform:translateY(-110%);transition:transform .45s cubic-bezier(.2,.7,.2,1)}
+  #bar.show{transform:none}
+  #bar .b-brand{font-family:var(--serif);font-weight:700;letter-spacing:.5px}
+  #bar .b-brand b{color:var(--gold-deep)}
+  #bar .b-tag{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--soft)}
+
+  /* ===== COVER ===== */
+  .cover{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:26px}
+  .frame{position:relative;width:min(680px,100%);min-height:min(86vh,860px);
+    border:1.5px solid var(--gold);border-radius:14px;background:linear-gradient(180deg,#fffdf8,var(--paper));
+    display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+    padding:54px 30px;box-shadow:0 30px 80px -40px rgba(120,90,20,.45)}
+  .frame::before{content:"";position:absolute;inset:13px;border:1px solid var(--gold);opacity:.55;border-radius:8px;pointer-events:none}
+  .seal{width:96px;height:96px;margin-bottom:26px;position:relative}
+  .seal svg{position:absolute;inset:0;width:100%;height:100%}
+  .seal .ring{fill:none;stroke:var(--gold);stroke-width:2.2;stroke-dasharray:295;stroke-dashoffset:295}
+  .seal .m{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    font-family:var(--serif);font-weight:700;font-size:46px;color:var(--gold);opacity:0}
+  .eyebrow{font-size:12px;letter-spacing:6px;text-transform:uppercase;color:var(--soft);margin-bottom:18px;opacity:0}
+  .title{font-family:var(--serif);font-weight:700;font-size:clamp(46px,11vw,86px);letter-spacing:2px;margin:0;
+    line-height:.98;
+    background:linear-gradient(100deg,var(--ink) 0%,var(--ink) 38%,var(--gold) 50%,var(--ink) 62%,var(--ink) 100%);
+    background-size:230% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+    opacity:0}
+  .rule{width:0;height:2px;background:var(--gold);margin:24px 0;opacity:.9}
+  .subt{font-family:var(--serif);font-style:italic;font-size:clamp(16px,2.6vw,21px);color:var(--soft);opacity:0}
+  .teasers{display:flex;flex-wrap:wrap;gap:14px 30px;justify-content:center;max-width:560px;margin-top:40px}
+  .teaser{flex:1 1 220px;min-width:200px;text-align:left;opacity:0}
+  .teaser .rn{font-family:var(--serif);font-weight:600;color:var(--gold);font-size:15px;letter-spacing:1px}
+  .teaser p{margin:3px 0 0;font-size:13px;color:var(--soft);line-height:1.45}
+  .chev{margin-top:40px;color:var(--gold);opacity:0;animation:none}
+  .chev svg{width:26px;height:26px}
+
+  /* cover load animation */
+  .go .seal .ring{animation:draw 1.3s .15s ease forwards}
+  .go .seal .m{animation:fade .7s 1.0s ease forwards}
+  .go .eyebrow{animation:fade .7s 1.15s ease forwards}
+  .go .title{animation:fade .9s 1.25s ease forwards, shimmer 5.5s 2.2s ease-in-out infinite}
+  .go .rule{animation:grow .8s 1.5s cubic-bezier(.2,.7,.2,1) forwards}
+  .go .subt{animation:fade .8s 1.7s ease forwards}
+  .go .teaser{animation:fade .7s ease forwards}
+  .go .teaser:nth-child(1){animation-delay:1.95s}
+  .go .teaser:nth-child(2){animation-delay:2.1s}
+  .go .chev{animation:fade .8s 2.5s ease forwards, bob 2.2s 3s ease-in-out infinite}
+  @keyframes draw{to{stroke-dashoffset:0}}
+  @keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  @keyframes grow{to{width:64px}}
+  @keyframes shimmer{0%,100%{background-position:130% 0}45%,55%{background-position:-30% 0}}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
+
+  /* ===== PARTS ===== */
+  main{max-width:840px;margin:0 auto;padding:0 24px 90px}
+  .part{position:relative;margin:78px 0 14px;padding:30px 0 8px;border-top:1px solid var(--line);overflow:hidden}
+  .part .num{position:absolute;right:-6px;top:-22px;font-family:var(--serif);font-weight:700;
+    font-size:190px;line-height:1;color:var(--gold);opacity:.10;pointer-events:none;user-select:none}
+  .kick{display:inline-block;font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--gold-deep);font-weight:600}
+  .part-h{font-family:var(--serif);font-weight:600;font-size:clamp(24px,4.2vw,34px);margin:8px 0 0;max-width:80%}
+
+  .sec{margin-top:30px}
+  .sec-h{font-family:var(--serif);font-weight:600;font-size:21px;margin:26px 0 12px;padding-bottom:8px;
+    position:relative}
+  .sec-h::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:46px;background:var(--gold);
+    transform:scaleX(0);transform-origin:left;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+  .sec-h.in::after{transform:scaleX(1)}
+
+  .card{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--gold);
+    border-radius:0 12px 12px 0;padding:15px 20px;margin:13px 0;
+    box-shadow:0 14px 30px -26px rgba(120,90,20,.5);
+    opacity:0;transform:translateY(18px);transition:opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1), box-shadow .25s ease}
+  .card.in{opacity:1;transform:none}
+  .card:hover{box-shadow:0 18px 40px -24px rgba(120,90,20,.55);border-left-color:var(--gold-deep)}
+  .lbl{font-weight:600;font-size:13.5px;color:var(--soft);margin-bottom:8px}
+  .frm{overflow-x:auto;overflow-y:hidden;padding:2px 0}
+  .frm .katex{font-size:1.12em;color:var(--ink)}
+  .frm .katex-display{margin:.25em 0;text-align:left}
+
+  .note{background:linear-gradient(180deg,#f7f0e1,#f3ead7);border:1px solid var(--line);border-radius:12px;
+    padding:13px 18px;margin:13px 0;font-size:13.5px;color:var(--soft);line-height:1.6;
+    opacity:0;transform:translateY(18px);transition:opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1)}
+  .note.in{opacity:1;transform:none}
+  .note b{color:var(--ink);font-weight:600}
+
+  footer{text-align:center;padding:46px 20px 60px;color:var(--soft);font-size:12.5px;border-top:1px solid var(--line);margin-top:40px}
+  footer .fseal{font-family:var(--serif);color:var(--gold);font-size:22px;font-weight:700}
+  footer a{color:var(--gold-deep);text-decoration:none}
+
+  @media (max-width:560px){
+    .part .num{font-size:120px;top:-6px}
+    .part-h{max-width:100%}
+    .frm .katex{font-size:1em}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *{animation:none !important;transition:none !important}
+    .seal .ring{stroke-dashoffset:0}.seal .m,.eyebrow,.title,.subt,.teaser,.chev{opacity:1}
+    .rule{width:64px}.title{-webkit-text-fill-color:var(--ink)}
+    .card,.note{opacity:1;transform:none}.sec-h::after{transform:scaleX(1)}
+  }
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<div id="bar">
+  <span class="b-brand">Math<b>IA</b></span>
+  <span class="b-tag">Algebra · Formule</span>
+</div>
+
+<!-- ===== COVER ===== -->
+<header class="cover">
+  <div class="frame" id="frame">
+    <div class="seal">
+      <svg viewBox="0 0 100 100"><circle class="ring" cx="50" cy="50" r="47"/></svg>
+      <div class="m">M</div>
+    </div>
+    <div class="eyebrow">MathIA</div>
+    <h1 class="title">Algebra</h1>
+    <div class="rule"></div>
+    <div class="subt">Formule — kompletan pregled</div>
+    <div class="teasers">
+      <div class="teaser">
+        <span class="rn">I deo</span>
+        <p>Relacije, funkcije, algebarske strukture, kompleksni brojevi i polinomi.</p>
+      </div>
+      <div class="teaser">
+        <span class="rn">II deo</span>
+        <p>Matrice, determinante, vektori, analitička geometrija, sistemi i prostori.</p>
+      </div>
+    </div>
+    <div class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 9l6 6 6-6"/></svg></div>
+  </div>
+</header>
+
+<main>
+  <!-- ===================== I DEO ===================== -->
+  <div class="part" id="deo1">
+    <div class="num">I</div>
+    <span class="kick">I deo</span>
+    <h2 class="part-h">Relacije, strukture, kompleksni brojevi i polinomi</h2>
+  </div>
+
+  <section class="sec">
+    <h3 class="sec-h">Relacije</h3>
+    <div class="card"><div class="lbl">Osobine relacije ρ na skupu A</div><div class="frm">\[\textbf{(R)}\ \forall a:\ a\,\rho\,a \quad \textbf{(S)}\ a\,\rho\,b\Rightarrow b\,\rho\,a \quad \textbf{(AS)}\ (a\rho b\wedge b\rho a)\Rightarrow a=b \quad \textbf{(T)}\ (a\rho b\wedge b\rho c)\Rightarrow a\rho c\]</div></div>
+    <div class="card"><div class="lbl">Relacija ekvivalencije i klasa</div><div class="frm">\[\rho:\ R\wedge S\wedge T \qquad [a]=\{x:\ x\,\rho\,a\}\]</div></div>
+    <div class="card"><div class="lbl">Relacija (parcijalnog) poretka</div><div class="frm">\[\rho:\ R\wedge AS\wedge T\]</div></div>
+  </section>
+
+  <section class="sec">
+    <h3 class="sec-h">Funkcije</h3>
+    <div class="card"><div class="lbl">Kompozicija i inverz</div><div class="frm">\[(g\circ f)(x)=g\big(f(x)\big)\qquad (g\circ f)^{-1}=f^{-1}\circ g^{-1}\]</div></div>
+    <div class="card"><div class="lbl">Injekcija / surjekcija / bijekcija</div><div class="frm">\[\text{inj: } f(x_1)=f(x_2)\Rightarrow x_1=x_2 \qquad \text{surj: } \forall y\,\exists x:\ f(x)=y\]</div></div>
+    <div class="card"><div class="lbl">Inverzna funkcija (bijekcija)</div><div class="frm">\[f\circ f^{-1}=\mathrm{id}_B,\qquad f^{-1}\circ f=\mathrm{id}_A\]</div></div>
+  </section>
+
+  <section class="sec">
+    <h3 class="sec-h">Bulove algebre (B, +, ·, ′, 0, 1)</h3>
+    <div class="card"><div class="lbl">Distributivnost</div><div class="frm">\[a(b+c)=ab+ac \qquad a+bc=(a+b)(a+c)\]</div></div>
+    <div class="card"><div class="lbl">Neutrali i komplement</div><div class="frm">\[a+0=a,\quad a\cdot 1=a \qquad a+a'=1,\quad a\cdot a'=0\]</div></div>
+    <div class="card"><div class="lbl">Idempotentnost i apsorpcija</div><div class="frm">\[a+a=a,\quad a\cdot a=a \qquad a+ab=a,\quad a(a+b)=a\]</div></div>
+    <div class="card"><div class="lbl">De Morgan</div><div class="frm">\[(a+b)'=a'\,b' \qquad (a\,b)'=a'+b' \qquad 0'=1,\ 1'=0\]</div></div>
+  </section>
+
+  <section class="sec">
+    <h3 class="sec-h">Grupoidi i grupe</h3>
+    <div class="card"><div class="lbl">Hijerarhija struktura (G, ∗)</div><div class="frm">\[\text{grupoid}\subset\text{polugrupa}\subset\text{monoid}\subset\text{grupa}\subset\text{Abelova grupa}\]</div></div>
+    <div class="card"><div class="lbl">Neutral i inverz</div><div class="frm">\[a*e=e*a=a \qquad a*a^{-1}=a^{-1}*a=e\]</div></div>
+    <div class="note"><b>Kejlijeva tablica:</b> struktura je grupa ako u svakom redu i koloni svaki element stoji tačno jednom (Latinski kvadrat), postoji neutral i svaki element ima inverz. Abelova je akko je tablica simetrična u odnosu na glavnu dijagonalu.</div>
+  </section>
+
+  <section class="sec">
+    <h3 class="sec-h">Prsteni i polja</h3>
+    <div class="card"><div class="lbl">Prsten (R, +, ·)</div><div class="frm">\[(R,+)\ \text{Abelova grupa},\ \ \cdot\ \text{asoc.},\ \ \text{distributivnost}\]</div></div>
+    <div class="card"><div class="lbl">Polje (F, +, ·)</div><div class="frm">\[\text{komutativan prsten sa }1,\ \ \forall a\neq0\ \exists\,a^{-1}\]</div></div>
+    <div class="card"><div class="lbl">Primeri</div><div class="frm">\[\mathbb{Q},\ \mathbb{R},\ \mathbb{C}\ \text{su polja}; \quad \mathbb{Z}_p\ \text{polje}\iff p\ \text{prost}\]</div></div>
+  </section>
+
+  <section class="sec">
+    <h3 class="sec-h">Konstrukcija konačnih polja</h3>
+    <div class="card"><div class="lbl">Prosto polje</div><div class="frm">\[GF(p)=\mathbb{Z}_p=\{0,1,\dots,p-1\},\quad |GF(p)|=p\]</div></div>
+    <div class="card"><div class="lbl">Prošireno polje</div><div class="frm">\[GF(p^{n})=\mathbb{Z}_p[x]\,/\,(f),\quad f\ \text{ireducibilan},\ \deg f=n,\quad |GF(p^{n})|=p^{n}\]</div></div>
+    <div class="card"><div class="lbl">Svodljivost (stepen ≤ 3)</div><div class="frm">\[f\ \text{svodljiv nad }F \iff f\ \text{ima koren u }F;\quad t^3+1=(t+1)(t^2-t+1)\]</div></div>
+  </section>
+
+  <section class="sec">
+    <h3 class="sec-h">Kompleksni brojevi</h3>
+    <div class="card"><div class="lbl">Oblici i moduo</div><div class="frm">\[z=x+iy=r(\cos\varphi+i\sin\varphi)=re^{i\varphi},\quad r=|z|=\sqrt{x^2+y^2},\ \ z\bar z=|z|^2\]</div></div>
+    <div class="card"><div class="lbl">Proizvod, količnik, Moavr</div><div class="frm">\[z_1z_2=r_1r_2e^{i(\varphi_1+\varphi_2)},\quad \frac{z_1}{z_2}=\frac{r_1}{r_2}e^{i(\varphi_1-\varphi_2)},\quad z^{n}=r^{n}e^{in\varphi}\]</div></div>
+    <div class="card"><div class="lbl">n-ti koreni</div><div class="frm">\[\sqrt[n]{z}=\sqrt[n]{r}\;e^{\,i\frac{\varphi+2k\pi}{n}},\qquad k=0,1,\dots,n-1\]</div></div>
+    <div class="card"><div class="lbl">Geometrija skupova (kružnica |z|=r, poluprava arg z=θ)</div><div class="frm">\[\{z:\,|z|=r\}\qquad \{z:\,\arg z=\theta\}\]</div></div>
+  </section>
+
+  <section class="sec">
+    <h3 class="sec-h">Polinomi</h3>
+    <div class="card"><div class="lbl">Bezuova teorema i stepen</div><div class="frm">\[p(\alpha)=0\iff (x-\alpha)\mid p(x)\qquad \deg(p\,q)=\deg p+\deg q\]</div></div>
+    <div class="card"><div class="lbl">Osnovna teorema algebre / faktorizacija nad ℂ</div><div class="frm">\[p(x)=a_n\prod_{k=1}^{n}(x-z_k),\qquad p\in\mathbb{C}[x],\ \deg p=n\]</div></div>
+    <div class="card"><div class="lbl">Faktorizacija nad ℝ (par konjugovanih korena)</div><div class="frm">\[(x-z)(x-\bar z)=x^2-2\,\mathrm{Re}(z)\,x+|z|^2\]</div></div>
+    <div class="card"><div class="lbl">Vietove formule (kvadratna)</div><div class="frm">\[x_1+x_2=-\tfrac{b}{a},\qquad x_1x_2=\tfrac{c}{a}\]</div></div>
+    <div class="card"><div class="lbl">Primer (zbir geometrijskog niza)</div><div class="frm">\[1024x^5+256x^4+64x^3+16x^2+4x+1=\sum_{k=0}^{5}(4x)^k=\frac{(4x)^6-1}{4x-1}\]</div></div>
+  </section>
+
+  <!-- ===================== II DEO ===================== -->
+  <div class="part" id="deo2">
+    <div class="num">II</div>
+    <span class="kick">II deo</span>
+    <h2 class="part-h">Linearna algebra i analitička geometrija</h2>
+  </div>
+
+  <section class="sec">
+    <h3 class="sec-h">Matrice</h3>
+    <div class="card"><div class="lbl">Množenje i transponovanje</div><div class="frm">\[(AB)_{ij}=\sum_k a_{ik}b_{kj}\qquad (AB)^{T}=B^{T}A^{T}\]</div></div>
+    <div class="card"><div class="lbl">Inverzna matrica</div><div class="frm">\[A^{-1}=\frac{1}{\det A}\,\mathrm{adj}(A)\qquad \begin{pmatrix}a&b\\c&d\end{pmatrix}^{-1}=\frac{1}{ad-bc}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}\]</div></div>
+    <div class="card"><div class="lbl">Pravilo proizvoda inverza</div><div class="frm">\[(AB)^{-1}=B^{-1}A^{-1}\]</div></div>
+  </section>
+
+  <section class="sec">
+    <h3 class="sec-h">Determinante</h3>
+    <div class="card"><div class="lbl">Razvoj (Laplas) po i-toj vrsti</div><div class="frm">\[\det A=\sum_{j}(-1)^{i+j}a_{ij}M_{ij}\]</div></div>
+    <div class="card"><div class="lbl">Osobine</div><div class="frm">\[\det(AB)=\det A\,\det B,\quad \det(\alpha A)=\alpha^{n}\det A,\quad \det(A^{T})=\det A\]</div></div>
+    <div class="card"><div class="lbl">Regularnost</div><div class="frm">\[A^{-1}\ \text{postoji}\iff \det A\neq 0\]</div></div>
+  </section>
+
+  <section class="sec">
+    <h3 class="sec-h">Sopstvene vrednosti i vektori</h3>
+    <div class="card"><div class="lbl">Karakteristični polinom</div><div class="frm">\[k(\lambda)=\det(A-\lambda I)\]</div></div>
+    <div class="card"><div class="lbl">Sopstveni par</div><div class="frm">\[k(\lambda)=0\ \Rightarrow\ \lambda;\qquad (A-\lambda I)\,v=0,\ \ v\neq 0\]</div></div>
+  </section>
+
+  <section class="sec">
+    <h3 class="sec-h">Vektori</h3>
+    <div class="card"><div class="lbl">Intenzitet i skalarni proizvod</div><div class="frm">\[|\vec a|=\sqrt{a_1^2+a_2^2+a_3^2}\qquad \vec a\cdot\vec b=a_1b_1+a_2b_2+a_3b_3=|\vec a||\vec b|\cos\varphi\]</div></div>
+    <div class="card"><div class="lbl">Vektorski i mešoviti proizvod</div><div class="frm">\[\vec a\times\vec b=\begin{vmatrix}\vec i&\vec j&\vec k\\ a_1&a_2&a_3\\ b_1&b_2&b_3\end{vmatrix},\qquad (\vec a,\vec b,\vec c)=\vec a\cdot(\vec b\times\vec c)\]</div></div>
+    <div class="card"><div class="lbl">Projekcija i težište</div><div class="frm">\[\mathrm{proj}_{\vec b}\,\vec a=\frac{\vec a\cdot\vec b}{|\vec b|^{2}}\,\vec b\qquad \vec r_T=\tfrac13(\vec r_A+\vec r_B+\vec r_C)\]</div></div>
+  </section>
+
+  <section class="sec">
+    <h3 class="sec-h">Analitička geometrija</h3>
+    <div class="card"><div class="lbl">Prava i ravan</div><div class="frm">\[\vec r=\vec r_P+t\,\vec p\qquad \vec n\cdot(\vec r-\vec r_N)=0\ \Leftrightarrow\ Ax+By+Cz+D=0\]</div></div>
+    <div class="card"><div class="lbl">Ortogonalna projekcija tačke na pravu p</div><div class="frm">\[\vec r_C=\vec r_P+\frac{(\vec r_B-\vec r_P)\cdot\vec p}{\vec p\cdot\vec p}\,\vec p\]</div></div>
+    <div class="note"><b>Prodor prave kroz ravan:</b> zameni pravu r = r<sub>P</sub> + t·p u jednačinu ravni, reši po parametru t, pa to t vrati u jednačinu prave da dobiješ tačku prodora.</div>
+  </section>
+
+  <section class="sec">
+    <h3 class="sec-h">Sistemi linearnih jednačina</h3>
+    <div class="card"><div class="lbl">Matrični zapis i Kramer</div><div class="frm">\[A\vec x=\vec b\qquad x_i=\frac{\det A_i}{\det A}\ \ (\det A\neq0)\]</div></div>
+    <div class="card"><div class="lbl">Ruše–Kapeli (saglasnost)</div><div class="frm">\[\mathrm{rang}\,A=\mathrm{rang}\,[A\,|\,b]=r\]</div></div>
+    <div class="note">Sistem je saglasan akko je rang A = rang[A|b]. Tada: <b>r = n</b> daje jedinstveno rešenje; <b>r &lt; n</b> daje beskonačno mnogo rešenja (n−r slobodnih parametara). Ako su rangovi različiti, sistem je nesaglasan.</div>
+  </section>
+
+  <section class="sec">
+    <h3 class="sec-h">Vektorski prostori</h3>
+    <div class="card"><div class="lbl">Linearna nezavisnost i baza</div><div class="frm">\[\textstyle\sum_i\lambda_i v_i=0\Rightarrow \lambda_i=0;\qquad \dim V=\#\,\text{baze}\]</div></div>
+    <div class="card"><div class="lbl">Teorema o rangu i defektu</div><div class="frm">\[\dim(\mathrm{im}\,f)+\dim(\ker f)=\dim V\]</div></div>
+  </section>
+
+  <section class="sec">
+    <h3 class="sec-h">Linearne transformacije</h3>
+    <div class="card"><div class="lbl">Linearnost</div><div class="frm">\[f(\alpha u+\beta v)=\alpha f(u)+\beta f(v)\qquad f(0)=0\]</div></div>
+    <div class="card"><div class="lbl">Matrica i rang</div><div class="frm">\[M_f=\big[\,f(e_1)\ \cdots\ f(e_n)\,\big]\qquad \mathrm{rang}\,f=\mathrm{rang}\,M_f\]</div></div>
+    <div class="card"><div class="lbl">Izomorfizam</div><div class="frm">\[\text{bijektivna lin. transf.};\quad V\cong W\iff \dim V=\dim W\]</div></div>
+  </section>
+</main>
+
+<footer>
+  <div class="fseal">M</div>
+  MathIA · <a href="https://mathia.rs">mathia.rs</a> — Algebra · Formule
+</footer>
+
+<script>
+  window.addEventListener('load', function(){
+    // render math
+    if (window.renderMathInElement){
+      renderMathInElement(document.body, {
+        delimiters:[{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}],
+        throwOnError:false
+      });
+    }
+    // start cover animation
+    requestAnimationFrame(function(){ document.getElementById('frame').parentElement.classList.add('go'); document.body.classList.add('go'); });
+
+    // scroll reveal
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+    }, {threshold:0.16, rootMargin:'0px 0px -8% 0px'});
+    document.querySelectorAll('.card,.note,.sec-h').forEach(function(el){ io.observe(el); });
+
+    // progress + top bar
+    var prog=document.getElementById('progress'), bar=document.getElementById('bar');
+    function onScroll(){
+      var h=document.documentElement, max=h.scrollHeight-h.clientHeight;
+      prog.style.width=(max>0?(h.scrollTop/max*100):0)+'%';
+      if(window.scrollY>window.innerHeight*0.7){bar.classList.add('show');}else{bar.classList.remove('show');}
+    }
+    document.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+  });
+</script>
+</body>
+</html>
