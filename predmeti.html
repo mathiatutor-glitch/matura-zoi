@@ -254,7 +254,7 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
      var sr=el.dataset.sr; el.textContent=(l==='en'&&EN[sr])?EN[sr]:sr;});
    if(h1)h1.innerHTML=(l==='en')?H1EN:h1.dataset.srhtml;
    if(ftag)ftag.innerHTML=(l==='en')?FTAGEN:ftag.dataset.srhtml;
-   document.documentElement.lang=l;
+   document.documentElement.lang=l; document.title=(l==='en')?'Subjects — MathIA':'Predmeti — MathIA';
    document.querySelectorAll('.langsw .lb').forEach(function(b){b.classList.toggle('on',b.dataset.l===l)});
    try{localStorage.setItem('mathia_lang',l)}catch(e){}
  }

@@ -126,7 +126,7 @@
   function applyLang(){
     var d=T[lang];
     document.querySelectorAll("[data-t]").forEach(function(el){ if(d[el.getAttribute("data-t")]!=null) el.innerHTML=d[el.getAttribute("data-t")]; });
-    document.documentElement.lang=lang; $("lang").textContent = lang==="sr"?"EN":"SR";
+    document.documentElement.lang=lang; document.title=lang==="sr"?"Prijava — MathIA":"Sign in — MathIA"; $("lang").textContent = lang==="sr"?"EN":"SR";
   }
   $("lang").onclick=function(){ lang = lang==="sr"?"en":"sr"; applyLang(); };
   applyLang();

@@ -153,6 +153,7 @@
     document.getElementById("en").classList.toggle("hidden", lang!=="en");
     document.getElementById("lang").textContent = lang==="sr"?"EN":"SR";
     document.documentElement.lang=lang;
+    document.title=lang==="sr"?"Politika privatnosti — MathIA":"Privacy policy — MathIA";
     document.getElementById("draftNote").innerHTML = lang==="sr"
       ? '⚠️ Ovo je <b>nacrt</b> politike privatnosti, kao polazna osnova. Pre objave neka ga pregleda pravnik i popunite polja <span class="ph">[ovako]</span>. Nije pravni savet.'
       : '⚠️ This is a <b>draft</b> privacy policy as a starting point. Have a lawyer review it before publishing and fill in the <span class="ph">[bracketed]</span> fields. Not legal advice.';
