@@ -314,6 +314,7 @@ footer .langs{margin-top:16px;font-size:.74rem;color:#8b94ad;letter-spacing:.08e
 @media(max-width:520px){.zchat{right:8px;bottom:8px;width:calc(100vw - 16px);height:calc(100vh - 80px)}}
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+<style id="mathia-tut-fix">a.tut{transition:transform .2s ease,box-shadow .2s ease}a.tut:hover{transform:translateY(-4px);box-shadow:0 16px 34px rgba(31,51,87,.12)}a.tut h3::after{content:" →";color:#c59a3a;opacity:0;transition:opacity .2s}a.tut:hover h3::after{opacity:1}</style>
 </head>
 <body>
 
@@ -371,6 +372,33 @@ footer .langs{margin-top:16px;font-size:.74rem;color:#8b94ad;letter-spacing:.08e
   </div>
 </section>
 
+<section id="test">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow" data-i18n="test_eyebrow">otkrij · besplatno</span><h2 data-i18n="test_h2">Pronađi fakultet i smer koji su baš za tebe</h2>
+      <p data-i18n="test_sub">Kratak i potpuno besplatan test za par minuta otkriva tvoj idealan smer — uz objašnjenje zašto ti odgovara, čime ćeš se baviti i gde se zapošljava, plus 4 alternative.</p></div>
+    <div class="discover">
+      <div class="disc">
+        <span class="disc-ico">🎓</span>
+        <h3 data-i18n="disc1_h">Koji fakultet za tebe</h3>
+        <p data-i18n="disc_p">Besplatno · 8 pitanja · par minuta</p>
+        <div class="disc-links">
+          <a href="kviz.html#fakultet:beograd">Beograd →</a>
+          <a href="kviz.html#fakultet:novisad">Novi Sad →</a>
+        </div>
+      </div>
+      <div class="disc">
+        <span class="disc-ico">🏫</span>
+        <h3 data-i18n="disc2_h">Koja srednja škola za tebe</h3>
+        <p data-i18n="disc_p">Besplatno · 8 pitanja · par minuta</p>
+        <div class="disc-links">
+          <a href="kviz.html#srednja:beograd">Beograd →</a>
+          <a href="kviz.html#srednja:novisad">Novi Sad →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="kako">
   <div class="wrap">
     <div class="sec-head"><span class="eyebrow" data-i18n="kako_eyebrow">kako radi</span><h2 data-i18n="kako_h2">Jednostavno kao tri koraka</h2>
@@ -415,32 +443,7 @@ footer .langs{margin-top:16px;font-size:.74rem;color:#8b94ad;letter-spacing:.08e
 
 <div class="divider"></div>
 
-<section id="test">
-  <div class="wrap">
-    <div class="sec-head"><span class="eyebrow" data-i18n="test_eyebrow">otkrij · besplatno</span><h2 data-i18n="test_h2">Pronađi fakultet i smer koji su baš za tebe</h2>
-      <p data-i18n="test_sub">Kratak i potpuno besplatan test za par minuta otkriva tvoj idealan smer — uz objašnjenje zašto ti odgovara, čime ćeš se baviti i gde se zapošljava, plus 4 alternative.</p></div>
-    <div class="discover">
-      <div class="disc">
-        <span class="disc-ico">🎓</span>
-        <h3 data-i18n="disc1_h">Koji fakultet za tebe</h3>
-        <p data-i18n="disc_p">Besplatno · 8 pitanja · par minuta</p>
-        <div class="disc-links">
-          <a href="kviz.html#fakultet:beograd">Beograd →</a>
-          <a href="kviz.html#fakultet:novisad">Novi Sad →</a>
-        </div>
-      </div>
-      <div class="disc">
-        <span class="disc-ico">🏫</span>
-        <h3 data-i18n="disc2_h">Koja srednja škola za tebe</h3>
-        <p data-i18n="disc_p">Besplatno · 8 pitanja · par minuta</p>
-        <div class="disc-links">
-          <a href="kviz.html#srednja:beograd">Beograd →</a>
-          <a href="kviz.html#srednja:novisad">Novi Sad →</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+
 
 <div class="divider"></div>
 
@@ -449,14 +452,14 @@ footer .langs{margin-top:16px;font-size:.74rem;color:#8b94ad;letter-spacing:.08e
     <div class="sec-head"><span class="eyebrow" data-i18n="ment_eyebrow">profesorke</span><h2 data-i18n="ment_h2">Upoznaj svoje profesorke</h2>
       <p data-i18n="ment_sub">Svaka ima svoje ime, svoju oblast i svoj topli stil.</p></div>
     <div class="tutori">
-      <div class="tut"><span class="ava">📐</span><h3>Nina</h3><span class="role" data-i18n="r_nina">Matematika</span><p data-i18n="d_nina">Analiza, algebra — „prvo skica pa račun“.</p></div>
-      <div class="tut"><span class="ava">⚡</span><h3>Iskra</h3><span class="role" data-i18n="r_iskra">Elektrotehnika</span><p data-i18n="d_iskra">Sve veže za realno kolo.</p></div>
-      <div class="tut"><span class="ava">🦢</span><h3>Lana</h3><span class="role" data-i18n="r_lana">Verovatnoća</span><p data-i18n="d_lana">Formulu prevede u intuiciju.</p></div>
-      <div class="tut"><span class="ava">🔭</span><h3>Vera</h3><span class="role" data-i18n="r_vera">Fizika</span><p data-i18n="d_vera">Polazi od „šta se fizički dešava“.</p></div>
-      <div class="tut"><span class="ava">🦋</span><h3>Lara</h3><span class="role" data-i18n="r_lara">Srednja mat.</span><p data-i18n="d_lara">Razlaže na najsitnije korake.</p></div>
-      <div class="tut"><span class="ava">⚡</span><h3>Iva</h3><span class="role" data-i18n="r_iva">Srednja fizika</span><p data-i18n="d_iva">Eksperiment i svakodnevni primeri.</p></div>
-      <div class="tut"><span class="ava">🦉</span><h3>Zoi</h3><span class="role" data-i18n="r_zoi">Prijemni</span><p data-i18n="d_zoi">Strategija i raspodela vremena.</p></div>
-      <div class="tut"><span class="ava">🦊</span><h3>Mila</h3><span class="role" data-i18n="r_mila">Mala matura</span><p data-i18n="d_mila">Za najmlađe — kao kroz igru.</p></div>
+      <a class="tut" href="/predmet-analiza1.html" style="text-decoration:none;color:inherit;cursor:pointer"><span class="ava">📐</span><h3>Nina</h3><span class="role" data-i18n="r_nina">Matematika</span><p data-i18n="d_nina">Analiza, algebra — „prvo skica pa račun“.</p></a>
+      <a class="tut" href="/predmet-elektrotehnika.html" style="text-decoration:none;color:inherit;cursor:pointer"><span class="ava">⚡</span><h3>Iskra</h3><span class="role" data-i18n="r_iskra">Elektrotehnika</span><p data-i18n="d_iskra">Sve veže za realno kolo.</p></a>
+      <a class="tut" href="/predmet-verovatnoca-statistika.html" style="text-decoration:none;color:inherit;cursor:pointer"><span class="ava">🦢</span><h3>Lana</h3><span class="role" data-i18n="r_lana">Verovatnoća</span><p data-i18n="d_lana">Formulu prevede u intuiciju.</p></a>
+      <a class="tut" href="/predmet-fizika-mehanika.html" style="text-decoration:none;color:inherit;cursor:pointer"><span class="ava">🔭</span><h3>Vera</h3><span class="role" data-i18n="r_vera">Fizika</span><p data-i18n="d_vera">Polazi od „šta se fizički dešava“.</p></a>
+      <a class="tut" href="/srednja-matematika-1.html" style="text-decoration:none;color:inherit;cursor:pointer"><span class="ava">🦋</span><h3>Lara</h3><span class="role" data-i18n="r_lara">Srednja mat.</span><p data-i18n="d_lara">Razlaže na najsitnije korake.</p></a>
+      <a class="tut" href="/srednja-fizika-1.html" style="text-decoration:none;color:inherit;cursor:pointer"><span class="ava">⚡</span><h3>Iva</h3><span class="role" data-i18n="r_iva">Srednja fizika</span><p data-i18n="d_iva">Eksperiment i svakodnevni primeri.</p></a>
+      <a class="tut" href="/prijemni.html" style="text-decoration:none;color:inherit;cursor:pointer"><span class="ava">🦉</span><h3>Zoi</h3><span class="role" data-i18n="r_zoi">Prijemni</span><p data-i18n="d_zoi">Strategija i raspodela vremena.</p></a>
+      <a class="tut" href="/mala-matura.html" style="text-decoration:none;color:inherit;cursor:pointer"><span class="ava">🦊</span><h3>Mila</h3><span class="role" data-i18n="r_mila">Mala matura</span><p data-i18n="d_mila">Za najmlađe — kao kroz igru.</p></a>
     </div>
   </div>
 </section>

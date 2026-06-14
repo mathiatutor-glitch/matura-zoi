@@ -283,7 +283,7 @@ footer .langs{margin-top:16px;font-size:.74rem;color:#8b94ad;letter-spacing:.08e
 .zchat-input button:hover{transform:translateY(-1px)}
 @media(max-width:520px){.zchat{right:8px;bottom:8px;width:calc(100vw - 16px);height:calc(100vh - 80px)}}
 </style>
-<style id="mathia-fix">#zoi-btn{display:none!important}.materials a.mat-card{cursor:pointer;transition:transform .2s ease,box-shadow .2s ease}.materials a.mat-card:hover{transform:translateY(-4px);box-shadow:0 16px 34px rgba(197,154,58,.18)}</style>
+<style id="mathia-fix">#zoi-btn{display:none!important}.materials a.mat-card{display:flex;flex-direction:column;text-decoration:none;color:inherit;cursor:pointer;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}.materials a.mat-card:hover{transform:translateY(-6px);box-shadow:0 24px 48px rgba(197,154,58,.22);border-color:#c59a3a}.mat-open{align-self:flex-start;display:inline-flex;align-items:center;gap:7px;margin-top:16px;background:linear-gradient(135deg,#e7c97f,#c59a3a);color:#fff;font-weight:800;font-size:.9rem;padding:10px 18px;border-radius:999px;box-shadow:0 10px 24px rgba(197,154,58,.35)}.materials a.mat-card:hover .mat-open{box-shadow:0 14px 30px rgba(197,154,58,.5);transform:translateY(-1px)}</style>
 </head>
 <body>
 <nav class="nav"><div class="wrap">
@@ -340,14 +340,14 @@ footer .langs{margin-top:16px;font-size:.74rem;color:#8b94ad;letter-spacing:.08e
     <div class="sec-head"><span class="eyebrow" data-i18n="mat_eyebrow">materijali</span><h2 data-i18n="mat_h2">Raskošne knjige i priručnici</h2>
       <p data-i18n="mat_sub">Isti pažljivi stil kao profesorke — krem korice, zlatne linije, jasni boxovi.</p></div>
     <div class="materials">
-      <a class="mat-card mat-book" href="/Fizika-1-Razred-Skripta.html" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;cursor:pointer"><span class="tag" data-i18n="matcard1_tag">e-knjiga 📘</span>
+      <a class="mat-card mat-book" href="/Fizika-1-Razred-Skripta.html" target="_blank" rel="noopener"><span class="tag" data-i18n="matcard1_tag">e-knjiga 📘</span>
         <h3 data-i18n="matcard1_h">Skripta za učenje</h3>
         <p data-i18n="matcard1_p">Cela oblast objašnjena jasno i postupno: formula, rešen primer i ono što treba zapamtiti.</p>
-        <span class="pill" data-i18n="matcard1_pill">SR + EN · korak po korak</span><span aria-hidden="true" style="display:inline-block;margin-top:10px;color:#c59a3a;font-weight:800;font-size:.82rem">Otvori ↗</span></a>
-      <a class="mat-card mat-hand" href="/Fizika-1-Razred-Formule.html" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;cursor:pointer"><span class="tag" data-i18n="matcard2_tag">e-priručnik 📑</span>
+        <span class="pill" data-i18n="matcard1_pill">SR + EN · korak po korak</span><span class="mat-open" aria-hidden="true">Otvori e-knjigu <b style="font-weight:900">↗</b></span></a>
+      <a class="mat-card mat-hand" href="/Fizika-1-Razred-Formule.html" target="_blank" rel="noopener"><span class="tag" data-i18n="matcard2_tag">e-priručnik 📑</span>
         <h3 data-i18n="matcard2_h">Najbitnije formule</h3>
         <p data-i18n="matcard2_p">Sve ključno na jednom mestu — sažeto, za brzo ponavljanje pred ispit.</p>
-        <span class="pill" data-i18n="matcard2_pill">SR + EN · za brzu ruku</span><span aria-hidden="true" style="display:inline-block;margin-top:10px;color:#c59a3a;font-weight:800;font-size:.82rem">Otvori ↗</span></a>
+        <span class="pill" data-i18n="matcard2_pill">SR + EN · za brzu ruku</span><span class="mat-open" aria-hidden="true">Otvori priručnik <b style="font-weight:900">↗</b></span></a>
     </div>
   </div>
 </section>
@@ -544,8 +544,8 @@ btn.addEventListener('click',function(){try{var raw=(window.__zoi||txt.textConte
 })();
 </script>
 
-<!-- MathIA AI klon (pravi backend) -->
-<script src="/widget.js?v=2" data-api="/api/chat" data-mode="sr-fiz-1" data-lang="sr" data-voice="sK1CZxinAv6CB3NL3fNq"></script>
+<!-- MathIA AI klon -->
+<script src="/widget.js?v=3" data-api="/api/chat" data-mode="sr-fiz-1" data-lang="sr" data-voice="sK1CZxinAv6CB3NL3fNq"></script>
 <script>(function(){function op(){var p=document.getElementById("zoi-panel");if(p)p.classList.add("zoi-open");}document.addEventListener("click",function(e){var t=e.target.closest&&e.target.closest(".mfab-btn,.fab-btn");if(t){e.preventDefault();e.stopPropagation();op();}},true);})();</script>
 </body>
 </html>
