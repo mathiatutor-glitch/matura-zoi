@@ -66,7 +66,7 @@
     fr: { sub: "professeure · examen final", hi: "Salut ! 😊 Je suis Zoi, ta prof de maths. Écris un exercice ou envoie une 📷 photo — on avance étape par étape.", ph: "Écris l’exercice ou la question…", send: "Envoyer", chips: ["Écris un exercice", "Envoyer une photo 📷", "Explique une notion"], voice: "Voix", thinking: "Zoi réfléchit…" },
   };
   var SPEAK = { sr: "sr-RS", en: "en-US", hu: "hu-HU", hr: "hr-HR", ro: "ro-RO", sk: "sk-SK", de: "de-DE", el: "el-GR", es: "es-ES", fr: "fr-FR" };
-  var ORDER = ["sr", "en", "hu", "hr", "ro", "sk", "de", "el", "es", "fr"];
+  var ORDER = ["sr", "en"];
   function t() { return T[LANG] || T.sr; }
 
   // dopune: 4. čip (zadatak za vežbu), prefiks za „objasni pojam", poruka za vežbu — po jeziku
@@ -386,7 +386,14 @@
     "domaci":"domaći","sledeci":"sledeći","sledeca":"sledeća","sledece":"sledeće",
     "dosao":"došao","dosla":"došla","cesto":"često","obicno":"obično","obican":"običan","znacenje":"značenje",
     "moze":"može","mozes":"možeš","mozemo":"možemo","mozete":"možete",
-    "zelim":"želim","zelis":"želiš","zeli":"želi","veci":"veći","veca":"veća"
+    "zelim":"želim","zelis":"želiš","zeli":"želi","veci":"veći","veca":"veća",
+    "hocu":"hoću","hoces":"hoćeš","hoce":"hoće","necu":"neću","neces":"nećeš","vise":"više","nize":"niže",
+    "vazno":"važno","tezi":"teži","tezina":"težina","tezinu":"težinu","pokazi":"pokaži","slicno":"slično","slican":"sličan",
+    "naci":"naći","nadji":"nađi","nadjes":"nađeš","nadjemo":"nađemo","precnik":"prečnik","poluprecnik":"poluprečnik","teziste":"težište",
+    "kruzni":"kružni","kruznica":"kružnica","izvodjenje":"izvođenje","vezbanje":"vežbanje","ucenje":"učenje","sansa":"šansa","sanse":"šanse",
+    "clan":"član","clanovi":"članovi","clanova":"članova","zakljucak":"zaključak","zakljuci":"zaključi","povecaj":"povećaj",
+    "resava":"rešava","resen":"rešen","resena":"rešena","reseno":"rešeno","tacka":"tačka","tacke":"tačke","tacku":"tačku","tackama":"tačkama",
+    "jedinicni":"jedinični","izlozilac":"izložilac","sredjivanje":"sređivanje","uglovi":"uglovi","jednacinu":"jednačinu"
   };
   function vratiKvacice(s) {
     return String(s).replace(/[A-Za-z]+/g, function (w) {
@@ -399,6 +406,15 @@
     s = vratiKvacice(s);
     s = s.replace(/([Ss])h/g, "$1-h"); // „sh" -> „s-h" da se ne čita kao „š" (ishod, ishrana, shvatiti)
     s = " " + s + " ";
+    // skraćenice
+    s = s.replace(/\btj\.?/gi, " to jest ").replace(/\bnpr\.?/gi, " na primer ").replace(/\bitd\.?/gi, " i tako dalje ").replace(/\btzv\.?/gi, " takozvani ");
+    // decimalni zarez: 3,14 -> "tri zapeta četrnaest" (samo bez razmaka, da ne hvata nabrajanje)
+    s = s.replace(/(\d),(\d)/g, "$1 zapeta $2");
+    // jedinice (pre stepena i pre "/" da se ne pročita "m kroz s")
+    s = s.replace(/°\s*C\b/g, " stepeni Celzijusa ");
+    s = s.replace(/\bkm\s*\/\s*h\b/g, " kilometara na čas ");
+    s = s.replace(/\bm\s*\/\s*s\s*(?:²|\^\s*2)\b/g, " metara u sekundi na kvadrat ");
+    s = s.replace(/\bm\s*\/\s*s\b/g, " metara u sekundi ");
     // grčka slova -> srpski izgovor (npr. „sin α" -> „sinus alfa"); π se rešava niže kao „pi"
     s = s.replace(/[αΑ]/g, " alfa ").replace(/[βΒ]/g, " beta ").replace(/[γΓ]/g, " gama ")
          .replace(/[δΔ]/g, " delta ").replace(/[εΕ]/g, " epsilon ").replace(/[θΘϑ]/g, " teta ")
