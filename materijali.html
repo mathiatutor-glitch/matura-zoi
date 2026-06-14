@@ -147,7 +147,7 @@ function render(lang){
              + '<span class="dl">PDF</span><span class="dl ghost">HTML</span></div>';
       }
       return '<div class="mc-row"><span class="mc-kind">'+t[kindKey]+'</span>'
-           + '<a class="dl" href="'+s.slug+'-'+kind+'.pdf" download>PDF</a>'
+           + '<a class="dl" href="'+s.slug+'-'+kind+'.pdf" target="_blank" rel="noopener">PDF</a>'
            + '<a class="dl ghost" href="'+s.slug+'-'+kind+'.html" target="_blank" rel="noopener">HTML</a></div>';
     }
     return '<article class="mcard'+(soon?' soon':'')+'">'
