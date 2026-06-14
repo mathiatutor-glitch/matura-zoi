@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Predmeti — MathIA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0C0B0E;--bg2:#141218;--panel:rgba(255,255,255,0.025);--ink:#F4EFE6;--muted:#A8A091;
+    --gold:#D8B370;--gold-bright:#F3D89A;--spark:#FFE7A8;--line:rgba(216,179,112,0.20);
+    --avail:#8FE3B0;--avail-glow:rgba(143,227,176,0.55)}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:'Outfit',sans-serif;font-weight:300;line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+  body::before{content:"";position:fixed;inset:0;z-index:-2;background:
+    radial-gradient(1100px 700px at 70% -10%, rgba(216,179,112,0.10), transparent 60%),
+    radial-gradient(900px 600px at 6% 112%, rgba(143,227,176,0.045), transparent 55%),
+    linear-gradient(180deg,var(--bg) 0%, var(--bg2) 55%, var(--bg) 100%)}
+  body::after{content:"";position:fixed;inset:0;z-index:-1;opacity:.035;pointer-events:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+  header{display:flex;align-items:center;justify-content:space-between;padding:30px 28px;max-width:1080px;margin:0 auto}
+  .brand{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:1.55rem;letter-spacing:.16em;text-transform:uppercase}
+  .brand a{color:inherit;text-decoration:none}
+  .brand b{color:var(--gold);font-weight:600}
+  .brand small{display:block;font-family:'Outfit';font-weight:300;font-size:.52rem;letter-spacing:.42em;color:var(--muted);text-transform:uppercase;margin-top:2px}
+  .nav-tag{font-size:.7rem;letter-spacing:.28em;text-transform:uppercase;color:var(--muted)}
+
+  .hero{text-align:center;padding:60px 0 30px}
+  .eyebrow{font-size:.72rem;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:22px}
+  h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.6rem,7vw,4.6rem);line-height:1.04;letter-spacing:.01em}
+  h1 em{font-style:italic;color:var(--gold-bright)}
+  .lede{max-width:580px;margin:20px auto 0;color:var(--muted);font-size:1.05rem}
+
+  .rule{height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent);margin:34px 0}
+  .sect-h{text-align:center;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.9rem;color:var(--gold-bright);margin-bottom:6px}
+  .sect-s{text-align:center;color:var(--muted);font-size:.92rem;margin-bottom:34px}
+
+  .clones{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  @media(max-width:760px){.clones{grid-template-columns:1fr}}
+  .clone{position:relative;display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:26px 24px 22px;text-decoration:none;color:inherit;overflow:hidden;transition:transform .3s,border-color .3s,background .3s}
+  .clone:hover{transform:translateY(-4px);border-color:var(--gold);background:rgba(216,179,112,0.05)}
+  .clone .glow{position:absolute;right:-40px;top:-40px;width:160px;height:160px;border-radius:50%;filter:blur(34px);opacity:.5}
+  .clone.zoi .glow{background:radial-gradient(circle,rgba(216,179,112,.5),transparent 70%)}
+  .clone.iskra .glow{background:radial-gradient(circle,rgba(255,231,168,.55),transparent 70%)}
+  .badge{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;border:1px solid var(--avail-glow);border-radius:100px;padding:5px 13px 5px 11px;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--avail);background:rgba(143,227,176,0.06);margin-bottom:18px}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--avail);box-shadow:0 0 0 0 var(--avail-glow);animation:pulse 2.2s ease-out infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 var(--avail-glow)}70%{box-shadow:0 0 0 9px rgba(143,227,176,0)}100%{box-shadow:0 0 0 0 rgba(143,227,176,0)}}
+  .clone .nm{font-family:'Cormorant Garamond',serif;font-size:2.6rem;font-weight:300;line-height:1;background:linear-gradient(180deg,var(--gold-bright),var(--gold) 60%,#9c7f49);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .clone .role{font-style:italic;font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--ink);margin:4px 0 12px}
+  .clone .desc{color:var(--muted);font-size:.9rem;flex:1}
+  .clone .go{margin-top:18px;font-size:.85rem;letter-spacing:.06em;color:var(--gold)}
+  .clone .go::after{content:" →"}
+
+  footer{text-align:center;padding:50px 28px 56px;color:var(--muted);font-size:.82rem}
+  footer .fbrand{font-family:'Cormorant Garamond',serif;letter-spacing:.2em;text-transform:uppercase;color:var(--ink);font-size:1.05rem;margin-bottom:8px}
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .8s,transform .8s}
+  .reveal.in{opacity:1;transform:none}
+  .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
+</style>
+<style id="mathia-cat">.clone .glow{background:radial-gradient(circle,rgba(216,179,112,.42),transparent 70%)}.grp{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.35rem;color:var(--gold-bright);text-align:center;margin:34px 0 14px}</style>
+</head>
+<body>
+
+<header>
+  <div class="brand"><a href="predmeti.html">Math<b>IA</b><small>Privatni profesor</small></a></div>
+  <div class="nav-tag">AI profesori</div>
+</header>
+
+<main class="wrap">
+  <div class="hero">
+    <div class="eyebrow reveal">Privatni čas — bilo kad</div>
+    <h1 class="reveal d1">Tvoji <em>AI profesori</em>,<br>uvek uz tebe</h1>
+    <p class="lede reveal d2">Svaki klon predaje istim glasom i metodom kao na pravom času.
+      Izaberi predmet i započni — strpljivo, korak po korak.</p>
+  </div>
+
+  <div class="rule"></div>
+
+  <section>
+    <div class="sect-h reveal">Dostupni predmeti</div>
+    <div class="sect-s reveal d1">Klikni na predmet da otvoriš stranicu i započneš čas</div>
+        <div class="grp reveal">Prijemni i mala matura</div>
+    <div class="clones">
+      <a class="clone reveal" href="/prijemni.html">
+        <span class="glow"></span>
+        <span class="badge"><span class="dot"></span>Dostupno</span>
+        <div class="nm">Zoi</div>
+        <div class="role">Prijemni iz matematike</div>
+        <div class="desc">Strategija, gradivo i probni zadaci za upis na fakultet.</div>
+        <div class="go">Otvori predmet</div>
+      </a>
+      <a class="clone reveal" href="/mala-matura.html">
+        <span class="glow"></span>
+        <span class="badge"><span class="dot"></span>Dostupno</span>
+        <div class="nm">Mila</div>
+        <div class="role">Mala matura</div>
+        <div class="desc">Završni ispit iz matematike za osnovce — korak po korak.</div>
+        <div class="go">Otvori predmet</div>
+      </a>
+    </div>
+    <div class="grp reveal">Srednja škola</div>
+    <div class="clones">
+      <a class="clone reveal" href="/srednja-matematika-1.html">
+        <span class="glow"></span>
+        <span class="badge"><span class="dot"></span>Dostupno</span>
+        <div class="nm">Lara</div>
+        <div class="role">Matematika · 1. razred</div>
+        <div class="desc">Skupovi, realni brojevi, linearna funkcija, trigonometrija pravouglog trougla.</div>
+        <div class="go">Otvori predmet</div>
+      </a>
+      <a class="clone reveal" href="/srednja-matematika-2.html">
+        <span class="glow"></span>
+        <span class="badge"><span class="dot"></span>Dostupno</span>
+        <div class="nm">Lara</div>
+        <div class="role">Matematika · 2. razred</div>
+        <div class="desc">Kvadratna jednačina i funkcija, eksponencijalna i logaritamska.</div>
+        <div class="go">Otvori predmet</div>
+      </a>
+      <a class="clone reveal" href="/srednja-matematika-3.html">
+        <span class="glow"></span>
+        <span class="badge"><span class="dot"></span>Dostupno</span>
+        <div class="nm">Lara</div>
+        <div class="role">Matematika · 3. razred</div>
+        <div class="desc">Trigonometrija, planimetrija, analitička geometrija, kompleksni brojevi.</div>
+        <div class="go">Otvori predmet</div>
+      </a>
+      <a class="clone reveal" href="/srednja-matematika-4.html">
+        <span class="glow"></span>
+        <span class="badge"><span class="dot"></span>Dostupno</span>
+        <div class="nm">Lara</div>
+        <div class="role">Matematika · 4. razred</div>
+        <div class="desc">Nizovi, izvodi i ispitivanje funkcije, integrali, verovatnoća.</div>
+        <div class="go">Otvori predmet</div>
+      </a>
+      <a class="clone reveal" href="/srednja-fizika-1.html">
+        <span class="glow"></span>
+        <span class="badge"><span class="dot"></span>Dostupno</span>
+        <div class="nm">Iva</div>
+        <div class="role">Fizika · 1. razred</div>
+        <div class="desc">Kinematika, dinamika, rad i energija, zakoni održanja.</div>
+        <div class="go">Otvori predmet</div>
+      </a>
+      <a class="clone reveal" href="/srednja-fizika-2.html">
+        <span class="glow"></span>
+        <span class="badge"><span class="dot"></span>Dostupno</span>
+        <div class="nm">Iva</div>
+        <div class="role">Fizika · 2. razred</div>
+        <div class="desc">Toplota i termodinamika, oscilacije, talasi, akustika.</div>
+        <div class="go">Otvori predmet</div>
+      </a>
+      <a class="clone reveal" href="/srednja-fizika-3.html">
+        <span class="glow"></span>
+        <span class="badge"><span class="dot"></span>Dostupno</span>
+        <div class="nm">Iva</div>
+        <div class="role">Fizika · 3. razred</div>
+        <div class="desc">Elektrostatika, struja, magnetno polje, indukcija.</div>
+        <div class="go">Otvori predmet</div>
+      </a>
+      <a class="clone reveal" href="/srednja-fizika-4.html">
+        <span class="glow"></span>
+        <span class="badge"><span class="dot"></span>Dostupno</span>
+        <div class="nm">Iva</div>
+        <div class="role">Fizika · 4. razred</div>
+        <div class="desc">Optika, relativnost, kvantna i nuklearna fizika.</div>
+        <div class="go">Otvori predmet</div>
+      </a>
+    </div>
+    <div class="grp reveal">Fakultet</div>
+    <div class="clones">
+      <a class="clone reveal" href="/predmet-analiza1.html">
+        <span class="glow"></span>
+        <span class="badge"><span class="dot"></span>Dostupno</span>
+        <div class="nm">Nina</div>
+        <div class="role">Matematička analiza 1</div>
+        <div class="desc">Nizovi i limesi, neprekidnost, izvodi, integrali.</div>
+        <div class="go">Otvori predmet</div>
+      </a>
+      <a class="clone reveal" href="/predmet-analiza2.html">
+        <span class="glow"></span>
+        <span class="badge"><span class="dot"></span>Dostupno</span>
+        <div class="nm">Nina</div>
+        <div class="role">Matematička analiza 2</div>
+        <div class="desc">Funkcije više promenljivih, višestruki integrali, redovi.</div>
+        <div class="go">Otvori predmet</div>
+      </a>
+      <a class="clone reveal" href="/predmet-kompleksna-analiza.html">
+        <span class="glow"></span>
+        <span class="badge"><span class="dot"></span>Dostupno</span>
+        <div class="nm">Nina</div>
+        <div class="role">Kompleksna analiza</div>
+        <div class="desc">Kompleksni brojevi, Ojlerov oblik, analitičke funkcije, reziduumi.</div>
+        <div class="go">Otvori predmet</div>
+      </a>
+      <a class="clone reveal" href="/predmet-linearna-algebra.html">
+        <span class="glow"></span>
+        <span class="badge"><span class="dot"></span>Dostupno</span>
+        <div class="nm">Nina</div>
+        <div class="role">Linearna algebra</div>
+        <div class="desc">Matrice, determinante, sistemi, sopstvene vrednosti.</div>
+        <div class="go">Otvori predmet</div>
+      </a>
+      <a class="clone reveal" href="/predmet-verovatnoca-statistika.html">
+        <span class="glow"></span>
+        <span class="badge"><span class="dot"></span>Dostupno</span>
+        <div class="nm">Lana</div>
+        <div class="role">Verovatnoća i statistika</div>
+        <div class="desc">Raspodele, očekivanje, Bajes, korelacija, osnove statistike.</div>
+        <div class="go">Otvori predmet</div>
+      </a>
+      <a class="clone reveal" href="/predmet-elektrotehnika.html">
+        <span class="glow"></span>
+        <span class="badge"><span class="dot"></span>Dostupno</span>
+        <div class="nm">Iskra</div>
+        <div class="role">Elektrotehnika</div>
+        <div class="desc">DC i AC kola, Kirhofovi zakoni, prelazni procesi.</div>
+        <div class="go">Otvori predmet</div>
+      </a>
+      <a class="clone reveal" href="/predmet-fizika-mehanika.html">
+        <span class="glow"></span>
+        <span class="badge"><span class="dot"></span>Dostupno</span>
+        <div class="nm">Vera</div>
+        <div class="role">Mehanika</div>
+        <div class="desc">Statika, kinematika, dinamika, rad i energija.</div>
+        <div class="go">Otvori predmet</div>
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="fbrand">MathIA</div>
+  Porodica privatnih AI profesora. &nbsp;·&nbsp; Matematika · Mehanika · Električna merenja
+</footer>
+
+<script>
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
