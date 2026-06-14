@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prijava — MathIA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--navy:#1f3357;--ink:#3c4458;--gold:#c59a3a;--goldD:#9b7420;--gold2:#ecd9a4;
+        --cream:#fff8ef;--paper:#fffdf9;--line:#eadfca;--muted:#8a93a6;--ok:#2e7d54}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Plus Jakarta Sans',sans-serif;color:var(--ink);background:
+    radial-gradient(900px 600px at 78% -8%,rgba(197,154,58,.12),transparent 60%),
+    radial-gradient(800px 560px at 4% 110%,rgba(31,51,87,.08),transparent 55%),
+    linear-gradient(180deg,var(--cream),var(--paper));min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px}
+  .brand{font-family:'Playfair Display',serif;font-weight:700;font-size:1.5rem;letter-spacing:.14em;text-transform:uppercase;color:var(--navy);margin-bottom:6px}
+  .brand b{color:var(--gold)}
+  .brand small{display:block;font-weight:300;font-size:.5rem;letter-spacing:.4em;color:var(--muted);text-align:center;margin-top:3px}
+  .card{width:100%;max-width:420px;background:var(--paper);border:1px solid var(--line);border-radius:22px;
+        box-shadow:0 30px 70px rgba(31,51,87,.10);padding:34px 30px 28px;margin-top:18px;position:relative}
+  .lang{position:absolute;top:16px;right:18px;font-size:.74rem;color:var(--muted);cursor:pointer;border:1px solid var(--line);border-radius:100px;padding:4px 10px;background:var(--cream)}
+  h1{font-family:'Playfair Display',serif;font-weight:600;font-size:1.7rem;color:var(--navy);line-height:1.15;margin-bottom:8px}
+  .sub{color:var(--muted);font-size:.95rem;margin-bottom:22px;line-height:1.5}
+  label{display:block;font-size:.82rem;font-weight:600;color:var(--ink);margin:0 0 7px 2px}
+  .field{display:flex;align-items:center;gap:8px;border:1.5px solid var(--line);border-radius:14px;background:var(--cream);padding:0 14px;transition:border-color .2s}
+  .field:focus-within{border-color:var(--gold)}
+  .field .cc{color:var(--ink);font-weight:600;font-size:1rem}
+  input{flex:1;border:0;outline:0;background:transparent;font-family:inherit;font-size:1.05rem;color:var(--ink);padding:14px 0;letter-spacing:.02em}
+  input::placeholder{color:#b9bfca}
+  #code{letter-spacing:.5em;text-align:center;font-weight:700;font-size:1.3rem}
+  .btn{width:100%;border:0;border-radius:14px;padding:15px;font-family:inherit;font-weight:700;font-size:1rem;cursor:pointer;margin-top:18px;
+       background:linear-gradient(135deg,var(--gold),var(--goldD));color:#fff;box-shadow:0 12px 26px rgba(197,154,58,.32);transition:transform .15s,box-shadow .2s}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 16px 32px rgba(197,154,58,.42)}
+  .btn:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+  .consent{display:flex;gap:9px;align-items:flex-start;margin-top:16px;font-size:.82rem;color:var(--muted);line-height:1.45}
+  .consent input{flex:0 0 auto;width:18px;height:18px;accent-color:var(--gold);margin-top:1px}
+  .consent a{color:var(--goldD)}
+  .trial{margin-top:18px;background:linear-gradient(135deg,#fffdf6,#fff3dc);border:1px solid var(--gold2);border-radius:14px;padding:13px 15px;font-size:.86rem;color:var(--ink);display:flex;gap:10px;align-items:center}
+  .trial b{color:var(--goldD)}
+  .msg{margin-top:14px;font-size:.86rem;padding:11px 13px;border-radius:12px;display:none}
+  .msg.err{display:block;background:#fdecec;color:#a23;border:1px solid #f3c9c9}
+  .msg.ok{display:block;background:#eaf7ef;color:var(--ok);border:1px solid #bfe6cf}
+  .back{display:inline-block;margin-top:16px;color:var(--muted);font-size:.84rem;cursor:pointer}
+  .foot{margin-top:22px;color:var(--muted);font-size:.74rem;text-align:center;line-height:1.5}
+  .hidden{display:none}
+  .resend{margin-top:12px;text-align:center;font-size:.82rem;color:var(--muted)}
+  .resend b{color:var(--goldD);cursor:pointer}
+</style>
+</head>
+<body>
+  <div class="brand">Math<b>IA</b><small>Privatni profesor</small></div>
+
+  <div class="card">
+    <span class="lang" id="lang">EN</span>
+
+    <!-- KORAK 1: telefon -->
+    <div id="step1">
+      <h1 data-t="h1">Prijavi se brojem telefona</h1>
+      <p class="sub" data-t="sub1">Bez kartice. Prvi <b>1 sat</b> ili <b>15 pitanja</b> — šta pre istekne — potpuno je besplatno.</p>
+      <label data-t="lblPhone">Broj telefona</label>
+      <div class="field">
+        <span class="cc">+381</span>
+        <input id="phone" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="6x xxx xxxx">
+      </div>
+      <label class="consent">
+        <input type="checkbox" id="consent">
+        <span data-t="consent">Slažem se da MathIA obradi moj broj telefona radi prijave, u skladu sa <a href="/privatnost.html" target="_blank">politikom privatnosti</a>.</span>
+      </label>
+      <button class="btn" id="send" disabled data-t="sendBtn">Pošalji kod</button>
+      <div class="trial">🎁 <span data-t="trialNote"><b>1 sat ili 15 pitanja</b> besplatno — počinje tek od tvog prvog pitanja.</span></div>
+    </div>
+
+    <!-- KORAK 2: kod -->
+    <div id="step2" class="hidden">
+      <h1 data-t="h2">Unesi kod iz SMS-a</h1>
+      <p class="sub"><span data-t="sub2">Poslali smo šestocifreni kod na</span> <b id="phoneEcho"></b>.</p>
+      <label data-t="lblCode">Kod iz SMS-a</label>
+      <div class="field"><input id="code" type="tel" inputmode="numeric" maxlength="6" placeholder="••••••"></div>
+      <button class="btn" id="verify" disabled data-t="verifyBtn">Potvrdi i uđi</button>
+      <div class="resend"><span data-t="noCode">Nema koda?</span> <b id="resend" data-t="resend">Pošalji ponovo</b> <span id="timer"></span></div>
+      <span class="back" id="back" data-t="back">← Promeni broj</span>
+    </div>
+
+    <div class="msg" id="msg"></div>
+    <div class="foot" data-t="foot">Tvoj broj koristimo samo za prijavu i bezbednost naloga. Nikada ga ne delimo.</div>
+  </div>
+
+<script>
+// ============================================================
+//  MathIA — ekran za prijavu (telefon + SMS kod)
+//  Probni model: 1 SAT ili 15 PITANJA, šta pre istekne (broji backend).
+//
+//  BACKEND ugovor (programer pravi ove rute — vidi SPEC):
+//   POST /api/auth/send-code   body {phone}            -> {ok:true}
+//   POST /api/auth/verify      body {phone, code}      -> {ok:true}  (postavlja sesiju/cookie)
+//                                                          ili {ok:false, error}
+//  Po uspehu: preusmeravamo na naslovnu (sesija je u httpOnly cookie-ju).
+//
+//  DEMO: dok backend ne postoji, radi lokalno — kod je 123456 (samo za prikaz).
+// ============================================================
+(function(){
+  var API = "/api";
+  var DEMO_CODE = "123456";           // samo za demo prikaz; ukloni kad backend proradi
+  var T = {
+    sr:{h1:"Prijavi se brojem telefona",sub1:"Bez kartice. Prvi <b>1 sat</b> ili <b>15 pitanja</b> — šta pre istekne — potpuno je besplatno.",
+        lblPhone:"Broj telefona",consent:'Slažem se da MathIA obradi moj broj telefona radi prijave, u skladu sa <a href="/privatnost.html" target="_blank">politikom privatnosti</a>.',
+        sendBtn:"Pošalji kod",trialNote:"<b>1 sat ili 15 pitanja</b> besplatno — počinje tek od tvog prvog pitanja.",
+        h2:"Unesi kod iz SMS-a",sub2:"Poslali smo šestocifreni kod na",lblCode:"Kod iz SMS-a",verifyBtn:"Potvrdi i uđi",
+        noCode:"Nema koda?",resend:"Pošalji ponovo",back:"← Promeni broj",
+        foot:"Tvoj broj koristimo samo za prijavu i bezbednost naloga. Nikada ga ne delimo.",
+        eInvalid:"Unesi ispravan broj telefona.",eCode:"Kod nije tačan. Probaj ponovo.",eNet:"Nešto je zapelo. Probaj ponovo.",
+        sent:"Kod je poslat!",welcome:"Dobrodošla! Otvaram MathIA…",sec:"sek"},
+    en:{h1:"Sign in with your phone",sub1:"No card needed. Your first <b>1 hour</b> or <b>15 questions</b> — whichever comes first — is completely free.",
+        lblPhone:"Phone number",consent:'I agree that MathIA processes my phone number for sign-in, per the <a href="/privatnost.html" target="_blank">privacy policy</a>.',
+        sendBtn:"Send code",trialNote:"<b>1 hour or 15 questions</b> free — starts only from your first question.",
+        h2:"Enter the SMS code",sub2:"We sent a six-digit code to",lblCode:"SMS code",verifyBtn:"Confirm & enter",
+        noCode:"No code?",resend:"Resend",back:"← Change number",
+        foot:"We use your number only for sign-in and account security. We never share it.",
+        eInvalid:"Please enter a valid phone number.",eCode:"The code is not correct. Try again.",eNet:"Something went wrong. Try again.",
+        sent:"Code sent!",welcome:"Welcome! Opening MathIA…",sec:"sec"}
+  };
+  var lang = (navigator.language||"sr").slice(0,2)==="en" ? "en":"sr";
+  var $=function(id){return document.getElementById(id);};
+  function applyLang(){
+    var d=T[lang];
+    document.querySelectorAll("[data-t]").forEach(function(el){ if(d[el.getAttribute("data-t")]!=null) el.innerHTML=d[el.getAttribute("data-t")]; });
+    document.documentElement.lang=lang; $("lang").textContent = lang==="sr"?"EN":"SR";
+  }
+  $("lang").onclick=function(){ lang = lang==="sr"?"en":"sr"; applyLang(); };
+  applyLang();
+
+  function show(el,on){ el.classList[on?"remove":"add"]("hidden"); }
+  function err(t){ var m=$("msg"); m.className="msg err"; m.textContent=t; }
+  function ok(t){ var m=$("msg"); m.className="msg ok"; m.textContent=t; }
+  function clearMsg(){ $("msg").className="msg"; }
+
+  function normPhone(){ return "+381"+$("phone").value.replace(/\D/g,"").replace(/^0+/,""); }
+  function phoneValid(){ var n=$("phone").value.replace(/\D/g,"").replace(/^0+/,""); return n.length>=8 && n.length<=10; }
+
+  $("phone").addEventListener("input",function(){ $("send").disabled = !(phoneValid() && $("consent").checked); });
+  $("consent").addEventListener("change",function(){ $("send").disabled = !(phoneValid() && $("consent").checked); });
+  $("code").addEventListener("input",function(){ this.value=this.value.replace(/\D/g,"").slice(0,6); $("verify").disabled = this.value.length!==6; });
+
+  var phone="";
+  var resendTimer=null;
+  function startTimer(){
+    var s=30; var r=$("resend"), t=$("timer"); r.style.pointerEvents="none"; r.style.opacity=".5";
+    clearInterval(resendTimer);
+    resendTimer=setInterval(function(){ s--; t.textContent=" ("+s+" "+T[lang].sec+")"; if(s<=0){ clearInterval(resendTimer); t.textContent=""; r.style.pointerEvents=""; r.style.opacity=""; } },1000);
+  }
+
+  async function post(path, body){
+    try{
+      var r=await fetch(API+path,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
+      if(!r.ok) throw 0; return await r.json();
+    }catch(e){ return null; } // null => backend nije spreman (demo)
+  }
+
+  $("send").onclick=async function(){
+    clearMsg(); if(!phoneValid()){ err(T[lang].eInvalid); return; }
+    phone=normPhone(); $("send").disabled=true;
+    var res=await post("/auth/send-code",{phone:phone});
+    // backend vraća {ok:true}; ako je null -> demo mod
+    $("phoneEcho").textContent=phone;
+    ok(T[lang].sent); show($("step1"),false); show($("step2"),true); startTimer(); $("code").focus();
+    if(res===null){ console.info("[MathIA] DEMO mod: unesi kod "+DEMO_CODE); }
+  };
+  $("resend").onclick=function(){ if($("resend").style.pointerEvents==="none")return; $("send").onclick(); };
+  $("back").onclick=function(){ clearMsg(); show($("step2"),false); show($("step1"),true); $("send").disabled=false; };
+
+  $("verify").onclick=async function(){
+    clearMsg(); var code=$("code").value; $("verify").disabled=true;
+    var res=await post("/auth/verify",{phone:phone,code:code});
+    if(res===null){ // DEMO
+      if(code===DEMO_CODE){ ok(T[lang].welcome); setTimeout(function(){ location.href="/index.html"; },800); }
+      else { err(T[lang].eCode); $("verify").disabled=false; }
+      return;
+    }
+    if(res.ok){ ok(T[lang].welcome); setTimeout(function(){ location.href="/index.html"; },700); }
+    else { err(res.error||T[lang].eCode); $("verify").disabled=false; }
+  };
+})();
+</script>
+</body>
+</html>

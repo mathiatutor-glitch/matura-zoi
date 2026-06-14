@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Politika privatnosti — MathIA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--navy:#1f3357;--ink:#3c4458;--gold:#c59a3a;--goldD:#9b7420;--gold2:#ecd9a4;
+        --cream:#fff8ef;--paper:#fffdf9;--line:#eadfca;--muted:#8a93a6}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Plus Jakarta Sans',sans-serif;color:var(--ink);line-height:1.7;
+    background:radial-gradient(900px 600px at 80% -10%,rgba(197,154,58,.10),transparent 60%),linear-gradient(180deg,var(--cream),var(--paper));min-height:100vh}
+  .wrap{max-width:760px;margin:0 auto;padding:40px 22px 70px}
+  .brand{font-family:'Playfair Display',serif;font-weight:700;font-size:1.4rem;letter-spacing:.14em;text-transform:uppercase;color:var(--navy);text-align:center}
+  .brand b{color:var(--gold)} .brand a{color:inherit;text-decoration:none}
+  .lang{float:right;font-size:.74rem;color:var(--muted);cursor:pointer;border:1px solid var(--line);border-radius:100px;padding:4px 11px;background:var(--paper)}
+  .draft{background:#fff3dc;border:1px solid var(--gold2);border-radius:14px;padding:13px 16px;margin:22px 0;color:var(--goldD);font-size:.88rem;font-weight:600}
+  h1{font-family:'Playfair Display',serif;font-weight:600;color:var(--navy);font-size:2rem;margin:18px 0 4px}
+  .upd{color:var(--muted);font-size:.84rem;margin-bottom:8px}
+  h2{font-family:'Playfair Display',serif;font-weight:600;color:var(--navy);font-size:1.25rem;margin:26px 0 8px}
+  p{margin:8px 0} ul{margin:8px 0 8px 22px} li{margin:5px 0}
+  .ph{background:#f3f0e7;border-radius:6px;padding:0 6px;color:var(--goldD);font-weight:600}
+  a{color:var(--goldD)}
+  .back{display:inline-block;margin-top:26px;color:var(--muted);text-decoration:none;font-size:.9rem}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <span class="lang" id="lang">EN</span>
+  <div class="brand"><a href="/index.html">Math<b>IA</b></a></div>
+
+  <div class="draft" id="draftNote">⚠️ Ovo je <b>nacrt</b> politike privatnosti, pripremljen kao polazna osnova. Pre objave neka ga pregleda pravnik i popunite polja označena <span class="ph">[ovako]</span>. Ovo nije pravni savet.</div>
+
+  <!-- ====================== SR ====================== -->
+  <div id="sr">
+    <h1>Politika privatnosti</h1>
+    <div class="upd">Poslednje ažuriranje: <span class="ph">[datum]</span></div>
+    <p>Ova politika objašnjava koje podatke MathIA prikuplja, zašto i kako ih štiti. Rukovalac podacima je <span class="ph">[pun pravni naziv]</span>, <span class="ph">[adresa]</span>, kontakt: <span class="ph">[email]</span>.</p>
+
+    <h2>1. Koje podatke prikupljamo</h2>
+    <ul>
+      <li><b>Broj telefona</b> — za prijavu i bezbednost naloga (SMS kod).</li>
+      <li><b>Sadržaj razgovora sa profesorkom</b> (pitanja, zadaci, eventualne slike koje pošalješ) — da bismo pružili objašnjenja.</li>
+      <li><b>Osnovni tehnički podaci</b> — npr. vreme prijave i status probnog perioda/pretplate.</li>
+    </ul>
+    <p>Ne tražimo i ne čuvamo više podataka nego što je potrebno.</p>
+
+    <h2>2. Zašto ih obrađujemo</h2>
+    <ul>
+      <li>Da omogućimo prijavu i sprečimo zloupotrebu (jedan probni period po broju).</li>
+      <li>Da profesorka odgovori na tvoja pitanja.</li>
+      <li>Da vodimo evidenciju o pretplati i naplati.</li>
+    </ul>
+    <p>Pravni osnov je tvoja <b>saglasnost</b> i izvršenje usluge koju si zatražio/la.</p>
+
+    <h2>3. Obrađivači (treće strane)</h2>
+    <p>Da bi usluga radila, neke podatke obrađuju pouzdani partneri, isključivo u našu svrhu:</p>
+    <ul>
+      <li><b>Slanje SMS koda</b> — <span class="ph">[Infobip / provajder]</span>.</li>
+      <li><b>AI objašnjenja</b> — tekst (i slike koje pošalješ) šalju se servisu veštačke inteligencije radi generisanja odgovora.</li>
+      <li><b>Glas (čitanje naglas)</b> — tekst se šalje servisu za sintezu govora.</li>
+      <li><b>Hosting</b> — <span class="ph">[Vercel / hosting]</span>.</li>
+    </ul>
+    <p>Tačne partnere i njihove politike potvrdite sa pravnikom. Ne prodajemo i ne ustupamo tvoje podatke u marketinške svrhe.</p>
+
+    <h2>4. Koliko čuvamo</h2>
+    <p>Podatke čuvamo dok imaš nalog ili dok je to potrebno za uslugu i zakonske obaveze. SMS kodovi se brišu ubrzo nakon upotrebe. Nalog možeš obrisati u svako doba.</p>
+
+    <h2>5. Tvoja prava</h2>
+    <ul>
+      <li>Uvid u podatke, ispravka i <b>brisanje</b> naloga.</li>
+      <li>Povlačenje saglasnosti.</li>
+      <li>Pritužba nadležnom organu (<span class="ph">[Poverenik za informacije od javnog značaja i zaštitu podataka o ličnosti]</span>).</li>
+    </ul>
+    <p>Za sve zahteve piši na <span class="ph">[email]</span>.</p>
+
+    <h2>6. Maloletnici</h2>
+    <p>Platformu koriste i učenici. Ako si mlađi/a od <span class="ph">[uzrast po zakonu]</span> godina, prijavu obavi uz saglasnost roditelja ili staratelja. <span class="ph">[Pravnik da potvrdi pravila za maloletnike i uzrast saglasnosti.]</span></p>
+
+    <h2>7. Kolačići i sesija</h2>
+    <p>Koristimo neophodni kolačić/sesiju da ostaneš prijavljen/a. Ne koristimo reklamne kolačiće.</p>
+
+    <h2>8. Izmene</h2>
+    <p>Politiku možemo ažurirati; nova verzija važi od objave na ovoj stranici.</p>
+
+    <a class="back" href="/index.html">← Nazad na početnu</a>
+  </div>
+
+  <!-- ====================== EN ====================== -->
+  <div id="en" class="hidden">
+    <h1>Privacy Policy</h1>
+    <div class="upd">Last updated: <span class="ph">[date]</span></div>
+    <p>This policy explains what data MathIA collects, why, and how we protect it. The data controller is <span class="ph">[full legal name]</span>, <span class="ph">[address]</span>, contact: <span class="ph">[email]</span>.</p>
+
+    <h2>1. What we collect</h2>
+    <ul>
+      <li><b>Phone number</b> — for sign-in and account security (SMS code).</li>
+      <li><b>Conversation content</b> (questions, problems, any images you send) — to provide explanations.</li>
+      <li><b>Basic technical data</b> — e.g. sign-in time and trial/subscription status.</li>
+    </ul>
+
+    <h2>2. Why we process it</h2>
+    <ul>
+      <li>To enable sign-in and prevent abuse (one trial per number).</li>
+      <li>So your teacher can answer your questions.</li>
+      <li>To manage subscription and billing.</li>
+    </ul>
+    <p>The legal basis is your <b>consent</b> and performance of the service you requested.</p>
+
+    <h2>3. Processors (third parties)</h2>
+    <p>To run the service, trusted partners process some data, only for our purpose:</p>
+    <ul>
+      <li><b>Sending the SMS code</b> — <span class="ph">[Infobip / provider]</span>.</li>
+      <li><b>AI explanations</b> — text (and images you send) are sent to an AI service to generate answers.</li>
+      <li><b>Voice (read aloud)</b> — text is sent to a speech-synthesis service.</li>
+      <li><b>Hosting</b> — <span class="ph">[Vercel / hosting]</span>.</li>
+    </ul>
+    <p>Confirm the exact partners and their policies with a lawyer. We do not sell or share your data for marketing.</p>
+
+    <h2>4. Retention</h2>
+    <p>We keep data while you have an account or as needed for the service and legal duties. SMS codes are deleted shortly after use. You can delete your account anytime.</p>
+
+    <h2>5. Your rights</h2>
+    <ul>
+      <li>Access, correction and <b>deletion</b> of your account.</li>
+      <li>Withdrawal of consent.</li>
+      <li>Complaint to the competent authority (<span class="ph">[data protection authority]</span>).</li>
+    </ul>
+    <p>For any request, write to <span class="ph">[email]</span>.</p>
+
+    <h2>6. Minors</h2>
+    <p>Students use the platform too. If you are under <span class="ph">[legal age]</span>, sign in with a parent's or guardian's consent. <span class="ph">[Lawyer to confirm rules and age of consent for minors.]</span></p>
+
+    <h2>7. Cookies and session</h2>
+    <p>We use a necessary cookie/session to keep you signed in. We do not use advertising cookies.</p>
+
+    <h2>8. Changes</h2>
+    <p>We may update this policy; the new version applies once posted on this page.</p>
+
+    <a class="back" href="/index.html">← Back to home</a>
+  </div>
+</div>
+
+<script>
+(function(){
+  var lang=(navigator.language||"sr").slice(0,2)==="en"?"en":"sr";
+  function apply(){
+    document.getElementById("sr").classList.toggle("hidden", lang!=="sr");
+    document.getElementById("en").classList.toggle("hidden", lang!=="en");
+    document.getElementById("lang").textContent = lang==="sr"?"EN":"SR";
+    document.documentElement.lang=lang;
+    document.getElementById("draftNote").innerHTML = lang==="sr"
+      ? '⚠️ Ovo je <b>nacrt</b> politike privatnosti, kao polazna osnova. Pre objave neka ga pregleda pravnik i popunite polja <span class="ph">[ovako]</span>. Nije pravni savet.'
+      : '⚠️ This is a <b>draft</b> privacy policy as a starting point. Have a lawyer review it before publishing and fill in the <span class="ph">[bracketed]</span> fields. Not legal advice.';
+  }
+  document.getElementById("lang").onclick=function(){ lang=lang==="sr"?"en":"sr"; apply(); };
+  apply();
+})();
+</script>
+</body>
+</html>

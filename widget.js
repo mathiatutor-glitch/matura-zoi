@@ -66,7 +66,7 @@
     fr: { sub: "professeure · examen final", hi: "Salut ! 😊 Je suis Zoi, ta prof de maths. Écris un exercice ou envoie une 📷 photo — on avance étape par étape.", ph: "Écris l’exercice ou la question…", send: "Envoyer", chips: ["Écris un exercice", "Envoyer une photo 📷", "Explique une notion"], voice: "Voix", thinking: "Zoi réfléchit…" },
   };
   var SPEAK = { sr: "sr-RS", en: "en-US", hu: "hu-HU", hr: "hr-HR", ro: "ro-RO", sk: "sk-SK", de: "de-DE", el: "el-GR", es: "es-ES", fr: "fr-FR" };
-  var ORDER = ["sr", "en", "hu", "hr", "ro", "sk", "de", "el", "es", "fr"];
+  var ORDER = ["sr", "en"];
   function t() { return T[LANG] || T.sr; }
 
   // dopune: 4. čip (zadatak za vežbu), prefiks za „objasni pojam", poruka za vežbu — po jeziku
@@ -271,20 +271,27 @@
     svg = svg.replace(/(href|xlink:href)\s*=\s*"(?:\s*javascript:)[^"]*"/gi, "");
     return svg;
   }
+  function addText(bub, t){ if (t && t.trim()) { var d=document.createElement("div"); d.innerHTML=fmt(t); bub.appendChild(d); } }
+  function addSvg(bub, svg){ var fig=document.createElement("div"); fig.className="zoi-fig"; fig.innerHTML=safeSvg(svg); var sv=fig.querySelector("svg"); if (sv){ sv.removeAttribute("width"); sv.removeAttribute("height"); bub.appendChild(fig); return true; } return false; }
   function renderZoi(bub, text){
     var str = String(text);
     var re = /```svg\s*([\s\S]*?)```|(<svg[\s\S]*?<\/svg>)/gi;
-    var last = 0, m, any = false;
-    while ((m = re.exec(str))) {
-      any = true;
-      if (m.index > last) { var d0=document.createElement("div"); d0.innerHTML=fmt(str.slice(last,m.index)); bub.appendChild(d0); }
-      var fig = document.createElement("div"); fig.className="zoi-fig"; fig.innerHTML = safeSvg(m[1]||m[2]||"");
-      var sv = fig.querySelector("svg"); if (sv) { sv.removeAttribute("width"); sv.removeAttribute("height"); }
-      bub.appendChild(fig);
-      last = re.lastIndex;
+    var last = 0, m;
+    while ((m = re.exec(str))) { addText(bub, str.slice(last, m.index)); addSvg(bub, m[1] || m[2] || ""); last = re.lastIndex; }
+    var rest = str.slice(last);
+    var cut = rest.search(/```svg|<svg\b/i);
+    if (cut !== -1) {                              // odsečen/nedovršen crtež -> nikad ne pokazuj sirov kod
+      addText(bub, rest.slice(0, cut));
+      var frag = rest.slice(cut), s0 = frag.search(/<svg\b/i), ok = false;
+      if (s0 !== -1) {
+        var svg = frag.slice(s0).replace(/```[\s\S]*$/, "").replace(/<[^>]*$/, ""); // skini fence i poslednji odsečen tag
+        if (!/<\/svg>/i.test(svg)) svg += "</svg>";
+        if (/<(line|circle|rect|path|polygon|polyline|text|ellipse|g)\b/i.test(svg)) ok = addSvg(bub, svg);
+      }
+      if (!ok) { var note=document.createElement("div"); note.style.cssText="margin-top:6px;color:#8a93a6;font-size:.86em;font-style:italic"; note.textContent=(LANG==="en")?"(the sketch got cut off — ask me to draw a simpler version)":"(crtež je bio predugačak — zamoli me: nacrtaj jednostavniju skicu)"; bub.appendChild(note); }
+      return;
     }
-    if (!any) { bub.innerHTML = fmt(str); return; }
-    if (last < str.length) { var d1=document.createElement("div"); d1.innerHTML=fmt(str.slice(last)); bub.appendChild(d1); }
+    addText(bub, rest);
   }
 
   // ——— mehurići ———
@@ -386,7 +393,14 @@
     "domaci":"domaći","sledeci":"sledeći","sledeca":"sledeća","sledece":"sledeće",
     "dosao":"došao","dosla":"došla","cesto":"često","obicno":"obično","obican":"običan","znacenje":"značenje",
     "moze":"može","mozes":"možeš","mozemo":"možemo","mozete":"možete",
-    "zelim":"želim","zelis":"želiš","zeli":"želi","veci":"veći","veca":"veća"
+    "zelim":"želim","zelis":"želiš","zeli":"želi","veci":"veći","veca":"veća",
+    "hocu":"hoću","hoces":"hoćeš","hoce":"hoće","necu":"neću","neces":"nećeš","vise":"više","nize":"niže",
+    "vazno":"važno","tezi":"teži","tezina":"težina","tezinu":"težinu","pokazi":"pokaži","slicno":"slično","slican":"sličan",
+    "naci":"naći","nadji":"nađi","nadjes":"nađeš","nadjemo":"nađemo","precnik":"prečnik","poluprecnik":"poluprečnik","teziste":"težište",
+    "kruzni":"kružni","kruznica":"kružnica","izvodjenje":"izvođenje","vezbanje":"vežbanje","ucenje":"učenje","sansa":"šansa","sanse":"šanse",
+    "clan":"član","clanovi":"članovi","clanova":"članova","zakljucak":"zaključak","zakljuci":"zaključi","povecaj":"povećaj",
+    "resava":"rešava","resen":"rešen","resena":"rešena","reseno":"rešeno","tacka":"tačka","tacke":"tačke","tacku":"tačku","tackama":"tačkama",
+    "jedinicni":"jedinični","izlozilac":"izložilac","sredjivanje":"sređivanje","uglovi":"uglovi","jednacinu":"jednačinu"
   };
   function vratiKvacice(s) {
     return String(s).replace(/[A-Za-z]+/g, function (w) {
@@ -399,6 +413,15 @@
     s = vratiKvacice(s);
     s = s.replace(/([Ss])h/g, "$1-h"); // „sh" -> „s-h" da se ne čita kao „š" (ishod, ishrana, shvatiti)
     s = " " + s + " ";
+    // skraćenice
+    s = s.replace(/\btj\.?/gi, " to jest ").replace(/\bnpr\.?/gi, " na primer ").replace(/\bitd\.?/gi, " i tako dalje ").replace(/\btzv\.?/gi, " takozvani ");
+    // decimalni zarez: 3,14 -> "tri zapeta četrnaest" (samo bez razmaka, da ne hvata nabrajanje)
+    s = s.replace(/(\d),(\d)/g, "$1 zapeta $2");
+    // jedinice (pre stepena i pre "/" da se ne pročita "m kroz s")
+    s = s.replace(/°\s*C\b/g, " stepeni Celzijusa ");
+    s = s.replace(/\bkm\s*\/\s*h\b/g, " kilometara na čas ");
+    s = s.replace(/\bm\s*\/\s*s\s*(?:²|\^\s*2)\b/g, " metara u sekundi na kvadrat ");
+    s = s.replace(/\bm\s*\/\s*s\b/g, " metara u sekundi ");
     // grčka slova -> srpski izgovor (npr. „sin α" -> „sinus alfa"); π se rešava niže kao „pi"
     s = s.replace(/[αΑ]/g, " alfa ").replace(/[βΒ]/g, " beta ").replace(/[γΓ]/g, " gama ")
          .replace(/[δΔ]/g, " delta ").replace(/[εΕ]/g, " epsilon ").replace(/[θΘϑ]/g, " teta ")
@@ -687,4 +710,87 @@
   // ——— start ———
   applyLang();
   greet();
+})();
+
+/* ============================================================
+   MathIA — traka probnog perioda ("preostalo: X min · Y pitanja")
+   Nezavisan dodatak. Čita GET {api}/me -> {trial:{active,minutesLeft,questionsLeft}, subscribed}.
+   Ako backend još ne postoji (404/greška) -> traka se ne prikazuje (bez greške).
+   ============================================================ */
+(function () {
+  var sc = document.querySelector('script[src*="widget.js"]');
+  var API = (sc && sc.getAttribute("data-api")) || "/api/chat";
+  var ME = API.replace(/\/[^\/]*$/, "") + "/me";
+  var EN = (document.documentElement.lang || "sr").slice(0, 2) === "en";
+  var t = {
+    free: EN ? "Free" : "Besplatno",
+    min: EN ? "min" : "min",
+    q: EN ? "questions" : "pitanja",
+    over: EN ? "Free trial ended" : "Probni period je istekao",
+    sub: EN ? "Subscribe →" : "Pretplati se →"
+  };
+  var state = null, bar = null, tick = null;
+
+  function el() {
+    var panel = document.getElementById("zoi-panel");
+    if (!panel) return null;
+    if (bar && bar.isConnected) return bar;
+    bar = document.createElement("div");
+    bar.id = "zoi-trial";
+    bar.style.cssText =
+      "font:600 12.5px/1.4 'Plus Jakarta Sans',Arial,sans-serif;padding:8px 14px;text-align:center;" +
+      "background:linear-gradient(135deg,#fffdf6,#fff3dc);color:#9b7420;border-bottom:1px solid #ecd9a4";
+    var head = panel.querySelector("#zoi-head");
+    if (head && head.parentNode) head.parentNode.insertBefore(bar, head.nextSibling);
+    else panel.insertBefore(bar, panel.firstChild);
+    return bar;
+  }
+
+  function render() {
+    var b = el(); if (!b || !state) return;
+    if (state.subscribed) { b.style.display = "none"; return; }
+    b.style.display = "block";
+    if (state.trial && state.trial.active) {
+      var m = Math.max(0, state.trial.minutesLeft|0), q = Math.max(0, state.trial.questionsLeft|0);
+      b.innerHTML = "🎁 " + t.free + ": <b>" + m + " " + t.min + "</b> · <b>" + q + " " + t.q + "</b>";
+    } else {
+      b.innerHTML = "🔒 " + t.over + " — <a href='/index.html#cene' style='color:#9b7420;font-weight:800'>" + t.sub + "</a>";
+    }
+  }
+
+  async function fetchMe() {
+    try {
+      var r = await fetch(ME, { credentials: "include" });
+      if (!r.ok) throw 0;
+      var d = await r.json();
+      if (d && (d.trial || d.subscribed != null)) { state = d; render(); }
+    } catch (e) { /* backend nije spreman -> bez trake */ }
+  }
+
+  function startTick() {
+    if (tick) return;
+    tick = setInterval(function () {
+      if (state && state.trial && state.trial.active && state.trial.minutesLeft > 0) {
+        state.trial.minutesLeft -= 1; render();
+      }
+    }, 60000);
+  }
+
+  function boot() {
+    if (!document.getElementById("zoi-panel")) return false;
+    fetchMe(); startTick();
+    // osveži kad se panel otvori i periodično dok je otvoren
+    var panel = document.getElementById("zoi-panel");
+    panel.addEventListener("click", function () {}, false);
+    setInterval(function () {
+      var p = document.getElementById("zoi-panel");
+      if (p && /\bzoi-open\b/.test(p.className)) fetchMe();
+    }, 20000);
+    return true;
+  }
+
+  var tries = 0;
+  var w = setInterval(function () {
+    if (boot() || ++tries > 40) clearInterval(w); // čekaj da widget napravi panel (do ~20s)
+  }, 500);
 })();

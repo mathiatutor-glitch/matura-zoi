@@ -1,0 +1,44 @@
+========================================================
+  MathIA — KONAČAN PAKET (gde šta ide)
+========================================================
+
+U KOREN REPOA (mathia-sajt, isti nivo gde je index.html):
+  index.html              (naslovna: pravi klon + kartice profesorki vode na predmete + "Pronađi fakultet" gore)
+  predmeti.html           (katalog svih 17 predmeta, vode na stranice)
+  prijava.html            (telefon + SMS kod; demo kod je 123456 dok backend ne proradi)
+  privatnost.html         (NACRT politike privatnosti — popuni [ ] i neka pravnik pregleda)
+  widget.js               (klon: SR/EN, crteži, izgovor, traka "preostalo")
+  zastita.js              (vodeni žig + zaštita od kopiranja + ©)
+  + 17 stranica predmeta:
+     mala-matura.html, prijemni.html,
+     srednja-matematika-1..4.html, srednja-fizika-1..4.html,
+     predmet-analiza1.html, predmet-analiza2.html, predmet-kompleksna-analiza.html,
+     predmet-linearna-algebra.html, predmet-verovatnoca-statistika.html,
+     predmet-elektrotehnika.html, predmet-fizika-mehanika.html
+
+U FOLDER  api/ :
+  api/chat.js             (mozak svih klonova + "site" mod za naslovnu)
+  api/tts.js              (glas — doteran, tečniji srpski)
+
+DAJ PROGRAMERU (NE ide na sajt):
+  _za-programera/MathIA-zastita-SPEC.md
+
+--------------------------------------------------------
+POSLE UPLOADA:
+  - Sačekaj ~1 min (Vercel) pa osveži: Cmd+Shift+R
+  - U Vercel projektu (mathia-sajt) moraju biti ključevi:
+      ANTHROPIC_API_KEY  (odgovori),  ELEVENLABS_API_KEY (glas)
+    Ako su samo u "matura-zoi" projektu, dodaj ih i ovde, pa Redeploy.
+
+ŠTA RADI ODMAH, A ŠTA TREBA BACKEND:
+  Radi odmah: klon (SR/EN, crteži, glas, čita sliku), materijali se otvaraju,
+              ekran prijave (demo), vodeni žig + © na stranicama gde dodaš zastita.js.
+  Traka "preostalo" u widgetu: pojavi se TEK kad programer napravi /api/me (do tada se ne vidi, bez greške).
+  Prava zaštita (SMS, baza, naplata, materijali iza prijave): programer po specifikaciji.
+  Politika privatnosti: pravnik (telefon + maloletnici).
+
+VODENI ŽIG NA E-KNJIGE (skripte/formule):
+  U svaku e-knjigu dodaj jednu liniju pre </body>:
+     <script src="/zastita.js"></script>
+  (Idealno: backend pre toga ubaci broj korisnika: <script>window.MATHIA_USER="+38160••••123";</script>)
+========================================================
