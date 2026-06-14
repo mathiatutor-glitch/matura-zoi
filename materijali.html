@@ -77,9 +77,9 @@ footer .disc{font-size:.74rem;max-width:680px;margin:14px auto 0;line-height:1.5
 <body>
 
 <nav class="nav"><div class="wrap">
-  <a class="brand" href="index.html">◆ MATHIA ◆</a>
+  <a class="brand" href="/">◆ MATHIA ◆</a>
   <div class="right">
-    <a class="back" href="index.html" data-i18n="back">← Početna</a>
+    <a class="back" href="/" data-i18n="back">← Početna</a>
     <select class="lang" aria-label="Izbor jezika"><option>🌐 Srpski</option><option>English</option></select>
   </div>
 </div></nav>
@@ -147,8 +147,8 @@ function render(lang){
              + '<span class="dl">PDF</span><span class="dl ghost">HTML</span></div>';
       }
       return '<div class="mc-row"><span class="mc-kind">'+t[kindKey]+'</span>'
-           + '<a class="dl" href="'+s.slug+'-'+kind+'.pdf" target="_blank" rel="noopener">PDF</a>'
-           + '<a class="dl ghost" href="'+s.slug+'-'+kind+'.html" target="_blank" rel="noopener">HTML</a></div>';
+           + '<a class="dl" href="/'+s.slug+'-'+kind+'.pdf" target="_blank" rel="noopener">PDF</a>'
+           + '<a class="dl ghost" href="/'+s.slug+'-'+kind+'.html" target="_blank" rel="noopener">HTML</a></div>';
     }
     return '<article class="mcard'+(soon?' soon':'')+'">'
       + '<div class="mc-top"><span class="mc-ico">📘</span><h3>'+s.name+'</h3>'+badge+'</div>'
