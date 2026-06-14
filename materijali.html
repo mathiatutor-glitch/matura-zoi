@@ -112,27 +112,41 @@ footer .disc{font-size:.74rem;max-width:680px;margin:14px auto 0;line-height:1.5
 <script>
 const LANGS=["sr","en"];
 const I18N={
-  sr:{back:"← Početna", eyebrow:"materijali", h1:"Skripte i priručnici za preuzimanje",
-      sub:"Za svaki predmet: skripta sa objašnjenjima i rešenim primerima, i priručnik sa svim ključnim formulama. PDF za štampu ili HTML za telefon.",
-      g_fak:"fakultet", g_mat:"Matematika", skripta:"📘 Skripta", formule:"📑 Formule",
+  sr:{back:"← Početna", eyebrow:"materijali", h1:"Skripte i priručnici",
+      sub:"Za svaki predmet: skripta sa objašnjenjima i rešenim primerima i priručnik sa svim formulama — otvaraju se u pregledaču, korak po korak. Zaštićeno, bez preuzimanja.",
+      g_fak:"fakultet", g_mat:"Matematika", skripta:"📘 Skripta", formule:"📑 Formule", open:"Otvori →",
       badge_new:"spremno", badge_soon:"uskoro", note:"Teorija, rešeni primeri i sve formule.",
       disc:"MathIA je nezavisna obrazovna platforma opšteg karaktera. Sadržaj i materijali su informativni i nisu povezani ni sa jednom konkretnom obrazovnom ustanovom, niti je predstavljaju."},
-  en:{back:"← Home", eyebrow:"materials", h1:"Study guides & handbooks to download",
-      sub:"For each subject: a study guide with explanations and worked examples, and a handbook with all the key formulas. PDF for print or HTML for your phone.",
-      g_fak:"university", g_mat:"Mathematics", skripta:"📘 Study guide", formule:"📑 Formulas",
+  en:{back:"← Home", eyebrow:"materials", h1:"Study guides & handbooks",
+      sub:"For each subject: a study guide with worked examples and a handbook with all formulas — they open in the browser, step by step. Protected, no downloads.",
+      g_fak:"university", g_mat:"Mathematics", skripta:"📘 Study guide", formule:"📑 Formulas", open:"Open →",
       badge_new:"ready", badge_soon:"soon", note:"Theory, worked examples and all formulas.",
       disc:"MathIA is an independent educational platform of a general nature. Content and materials are informational and are not affiliated with, nor do they represent, any specific educational institution."}
 };
 
 /* predmeti: name, slug (naziv fajla), ready? */
 const SUBJECTS=[
-  {name:"Matematička analiza 1", slug:"Matematicka-Analiza-1", ready:false},
-  {name:"Matematička analiza 2", slug:"Matematicka-Analiza-2", ready:false},
-  {name:"Kompleksna analiza", slug:"Kompleksna-Analiza", ready:false},
-  {name:"Linearna algebra", slug:"Linearna-Algebra", ready:false},
-  {name:"Verovatnoća, statistika i slučajni procesi", slug:"Verovatnoca-Statistika-Slucajni-Procesi", ready:false},
+  {name:"Prijemni — Matematika", slug:"Prijemni-Matematika", ready:true},
+  {name:"Mala matura — Matematika", slug:"Mala-Matura-Matematika", ready:true},
+  {name:"Matematička analiza 1", slug:"Matematicka-Analiza-1", ready:true},
+  {name:"Matematička analiza 2", slug:"Matematicka-Analiza-2", ready:true},
+  {name:"Kompleksna analiza", slug:"Kompleksna-Analiza", ready:true},
+  {name:"Linearna algebra", slug:"Linearna-Algebra", ready:true},
+  {name:"Verovatnoća, statistika i slučajni procesi", slug:"Verovatnoca-Statistika-Slucajni-Procesi", ready:true},
   {name:"Operaciona istraživanja", slug:"Operaciona-Istrazivanja", ready:true},
-  {name:"Diskretna matematika", slug:"Diskretna-Matematika", ready:true}
+  {name:"Diskretna matematika", slug:"Diskretna-Matematika", ready:true},
+  {name:"Uvod u elektroniku", slug:"Uvod-u-Elektroniku", ready:true},
+  {name:"Teorija električnih kola", slug:"Teorija-Elektricnih-Kola", ready:true},
+  {name:"Električna merenja", slug:"Elektricna-Merenja", ready:true},
+  {name:"Mehanika", slug:"Mehanika", ready:true},
+  {name:"Matematika · 1. razred", slug:"Matematika-1-Razred", ready:true},
+  {name:"Matematika · 2. razred", slug:"Matematika-2-Razred", ready:true},
+  {name:"Matematika · 3. razred", slug:"Matematika-3-Razred", ready:true},
+  {name:"Matematika · 4. razred", slug:"Matematika-4-Razred", ready:true},
+  {name:"Fizika · 1. razred", slug:"Fizika-1-Razred", ready:true},
+  {name:"Fizika · 2. razred", slug:"Fizika-2-Razred", ready:true},
+  {name:"Fizika · 3. razred", slug:"Fizika-3-Razred", ready:true},
+  {name:"Fizika · 4. razred", slug:"Fizika-4-Razred", ready:true}
 ];
 
 function render(lang){
@@ -142,13 +156,8 @@ function render(lang){
     const soon=!s.ready;
     const badge='<span class="mc-badge">'+(s.ready?t.badge_new:t.badge_soon)+'</span>';
     function row(kindKey, kind){
-      if(soon){
-        return '<div class="mc-row"><span class="mc-kind">'+t[kindKey]+'</span>'
-             + '<span class="dl">PDF</span><span class="dl ghost">HTML</span></div>';
-      }
       return '<div class="mc-row"><span class="mc-kind">'+t[kindKey]+'</span>'
-           + '<a class="dl" href="/'+s.slug+'-'+kind+'.pdf" target="_blank" rel="noopener">PDF</a>'
-           + '<a class="dl ghost" href="/'+s.slug+'-'+kind+'.html" target="_blank" rel="noopener">HTML</a></div>';
+           + '<a class="dl" href="/'+s.slug+'-'+kind+'.html" target="_blank" rel="noopener">'+t.open+'</a></div>';
     }
     return '<article class="mcard'+(soon?' soon':'')+'">'
       + '<div class="mc-top"><span class="mc-ico">📘</span><h3>'+s.name+'</h3>'+badge+'</div>'
