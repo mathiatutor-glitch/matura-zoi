@@ -43,9 +43,9 @@ function xmlEscape(s) {
 
 // ElevenLabs -> MP3 buffer
 async function synthEleven(text, voiceId, key, speed) {
-  const vs = { stability: 0.50, similarity_boost: 0.85, style: 0.0, use_speaker_boost: true };
+  const vs = { stability: 0.45, similarity_boost: 0.85, style: 0.15, use_speaker_boost: true }; // prirodniji, tečniji srpski
   const sp = Number(speed);
-  vs.speed = (sp >= 0.7 && sp <= 1.2) ? sp : 0.95; // podrazumevano 0.95 (normalno, ne brzo); data-rate/?speed= menja
+  vs.speed = (sp >= 0.7 && sp <= 1.2) ? sp : 0.93; // malo sporije (0.93) za jasniji izgovor; data-rate/?speed= menja
   const r = await fetch(
     `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}?output_format=mp3_44100_128`,
     {

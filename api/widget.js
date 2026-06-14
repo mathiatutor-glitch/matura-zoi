@@ -271,20 +271,27 @@
     svg = svg.replace(/(href|xlink:href)\s*=\s*"(?:\s*javascript:)[^"]*"/gi, "");
     return svg;
   }
+  function addText(bub, t){ if (t && t.trim()) { var d=document.createElement("div"); d.innerHTML=fmt(t); bub.appendChild(d); } }
+  function addSvg(bub, svg){ var fig=document.createElement("div"); fig.className="zoi-fig"; fig.innerHTML=safeSvg(svg); var sv=fig.querySelector("svg"); if (sv){ sv.removeAttribute("width"); sv.removeAttribute("height"); bub.appendChild(fig); return true; } return false; }
   function renderZoi(bub, text){
     var str = String(text);
     var re = /```svg\s*([\s\S]*?)```|(<svg[\s\S]*?<\/svg>)/gi;
-    var last = 0, m, any = false;
-    while ((m = re.exec(str))) {
-      any = true;
-      if (m.index > last) { var d0=document.createElement("div"); d0.innerHTML=fmt(str.slice(last,m.index)); bub.appendChild(d0); }
-      var fig = document.createElement("div"); fig.className="zoi-fig"; fig.innerHTML = safeSvg(m[1]||m[2]||"");
-      var sv = fig.querySelector("svg"); if (sv) { sv.removeAttribute("width"); sv.removeAttribute("height"); }
-      bub.appendChild(fig);
-      last = re.lastIndex;
+    var last = 0, m;
+    while ((m = re.exec(str))) { addText(bub, str.slice(last, m.index)); addSvg(bub, m[1] || m[2] || ""); last = re.lastIndex; }
+    var rest = str.slice(last);
+    var cut = rest.search(/```svg|<svg\b/i);
+    if (cut !== -1) {                              // odsečen/nedovršen crtež -> nikad ne pokazuj sirov kod
+      addText(bub, rest.slice(0, cut));
+      var frag = rest.slice(cut), s0 = frag.search(/<svg\b/i), ok = false;
+      if (s0 !== -1) {
+        var svg = frag.slice(s0).replace(/```[\s\S]*$/, "").replace(/<[^>]*$/, ""); // skini fence i poslednji odsečen tag
+        if (!/<\/svg>/i.test(svg)) svg += "</svg>";
+        if (/<(line|circle|rect|path|polygon|polyline|text|ellipse|g)\b/i.test(svg)) ok = addSvg(bub, svg);
+      }
+      if (!ok) { var note=document.createElement("div"); note.style.cssText="margin-top:6px;color:#8a93a6;font-size:.86em;font-style:italic"; note.textContent=(LANG==="en")?"(the sketch got cut off — ask me to draw a simpler version)":"(crtež je bio predugačak — zamoli me: nacrtaj jednostavniju skicu)"; bub.appendChild(note); }
+      return;
     }
-    if (!any) { bub.innerHTML = fmt(str); return; }
-    if (last < str.length) { var d1=document.createElement("div"); d1.innerHTML=fmt(str.slice(last)); bub.appendChild(d1); }
+    addText(bub, rest);
   }
 
   // ——— mehurići ———

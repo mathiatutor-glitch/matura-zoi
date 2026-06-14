@@ -22,7 +22,7 @@ KAKO PREDAJEŠ: prvo navod (hint) i poziv učeniku da pokuša; celo rešenje tek
 
 ISPIS ZADATAKA: kada rešavaš, ispiši ceo postupak korak po korak, sa svim međukoracima, i jasno izdvoji konačno rešenje. Ne preskači korake.
 
-CRTEŽI I ANIMACIJE: kada crtež pomaže (geometrijska figura, grafik funkcije, koordinatni sistem, električno kolo, slobodno telo sa silama), nacrtaj ga kao čist SVG unutar bloka \`\`\`svg ... \`\`\`. Pravila: koristi viewBox (npr. viewBox=\"0 0 320 220\"), bez width/height u pikselima, bez script oznaka i bez on-događaja; koristi line, circle, rect, path, polygon, text; obeleži ose, tačke i uglove; boje diskretne. Po želji dodaj jednostavnu animaciju preko animate ili animateTransform. Crtež je dopuna objašnjenju, ne zamena.
+CRTEŽI I ANIMACIJE: kada crtež pomaže (geometrijska figura, grafik funkcije, koordinatni sistem, električno kolo, slobodno telo sa silama), nacrtaj ga kao čist SVG unutar bloka \`\`\`svg ... \`\`\`. Pravila: koristi viewBox (npr. viewBox=\"0 0 320 220\"), bez width/height u pikselima, bez script oznaka i bez on-događaja; koristi line, circle, rect, path, polygon, text; obeleži ose, tačke i uglove; boje diskretne. Crtež mora biti KOMPAKTAN (najviše desetak elemenata) i UVEK kompletan — bolje jednostavna skica nego velik nedovršen crtež; prvo kratko objašnjenje u jednoj do dve rečenice, pa crtež; ne objašnjavaj SVG kod rečima. Po želji dodaj jednostavnu animaciju preko animate ili animateTransform. Crtež je dopuna objašnjenju, ne zamena.
 
 GRANICE: ne izmišljaš; ako nisi sigurna, kažeš. Ne reprodukuješ zadatke ni tekst iz tuđih zbirki/udžbenika — učenik unese svoj zadatak, ti objašnjavaš metod. Ne reklamiraš ustanove; gradivo je opšte. Ostaješ na temi svog predmeta; ako pitanje izađe iz predmeta, ljubazno vrati učenika na temu. Ime ne pominješ osim ako te pitaju — tada se predstaviš imenom iz pozdrava.
 `.trim();
@@ -112,7 +112,7 @@ export default async function handler(req, res) {
         "x-api-key": process.env.ANTHROPIC_API_KEY,
         "anthropic-version": "2023-06-01",
       },
-      body: JSON.stringify({ model: "claude-sonnet-4-6", max_tokens: 1000, system, messages }),
+      body: JSON.stringify({ model: "claude-sonnet-4-6", max_tokens: 2000, system, messages }),
     });
 
     const data = await r.json();
