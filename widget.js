@@ -17,6 +17,36 @@
   var LANG = (script && script.getAttribute("data-lang")) || "sr";
   var MODE = (script && script.getAttribute("data-mode")) || "matura"; // "matura" | "ftn"
   var NAME = (script && script.getAttribute("data-name")) || "Zoi"; // ime asistenta (npr. "Mila")
+  var HI = (script && script.getAttribute("data-hi")) || ""; // pozdrav po stranici (opciono)
+  var SUB = (script && script.getAttribute("data-sub")) || ""; // podnaslov po stranici (opciono)
+  var ALIASES = { matura: "mala-matura", ftn: "prijemni-matematika", prijemni: "prijemni-matematika" };
+  function resolveMode(m){ return m ? (ALIASES[m] || m) : m; }
+  var RMODE = resolveMode(MODE);
+  var SUBJECTS = {
+    "prijemni-matematika": { name: "Zoi", sub: { sr: "profesorica · prijemni", en: "teacher · entrance exam" }, hi: { sr: "Ćao! Ja sam {name}, tvoja profesorica za prijemni iz matematike. Napiši zadatak ili pošalji sliku — idemo korak po korak.", en: "Hi! I'm {name}, your teacher for the math entrance exam. Type a problem or send a photo — we'll go step by step." } },
+    "mala-matura": { name: "Mila", sub: { sr: "profesorica · mala matura", en: "teacher · grade-8 final" }, hi: { sr: "Ćao! Ja sam {name}, tvoja profesorica za malu maturu iz matematike. Napiši zadatak ili pošalji sliku — idemo korak po korak.", en: "Hi! I'm {name}, your teacher for the grade-8 math final. Type a problem or send a photo — we'll go step by step." } },
+    "sr-mat-1": { name: "Lara", sub: { sr: "profesorica · matematika 1. razred", en: "teacher · math · grade 1" }, hi: { sr: "Ćao! Ja sam {name}, tvoja profesorica za matematiku 1. razreda. Napiši zadatak ili pošalji sliku — idemo korak po korak.", en: "Hi! I'm {name}, your teacher for grade-1 math. Type a problem or send a photo — we'll go step by step." } },
+    "sr-mat-2": { name: "Lara", sub: { sr: "profesorica · matematika 2. razred", en: "teacher · math · grade 2" }, hi: { sr: "Ćao! Ja sam {name}, tvoja profesorica za matematiku 2. razreda. Napiši zadatak ili pošalji sliku — idemo korak po korak.", en: "Hi! I'm {name}, your teacher for grade-2 math. Type a problem or send a photo — we'll go step by step." } },
+    "sr-mat-3": { name: "Lara", sub: { sr: "profesorica · matematika 3. razred", en: "teacher · math · grade 3" }, hi: { sr: "Ćao! Ja sam {name}, tvoja profesorica za matematiku 3. razreda. Napiši zadatak ili pošalji sliku — idemo korak po korak.", en: "Hi! I'm {name}, your teacher for grade-3 math. Type a problem or send a photo — we'll go step by step." } },
+    "sr-mat-4": { name: "Lara", sub: { sr: "profesorica · matematika 4. razred", en: "teacher · math · grade 4" }, hi: { sr: "Ćao! Ja sam {name}, tvoja profesorica za matematiku 4. razreda. Napiši zadatak ili pošalji sliku — idemo korak po korak.", en: "Hi! I'm {name}, your teacher for grade-4 math. Type a problem or send a photo — we'll go step by step." } },
+    "sr-fiz-1": { name: "Iva", sub: { sr: "profesorica · fizika 1. razred", en: "teacher · physics · grade 1" }, hi: { sr: "Ćao! Ja sam {name}, tvoja profesorica za fiziku 1. razreda. Napiši zadatak ili pošalji sliku — idemo korak po korak.", en: "Hi! I'm {name}, your teacher for grade-1 physics. Type a problem or send a photo — we'll go step by step." } },
+    "sr-fiz-2": { name: "Iva", sub: { sr: "profesorica · fizika 2. razred", en: "teacher · physics · grade 2" }, hi: { sr: "Ćao! Ja sam {name}, tvoja profesorica za fiziku 2. razreda. Napiši zadatak ili pošalji sliku — idemo korak po korak.", en: "Hi! I'm {name}, your teacher for grade-2 physics. Type a problem or send a photo — we'll go step by step." } },
+    "sr-fiz-3": { name: "Iva", sub: { sr: "profesorica · fizika 3. razred", en: "teacher · physics · grade 3" }, hi: { sr: "Ćao! Ja sam {name}, tvoja profesorica za fiziku 3. razreda. Napiši zadatak ili pošalji sliku — idemo korak po korak.", en: "Hi! I'm {name}, your teacher for grade-3 physics. Type a problem or send a photo — we'll go step by step." } },
+    "sr-fiz-4": { name: "Iva", sub: { sr: "profesorica · fizika 4. razred", en: "teacher · physics · grade 4" }, hi: { sr: "Ćao! Ja sam {name}, tvoja profesorica za fiziku 4. razreda. Napiši zadatak ili pošalji sliku — idemo korak po korak.", en: "Hi! I'm {name}, your teacher for grade-4 physics. Type a problem or send a photo — we'll go step by step." } },
+    "fax-analiza1": { name: "Nina", sub: { sr: "profesorica · Analiza 1", en: "teacher · Calculus 1" }, hi: { sr: "Ćao! Ja sam {name}, tvoja profesorica za Matematičku analizu 1. Napiši zadatak ili pošalji sliku — idemo korak po korak.", en: "Hi! I'm {name}, your teacher for Calculus 1. Type a problem or send a photo — we'll go step by step." } },
+    "fax-analiza2": { name: "Nina", sub: { sr: "profesorica · Analiza 2", en: "teacher · Calculus 2" }, hi: { sr: "Ćao! Ja sam {name}, tvoja profesorica za Matematičku analizu 2. Napiši zadatak ili pošalji sliku — idemo korak po korak.", en: "Hi! I'm {name}, your teacher for Calculus 2. Type a problem or send a photo — we'll go step by step." } },
+    "fax-kompleksna": { name: "Nina", sub: { sr: "profesorica · Kompleksna analiza", en: "teacher · Complex analysis" }, hi: { sr: "Ćao! Ja sam {name}, tvoja profesorica za Kompleksnu analizu. Napiši zadatak ili pošalji sliku — idemo korak po korak.", en: "Hi! I'm {name}, your teacher for complex analysis. Type a problem or send a photo — we'll go step by step." } },
+    "fax-linearna": { name: "Nina", sub: { sr: "profesorica · Linearna algebra", en: "teacher · Linear algebra" }, hi: { sr: "Ćao! Ja sam {name}, tvoja profesorica za Linearnu algebru. Napiši zadatak ili pošalji sliku — idemo korak po korak.", en: "Hi! I'm {name}, your teacher for linear algebra. Type a problem or send a photo — we'll go step by step." } },
+    "fax-verovatnoca": { name: "Lana", sub: { sr: "profesorica · Verovatnoća i statistika", en: "teacher · Probability & stats" }, hi: { sr: "Ćao! Ja sam {name}, tvoja profesorica za Verovatnoću i statistiku. Napiši zadatak ili pošalji sliku — idemo korak po korak.", en: "Hi! I'm {name}, your teacher for probability & statistics. Type a problem or send a photo — we'll go step by step." } },
+    "fax-operaciona": { name: "Nina", sub: { sr: "profesorica · Operaciona istraživanja", en: "teacher · Operations research" }, hi: { sr: "Ćao! Ja sam {name}, tvoja profesorica za Operaciona istraživanja. Napiši zadatak ili pošalji sliku — idemo korak po korak.", en: "Hi! I'm {name}, your teacher for operations research. Type a problem or send a photo — we'll go step by step." } },
+    "fax-diskretna": { name: "Nina", sub: { sr: "profesorica · Diskretna matematika", en: "teacher · Discrete math" }, hi: { sr: "Ćao! Ja sam {name}, tvoja profesorica za Diskretnu matematiku. Napiši zadatak ili pošalji sliku — idemo korak po korak.", en: "Hi! I'm {name}, your teacher for discrete mathematics. Type a problem or send a photo — we'll go step by step." } },
+    "fax-elektronika": { name: "Iskra", sub: { sr: "profesorica · Uvod u elektroniku", en: "teacher · Intro electronics" }, hi: { sr: "Ćao! Ja sam {name}, tvoja profesorica za Uvod u elektroniku. Napiši zadatak ili pošalji sliku — idemo korak po korak.", en: "Hi! I'm {name}, your teacher for intro to electronics. Type a problem or send a photo — we'll go step by step." } },
+    "fax-kola": { name: "Iskra", sub: { sr: "profesorica · Teorija el. kola", en: "teacher · Electric circuits" }, hi: { sr: "Ćao! Ja sam {name}, tvoja profesorica za Teoriju električnih kola. Napiši zadatak ili pošalji sliku — idemo korak po korak.", en: "Hi! I'm {name}, your teacher for electric circuits. Type a problem or send a photo — we'll go step by step." } },
+    "fax-merenja": { name: "Iskra", sub: { sr: "profesorica · Električna merenja", en: "teacher · Electrical meas." }, hi: { sr: "Ćao! Ja sam {name}, tvoja profesorica za Električna merenja. Napiši zadatak ili pošalji sliku — idemo korak po korak.", en: "Hi! I'm {name}, your teacher for electrical measurements. Type a problem or send a photo — we'll go step by step." } },
+    "fax-mehanika": { name: "Vera", sub: { sr: "profesorica · Mehanika", en: "teacher · Mechanics" }, hi: { sr: "Ćao! Ja sam {name}, tvoja profesorica za Mehaniku. Napiši zadatak ili pošalji sliku — idemo korak po korak.", en: "Hi! I'm {name}, your teacher for mechanics. Type a problem or send a photo — we'll go step by step." } }
+  };
+  if (!(script && script.getAttribute("data-name")) && SUBJECTS[RMODE] && SUBJECTS[RMODE].name) NAME = SUBJECTS[RMODE].name;
+
   var VOICE = (script && script.getAttribute("data-voice")) || ""; // ElevenLabs Voice ID za srpski (prazno = podrazumevano)
   var AVATAR_OK = true;
   var TTS = (script && script.getAttribute("data-tts")) || API.replace(/\/api\/[a-z-]+\/?$/, "/api/tts");
@@ -69,8 +99,8 @@
     es: { sub: "profesora · acceso FTN", hi: "¡Hola! 😊 Soy Zoi, tu profesora de matemáticas para el examen de acceso a la FTN. Escribe un ejercicio o envía una 📷 foto — vamos paso a paso." },
     fr: { sub: "professeure · concours FTN", hi: "Salut ! 😊 Je suis Zoi, ta prof de maths pour le concours d’entrée à la FTN. Écris un exercice ou envoie une 📷 photo — on avance étape par étape." },
   };
-  function modeSub(x) { return (MODE === "ftn" && FTN[LANG]) ? FTN[LANG].sub : x.sub; }
-  function modeHi(x) { var s = (MODE === "ftn" && FTN[LANG]) ? FTN[LANG].hi : x.hi; return String(s).replace(/Zoi/g, NAME); }
+  function modeSub(x) { if (SUB) return SUB; var sj=SUBJECTS[RMODE]; if (sj && sj.sub) return sj.sub[LANG] || sj.sub.en || sj.sub.sr; return (MODE === "ftn" && FTN[LANG]) ? FTN[LANG].sub : x.sub; }
+  function modeHi(x) { var s; if (HI) { s = HI; } else { var sj = SUBJECTS[RMODE]; if (sj && sj.hi) { s = sj.hi[LANG] || sj.hi.en || sj.hi.sr; } else { s = (MODE === "ftn" && FTN[LANG]) ? FTN[LANG].hi : x.hi; } } return String(s).replace(/\{name\}/g, NAME).replace(/Zoi/g, NAME); }
 
   // ——— stilovi (sve scope-ovano sa zoi- prefiksom) ———
   var css =
@@ -112,7 +142,10 @@
     ".zoi-say:hover{background:#E2F4EF;border-color:#2FB7A0}" +
     ".zoi-avfb{display:grid;place-items:center;background:linear-gradient(135deg,#1F8A78,#2FB7A0);color:#fff}" +
     "#zoi-btn.zoi-avfb{font-size:30px}" +
-    "#zoi-head .zoi-headfb{width:40px;height:40px;border-radius:50%;border:2px solid rgba(255,255,255,.7);font-size:20px}";
+    "#zoi-head .zoi-headfb{width:40px;height:40px;border-radius:50%;border:2px solid rgba(255,255,255,.7);font-size:20px}" +
+    ".zoi-fig{background:#fff;border:1px solid #E2D6BF;border-radius:12px;padding:8px;margin:6px 0;max-width:100%;overflow-x:auto}" +
+    ".zoi-fig svg{max-width:100%;height:auto;display:block;margin:0 auto}" +
+    ".zoi-bub sup{font-size:.72em;vertical-align:super}.zoi-bub sub{font-size:.72em;vertical-align:sub}";
 
   var style = document.createElement("style");
   style.textContent = css;
@@ -224,7 +257,34 @@
     s = s.replace(/^[ \t]*[\*\-\+]\s+/gm, "• ");              // „* "/„- " na početku reda -> tačkica
     s = s.replace(/\*([^*\n]+)\*/g, "$1");                    // *kurziv* -> tekst
     s = s.replace(/\*/g, "");                                  // sve preostale zvezdice
+    s = s.replace(/\^\{([^}]+)\}/g, "<sup>$1</sup>").replace(/\^(-?\d+|[A-Za-z])/g, "<sup>$1</sup>");
+    s = s.replace(/_\{([^}]+)\}/g, "<sub>$1</sub>").replace(/_(\d+)/g, "<sub>$1</sub>");
     return s;
+  }
+
+  // ——— bezbedan SVG (crteži/animacije iz odgovora) ———
+  function safeSvg(svg){
+    svg = String(svg);
+    svg = svg.replace(/<script[\s\S]*?<\/script>/gi, "");
+    svg = svg.replace(/<foreignObject[\s\S]*?<\/foreignObject>/gi, "");
+    svg = svg.replace(/\son\w+\s*=\s*"[^"]*"/gi, "").replace(/\son\w+\s*=\s*'[^']*'/gi, "");
+    svg = svg.replace(/(href|xlink:href)\s*=\s*"(?:\s*javascript:)[^"]*"/gi, "");
+    return svg;
+  }
+  function renderZoi(bub, text){
+    var str = String(text);
+    var re = /```svg\s*([\s\S]*?)```|(<svg[\s\S]*?<\/svg>)/gi;
+    var last = 0, m, any = false;
+    while ((m = re.exec(str))) {
+      any = true;
+      if (m.index > last) { var d0=document.createElement("div"); d0.innerHTML=fmt(str.slice(last,m.index)); bub.appendChild(d0); }
+      var fig = document.createElement("div"); fig.className="zoi-fig"; fig.innerHTML = safeSvg(m[1]||m[2]||"");
+      var sv = fig.querySelector("svg"); if (sv) { sv.removeAttribute("width"); sv.removeAttribute("height"); }
+      bub.appendChild(fig);
+      last = re.lastIndex;
+    }
+    if (!any) { bub.innerHTML = fmt(str); return; }
+    if (last < str.length) { var d1=document.createElement("div"); d1.innerHTML=fmt(str.slice(last)); bub.appendChild(d1); }
   }
 
   // ——— mehurići ———
@@ -246,7 +306,7 @@
       };
     }
     if (text) {
-      if (who === "zoi") { bub.innerHTML = fmt(text); }
+      if (who === "zoi") { renderZoi(bub, text); }
       else { bub.appendChild(document.createTextNode(text)); }
     }
     if (imgUrl) { var im = document.createElement("img"); im.src = imgUrl; bub.appendChild(im); }
@@ -337,6 +397,7 @@
   }
   function mathSr(s) {
     s = vratiKvacice(s);
+    s = s.replace(/([Ss])h/g, "$1-h"); // „sh" -> „s-h" da se ne čita kao „š" (ishod, ishrana, shvatiti)
     s = " " + s + " ";
     // grčka slova -> srpski izgovor (npr. „sin α" -> „sinus alfa"); π se rešava niže kao „pi"
     s = s.replace(/[αΑ]/g, " alfa ").replace(/[βΒ]/g, " beta ").replace(/[γΓ]/g, " gama ")
@@ -418,8 +479,20 @@
     });
     // plus / minus
     s = s.replace(/\+/g, " plus ");
-    s = s.replace(/−/g, " minus ");
-    s = s.replace(/(\d|\s)\s*-\s*(\d|[A-Za-z])/g, "$1 minus $2");
+    // crtice: „minus" SAMO kao pravi matematički znak; razmaknuta/duga crta = pauza; složenice ostaju
+    s = s.replace(/(^|\n)[ \t]*[-–—][ \t]+/g, "$1 ");               // crtice nabrajanja (liste) -> bez crtice
+    s = s.replace(/−/g, " minus ");                                 // pravi znak minus (U+2212)
+    s = s.replace(/\s*[—–]\s*/g, ", ");                              // duga crta (em/en) = pauza, nikad minus
+    s = s.replace(/([0-9A-Za-zπčćžšđČĆŽŠĐ]+)(\s*)-(\s*)(?=([0-9A-Za-zπčćžšđČĆŽŠĐ]+))/g, function (m, a, sp1, sp2, b) {
+      var aMath = /\d/.test(a) || a.length <= 1;                    // levo: broj ili jednoslovna promenljiva?
+      var bMath = /\d/.test(b) || b.length <= 1;
+      if (aMath && bMath) return a + " minus ";                     // oduzimanje: 5-3, x-1, n-1, 2x-5
+      if (!sp2 && /^\d/.test(b) && sp1) return a + " minus ";        // „reč -5" = negativan broj
+      if (sp1 || sp2) return a + ", ";                              // razmaknuta crta posle reči = pauza
+      return a + "-";                                              // spojena složenica ostaje (crno-belo, is-hod)
+    });
+    s = s.replace(/(^|[\s(=+*/,])-(?=\d)/g, "$1minus ");             // predznak zalepljen za broj (bez levog operanda)
+    s = s.replace(/\s-\s/g, ", ");                                  // preostala razmaknuta crtica = pauza
     // implicitno množenje: 2x -> 2 iks, 4ac -> 4 ac
     s = s.replace(/(\d)(?=[A-Za-zπ])/g, "$1 ");
     // slovo Q -> "ku" (da ne čita "kju"); ako Q kod tebe znači skup racionalnih, vidi napomenu
@@ -433,6 +506,7 @@
   }
   function clean(text) {
     text = String(text == null ? "" : text).normalize("NFC"); // spoji rastavljene kvačice (Ć, Č, Š…)
+    text = text.replace(/```svg[\s\S]*?```/gi, " ").replace(/```[\s\S]*?```/gi, " ").replace(/<svg[\s\S]*?<\/svg>/gi, " "); // crteži se ne čitaju
     if (LANG === "sr" || LANG === "bs" || LANG === "hr") {
       // strelice nose značenje (limesi/implikacije) — obradi ih PRE stripEmoji koji bi ih obrisao
       var s = stripMd(text)
